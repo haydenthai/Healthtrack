@@ -19,6 +19,12 @@
       },
       "api": {
         "healthtrack": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d12lalry6wmyri",
+          "type": "cicd"
+        }
       }
     }
   }

@@ -21,8 +21,6 @@ export interface AdminProps {
     signOut?: (event?: AuthEventData) => void;
 }
 
-console.log(await DataStore.query(Patient))
-
 function Admin({ user }: AdminProps) {
     const { signOut } = useAuthenticator((context) => [context.user]);
     const [navigationOpen, setNavigationOpen] = React.useState(false);

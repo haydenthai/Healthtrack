@@ -37,6 +37,10 @@ import { DataStore } from '@aws-amplify/datastore';
 import { Patient, Physician } from '../models';
 import { PatientCreateForm } from '../ui-components';
 import { PatientCreateFormInputValues } from 'src/ui-components/PatientCreateForm';
+import { API } from 'aws-amplify';
+import * as queries from '../graphql/queries';
+import { GraphQLQuery } from '@aws-amplify/api';
+import { ListPatientsQuery } from '../API';
 
 const getTextFilterCounterText = (count: number) =>
     `${count} ${count === 1 ? 'match' : 'matches'}`;
@@ -71,7 +75,12 @@ class DataProvider {
     async getData() {
         const models = await DataStore.query(Patient);
         console.log(models);
-        console.log(await DataStore.query(Physician));
+
+        const allPatients = await API.graphql<GraphQLQuery<ListPatientsQuery>>(
+            { query: queries.listPatients }
+          );
+          console.log(allPatients)
+        // console.log(await DataStore.query(Physician));
         // console.log(await DataStore.query(Patient));
         let data = await DataStore.query(Patient);
         return data;
