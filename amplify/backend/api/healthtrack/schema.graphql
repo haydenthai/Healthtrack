@@ -1,0 +1,193 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+
+type Vendor @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  address: String
+  preferred: Boolean
+  equipmentID: ID! @index(name: "byEquipment")
+}
+
+type EquipmentMaintenance @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  type: String
+  description: String
+  status: Boolean
+  resolution: String
+  equipmentID: ID! @index(name: "byEquipment")
+}
+
+type EquipmentOwned @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  datePurchased: AWSDate
+  warranty: String
+}
+
+type EquipmentLeased @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  startDate: AWSDate
+  endDate: AWSDate
+}
+
+type Equipment @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  type: String
+  description: String
+  department: String
+  owned: Boolean
+  leased: Boolean
+  Vendors: [Vendor] @hasMany(indexName: "byEquipment", fields: ["id"])
+  EquipmentMaintenances: [EquipmentMaintenance] @hasMany(indexName: "byEquipment", fields: ["id"])
+  EquipmentOwned: EquipmentOwned @hasOne
+  EquipmentLeased: EquipmentLeased @hasOne
+}
+
+type LabTest @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  testTypeName: String
+  normalRange: String
+  abnormalRange: String
+  description: String
+  laborderID: ID! @index(name: "byLabOrder")
+}
+
+type ServiceProvidedByClinic @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  type: String
+  description: String
+  cost: Float
+}
+
+type WorkSchedule @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  twoMonthCalendar: [Week]
+  physicianID: ID! @index(name: "byPhysician")
+}
+
+type Day {
+  id: ID!
+  isReserved: Boolean!
+  periods: Int!
+  number: Int!
+}
+
+type Week {
+  weekDays: [Day]
+}
+
+type Physician @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  cellPhoneNumber: AWSPhone
+  WorkSchedules: [WorkSchedule] @hasMany(indexName: "byPhysician", fields: ["id"])
+  Appointments: [Appointment] @hasMany(indexName: "byPhysician", fields: ["id"])
+}
+
+type Appointment @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  time: AWSDateTime
+  type: String
+  patientID: ID! @index(name: "byPatient")
+  physicianID: ID! @index(name: "byPhysician")
+  ServiceProvidedByClinic: ServiceProvidedByClinic @hasOne
+}
+
+type LabOrder @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  physicianName: String
+  testType: String
+  testDate: AWSDate
+  technician: String
+  testResult: String
+  medicalencounterID: ID! @index(name: "byMedicalEncounter")
+  ServiceProvidedByClinic: ServiceProvidedByClinic @hasOne
+  LabTests: [LabTest] @hasMany(indexName: "byLabOrder", fields: ["id"])
+}
+
+type Prescription @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  physicianName: String!
+  medication: String!
+  dosag: String!
+  frequency: String!
+  filledBy: String
+  dateFilled: AWSDate!
+  medicalencounterID: ID! @index(name: "byMedicalEncounter")
+  ServiceProvidedByClinic: ServiceProvidedByClinic @hasOne
+}
+
+type VitalSign @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  pulse: Int!
+  respirationRate: Int!
+  bloodPressure: String!
+  temperature: String
+}
+
+enum Practitioner {
+  NURSE
+  DOCTOR
+  PHYSICIAN
+  PHYSICIAN_ASSISTANT
+  PEDIATRIST
+  ANESTHESIOLOGIST
+  RADIOLOGIST
+  PSYCHOLOGIST
+  NEUROLOGIST
+  PSYCHIATRIST
+}
+
+type MedicalEncounter @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  date: AWSDate!
+  practitionerSeen: [Practitioner]!
+  complaints: String
+  diagnosis: String!
+  treatmentPlan: String
+  referralToSpecialists: String
+  recommendedFollowUp: String
+  patientID: ID! @index(name: "byPatient")
+  VitalSign: VitalSign @hasOne
+  Prescriptions: [Prescription] @hasMany(indexName: "byMedicalEncounter", fields: ["id"])
+  LabOrders: [LabOrder] @hasMany(indexName: "byMedicalEncounter", fields: ["id"])
+}
+
+type Medication @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  usage: String
+  dosage: String
+  frequency: String
+  sideEffects: String
+  interactions: String
+  patientID: ID! @index(name: "byPatient")
+}
+
+enum InsuranceCarrierStatus {
+  PAYS_ON_TIME
+  LATE_WITH_PAYMENTS
+  DIFFICULT_TO_GET_PAYMENTS
+}
+
+type InsuranceCarrier @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  address: String
+  status: InsuranceCarrierStatus
+}
+
+type Patient @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  user: String!
+  address: String
+  dateOfBirth: AWSDate
+  gender: String
+  InsuranceCarrier: InsuranceCarrier @hasOne
+  Medications: [Medication] @hasMany(indexName: "byPatient", fields: ["id"])
+  MedicalEncounters: [MedicalEncounter] @hasMany(indexName: "byPatient", fields: ["id"])
+  Appointments: [Appointment] @hasMany(indexName: "byPatient", fields: ["id"])
+  Physician: Physician @hasOne
+  cell: AWSPhone
+}
+ 

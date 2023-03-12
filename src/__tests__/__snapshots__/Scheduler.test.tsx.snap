@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Scheduler /> should add appointment when clicking on a time slot 1`] = `<div />`;
+
+exports[`<Scheduler /> should remove appointment when clicking on a time slot 1`] = `<div />`;
+
+exports[`<Scheduler /> should render the element correctly 1`] = `<div />`;
