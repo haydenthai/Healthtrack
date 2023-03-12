@@ -37,7 +37,7 @@ import { DataStore } from '@aws-amplify/datastore';
 import { Patient, Physician } from '../models';
 import { PatientCreateForm } from '../ui-components';
 import { PatientCreateFormInputValues } from 'src/ui-components/PatientCreateForm';
-import { API } from 'aws-amplify';
+import { API, Hub } from 'aws-amplify';
 import * as queries from '../graphql/queries';
 import { GraphQLQuery } from '@aws-amplify/api';
 import { ListPatientsQuery } from '../API';
@@ -76,17 +76,16 @@ class DataProvider {
         const models = await DataStore.query(Patient);
         console.log(models);
 
-        const allPatients = await API.graphql<GraphQLQuery<ListPatientsQuery>>(
-            { query: queries.listPatients }
-          );
-          console.log(allPatients)
+        // const allPatients = await API.graphql<GraphQLQuery<ListPatientsQuery>>(
+        //     { query: queries.listPatients }
+        //   );
+        //   console.log(allPatients)
         // console.log(await DataStore.query(Physician));
         // console.log(await DataStore.query(Patient));
         let data = await DataStore.query(Patient);
         return data;
     }
 }
-
 
 interface NavigationProps {
     activeHref?: string;
@@ -522,10 +521,25 @@ function DetailsCards({
     });
 
     useEffect(() => {
-        new DataProvider().getData().then((patients: any) => {
-            setPatients(patients);
-            setLoading(false);
+        const removeListener = Hub.listen('datastore', async (capsule) => {
+            const {
+                payload: { event, data },
+            } = capsule;
+
+            console.log('DataStore event', event, data);
+
+            if (event === 'ready') {
+                new DataProvider().getData().then((patients: any) => {
+                    setPatients(patients);
+                    setLoading(false);
+                });
+            }
         });
+        DataStore.start();
+        return () => {
+            removeListener();
+        };
+
     }, []);
 
     return (

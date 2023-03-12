@@ -9,10 +9,12 @@
     },
     "additionalAuthTypes": [
       {
+        "mode": "AWS_IAM"
+      },
+      {
         "mode": "API_KEY",
-        "expirationTime": 365,
-        "apiKeyExpirationDate": "2024-03-11T08:00:56.392Z",
-        "keyDescription": "api for htAuth"
+        "keyDescription": "api key description",
+        "expirationTime": 30
       }
     ],
     "conflictResolution": {
