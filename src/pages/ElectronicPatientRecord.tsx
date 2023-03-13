@@ -148,7 +148,7 @@ export const CARD_DEFINITIONS = {
     header: (item: any) => (
         <div>
             <Link fontSize="heading-m" href="#">
-                {item.patientName}
+                {item.name}
                 {/* {console.log('item:', item)} */}
             </Link>
         </div>
@@ -171,15 +171,15 @@ export const CARD_DEFINITIONS = {
     //     "_deleted": null
     // }
     sections: [
+        // {
+        //     id: 'name',
+        //     header: 'Patient Name',
+        //     content: (item: { name: string }) => item.name,
+        // },
         {
-            id: 'patientName',
-            header: 'Patient Name',
-            content: (item: { patientName: any }) => item.patientName,
-        },
-        {
-            id: 'telephoneNumber',
-            header: 'Telephone Number',
-            content: (item: { telephoneNumber: any }) => item.telephoneNumber,
+            id: 'cell',
+            header: 'Cellular Number',
+            content: (item: { cell: string }) => item.cell,
         },
         {
             id: 'insuranceCarrierID',
@@ -255,8 +255,8 @@ export const VISIBLE_CONTENT_OPTIONS = [
     {
         label: 'Main Patient Properties',
         options: [
-            { id: 'patientName', label: 'Patient Name' },
-            { id: 'telephoneNumber', label: 'Telephone Number' },
+            { id: 'name', label: 'Patient Name' },
+            { id: 'cell', label: 'Cellular Number' },
             { id: 'primaryCarePhysician', label: 'Primary Care Physician' },
             { id: 'dateOfBirth', label: 'Date of Birth' },
             { id: 'insuranceCarrierID', label: 'Insurance Carrier ID' },
@@ -278,8 +278,8 @@ export const PAGE_SIZE_OPTIONS = [
 export const DEFAULT_PREFERENCES = {
     pageSize: 30,
     visibleContent: [
-        'patientName',
-        'telephoneNumber',
+        'name',
+        'cell',
         'dateOfBirth',
         'gender',
         'primaryCarePhysician',
@@ -525,8 +525,6 @@ function DetailsCards({
             const {
                 payload: { event, data },
             } = capsule;
-
-            console.log('DataStore event', event, data);
 
             if (event === 'ready') {
                 new DataProvider().getData().then((patients: any) => {

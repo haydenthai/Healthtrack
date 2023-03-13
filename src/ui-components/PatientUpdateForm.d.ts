@@ -14,14 +14,14 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type PatientUpdateFormInputValues = {
-    user?: string;
+    name?: string;
     address?: string;
     dateOfBirth?: string;
     gender?: string;
     cell?: string;
 };
 export declare type PatientUpdateFormValidationValues = {
-    user?: ValidationFunction<string>;
+    name?: ValidationFunction<string>;
     address?: ValidationFunction<string>;
     dateOfBirth?: ValidationFunction<string>;
     gender?: ValidationFunction<string>;
@@ -30,7 +30,7 @@ export declare type PatientUpdateFormValidationValues = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type PatientUpdateFormOverridesProps = {
     PatientUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    user?: PrimitiveOverrideProps<TextFieldProps>;
+    name?: PrimitiveOverrideProps<TextFieldProps>;
     address?: PrimitiveOverrideProps<TextFieldProps>;
     dateOfBirth?: PrimitiveOverrideProps<TextFieldProps>;
     gender?: PrimitiveOverrideProps<TextFieldProps>;

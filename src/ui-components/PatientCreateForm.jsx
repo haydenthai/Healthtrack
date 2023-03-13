@@ -23,13 +23,13 @@ export default function PatientCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    user: "",
+    name: "",
     address: "",
     dateOfBirth: "",
     gender: "",
     cell: "",
   };
-  const [user, setUser] = React.useState(initialValues.user);
+  const [name, setName] = React.useState(initialValues.name);
   const [address, setAddress] = React.useState(initialValues.address);
   const [dateOfBirth, setDateOfBirth] = React.useState(
     initialValues.dateOfBirth
@@ -38,7 +38,7 @@ export default function PatientCreateForm(props) {
   const [cell, setCell] = React.useState(initialValues.cell);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setUser(initialValues.user);
+    setName(initialValues.name);
     setAddress(initialValues.address);
     setDateOfBirth(initialValues.dateOfBirth);
     setGender(initialValues.gender);
@@ -46,7 +46,7 @@ export default function PatientCreateForm(props) {
     setErrors({});
   };
   const validations = {
-    user: [{ type: "Required" }],
+    name: [],
     address: [],
     dateOfBirth: [],
     gender: [],
@@ -78,7 +78,7 @@ export default function PatientCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          user,
+          name,
           address,
           dateOfBirth,
           gender,
@@ -129,32 +129,32 @@ export default function PatientCreateForm(props) {
       {...rest}
     >
       <TextField
-        label="User"
-        isRequired={true}
+        label="Name"
+        isRequired={false}
         isReadOnly={false}
-        value={user}
+        value={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              user: value,
+              name: value,
               address,
               dateOfBirth,
               gender,
               cell,
             };
             const result = onChange(modelFields);
-            value = result?.user ?? value;
+            value = result?.name ?? value;
           }
-          if (errors.user?.hasError) {
-            runValidationTasks("user", value);
+          if (errors.name?.hasError) {
+            runValidationTasks("name", value);
           }
-          setUser(value);
+          setName(value);
         }}
-        onBlur={() => runValidationTasks("user", user)}
-        errorMessage={errors.user?.errorMessage}
-        hasError={errors.user?.hasError}
-        {...getOverrideProps(overrides, "user")}
+        onBlur={() => runValidationTasks("name", name)}
+        errorMessage={errors.name?.errorMessage}
+        hasError={errors.name?.hasError}
+        {...getOverrideProps(overrides, "name")}
       ></TextField>
       <TextField
         label="Address"
@@ -165,7 +165,7 @@ export default function PatientCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              user,
+              name,
               address: value,
               dateOfBirth,
               gender,
@@ -194,7 +194,7 @@ export default function PatientCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              user,
+              name,
               address,
               dateOfBirth: value,
               gender,
@@ -222,7 +222,7 @@ export default function PatientCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              user,
+              name,
               address,
               dateOfBirth,
               gender: value,
@@ -251,7 +251,7 @@ export default function PatientCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              user,
+              name,
               address,
               dateOfBirth,
               gender,

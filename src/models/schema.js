@@ -1685,11 +1685,11 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "user": {
-                    "name": "user",
+                "name": {
+                    "name": "name",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "address": {
@@ -1954,5 +1954,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.3.6",
-    "version": "d1bd97102fb091ecabc9fa0e53199ae2"
+    "version": "1d851ba46739793c3f1096224bfb6692"
 };

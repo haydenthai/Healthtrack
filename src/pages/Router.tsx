@@ -65,7 +65,7 @@ export function Router({ user }: RouterProps) {
                 <Authenticator components={components}>
                     {({ user }: RouterProps) => (
                         <Routes>
-                            <Route path="/" element={<Nav />} />
+                            <Route path="/*" element={<Nav />} />
                             <Route path="/patientdetails" element={<DetailsView/>}/>
                             <Route
                                 path="/nurse"
