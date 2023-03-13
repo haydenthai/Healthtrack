@@ -3,12 +3,9 @@ import ReactDOM from 'react-dom/client';
 import awsExports from './aws-exports';
 import './styles/index.css';
 import { Amplify } from 'aws-amplify';
-import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
-import customSignUpFields from './components/authenticator/FormFields';
-import type { AmplifyUser, AuthEventData } from '@aws-amplify/ui';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
+import { BrowserRouter } from "react-router-dom";
 import { Router } from './pages/Router';
 import Nurse from './pages/Nurse';
 import Physician from './pages/PhysicianScheduler';
@@ -19,6 +16,7 @@ import Patient from './pages/ElectronicPatientRecord';
 import '@cloudscape-design/global-styles/index.css';
 import InsuranceBilling from './pages/InsuranceBilling';
 import DetailsView from './pages/DetailedPatient';
+import { App } from './pages/App';
 
 Amplify.configure(awsExports);
 
@@ -74,6 +72,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
   </React.StrictMode>
 );

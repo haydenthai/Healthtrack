@@ -197,12 +197,12 @@ export const CARD_DEFINITIONS = {
             header: 'Gender',
             content: (item: { gender: string }) => item.gender,
         },
-        {
-            id: 'primaryCarePhysician',
-            header: 'Primary Care Physician',
-            content: (item: { primaryCarePhysician: any }) =>
-                item.primaryCarePhysician,
-        },
+        // {
+        //     id: 'primaryCarePhysician',
+        //     header: 'Primary Care Physician',
+        //     content: (item: { primaryCarePhysician: any }) =>
+        //         item.primaryCarePhysician,
+        // },
         {
             id: 'listCurrentMedications',
             header: 'List Current Medications',
@@ -237,12 +237,12 @@ export const CARD_DEFINITIONS = {
             header: 'Logging',
             content: (item: { logging: any }) => item.logging,
         },
-        {
-            id: 'listScheduledAppointments',
-            header: 'List Scheduled Appointments',
-            content: (item: { listScheduledAppointments: any }) =>
-                item.listScheduledAppointments,
-        },
+        // {
+        //     id: 'listScheduledAppointments',
+        //     header: 'List Scheduled Appointments',
+        //     content: (item: { listScheduledAppointments: any }) =>
+        //         item.listScheduledAppointments,
+        // },
         {
             id: 'telephonephoneNumber',
             header: 'Phone Number',

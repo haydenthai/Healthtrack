@@ -45,7 +45,6 @@ function Nav() {
             >
                 <ColumnLayout>
                     <Link to="/patientdetails">Detailed Patient View</Link>
-                    <Link to="/admin">Administrator</Link>
                     <Link to="/nurse">Electronic Patient Record Detailed Patient View</Link>
                     <Link to="/physician">Physician Scheduler</Link>
                     <Link to="/technician">Lab Order Tracking</Link>

@@ -1,4 +1,4 @@
-import { Icon, useAuthenticator, View } from '@aws-amplify/ui-react';
+import { Flex, Icon, useAuthenticator, View } from '@aws-amplify/ui-react';
 import React, { useEffect, useState } from 'react';
 import * as AmpUI from '@aws-amplify/ui-react';
 import { calendar } from '../util/schedulerMockData';
@@ -10,16 +10,17 @@ import {
 } from '../components/physician/physicianUtils';
 import { Navigation } from '../components/navigation/Navigation';
 import '../styles/base.scss';
-import { CancelableEventHandler, ClickDetail } from '@cloudscape-design/components/internal/events';
-import { AppLayout, Button } from '@cloudscape-design/components';
-
+import {
+    CancelableEventHandler,
+    ClickDetail,
+} from '@cloudscape-design/components/internal/events';
+import { AppLayout, Button, Container } from '@cloudscape-design/components';
 
 export interface PhysicianProps {
     user?: AmplifyUser;
 }
 
-
-function Physician({ user }: PhysicianProps) {
+function PhysicianScheduler({ user }: PhysicianProps) {
     const { signOut } = useAuthenticator((context) => [context.user]);
     const [navigationOpen, setNavigationOpen] = useState(false);
     const [isDate, setIsDate] = useState(false);
@@ -456,15 +457,14 @@ function Physician({ user }: PhysicianProps) {
         );
     }, [day, month, year, weekCounter]);
 
-    
     return (
         <AppLayout
-            headerSelector='#header'
+            headerSelector="#header"
             navigationOpen={navigationOpen}
             onNavigationChange={() => setNavigationOpen(!navigationOpen)}
             navigation={
                 <>
-                    <Navigation signOut={signOut}/>
+                    <Navigation signOut={signOut} />
                 </>
             }
             content={
@@ -490,18 +490,22 @@ function Physician({ user }: PhysicianProps) {
                             <Icon name="caret-right-filled" />
                         </Button>
                     </AmpUI.Flex>
+                    <Container
 
-                    <Scheduler
-                        isDate={isDate}
-                        year={year}
-                        month={month}
-                        monday={day}
-                        i={weekCounter}
-                    />
+                        >
+
+                            <Scheduler
+                                isDate={isDate}
+                                year={year}
+                                month={month}
+                                monday={day}
+                                i={weekCounter}
+                            />
+                    </Container>
                 </>
             }
         />
     );
 }
 
-export default Physician;
+export default PhysicianScheduler;
