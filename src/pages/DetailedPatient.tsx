@@ -27,11 +27,13 @@ import { v4 as uuid4 } from 'uuid';
 import { DataStore } from 'aws-amplify';
 import * as React from 'react';
 import Link, { LinkProps } from '@cloudscape-design/components/link';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import styles from '../styles/styles.module.scss';
 import { Patient } from '../models';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import { TableEmptyState, TableNoMatchState } from './ElectronicPatientRecord';
+import type { AmplifyUser } from '@aws-amplify/ui';
+import { UserContext } from './App';
 
 interface InfoLinkProps {
     id?: string;
@@ -277,7 +279,7 @@ function useAsyncData(loadCallback: any) {
 class DataProvider {
     async getData() {
         console.log(await DataStore.query(Patient));
-        return []
+        return [];
     }
 }
 export const ORIGINS_COLUMN_DEFINITIONS = [
@@ -439,43 +441,46 @@ function BehaviorsTable() {
     );
 }
 
-const GeneralConfig = () => (
-    <Container header={<Header variant="h2">General configuration</Header>}>
-        <ColumnLayout columns={4} variant="text-grid">
-            <div>
-                <Box variant="awsui-key-label">Engine</Box>
-                <div>Oracle Enterprise Edition 12.1.0.2.v7</div>
-            </div>
-            <div>
-                <Box variant="awsui-key-label">DB instance class</Box>
-                <div>db.t2.large</div>
-            </div>
-            <div>
-                <Box variant="awsui-key-label">DB instance status</Box>
-                <StatusIndicator type="success">Available</StatusIndicator>
-            </div>
-            <div>
-                <Box variant="awsui-key-label">Pending maintenance</Box>
-                <div>None</div>
-            </div>
-        </ColumnLayout>
-    </Container>
-);
+const GeneralConfig = () => {
+    
+    return (
+        <Container header={<Header variant="h2">General configuration</Header>}>
+            <ColumnLayout columns={4} variant="text-grid">
+                <div>
+                    <Box variant="awsui-key-label">Insurance Carrier</Box>
+                    <div>Oracle Enterprise Edition 12.1.0.2.v7</div>
+                </div>
+                <div>
+                    <Box variant="awsui-key-label">DB instance class</Box>
+                    <div>db.t2.large</div>
+                </div>
+                <div>
+                    <Box variant="awsui-key-label">DB instance status</Box>
+                    <StatusIndicator type="success">Available</StatusIndicator>
+                </div>
+                <div>
+                    <Box variant="awsui-key-label">Pending maintenance</Box>
+                    <div>None</div>
+                </div>
+            </ColumnLayout>
+        </Container>
+    );
+};
 
-const resourcesBreadcrumbs = [
+const resourcesBreadcrumbs = (name: string) => [
     {
-        text: 'Nurse',
-        href: '/nurse',
+        text: 'Electronic Patient Record',
+        href: '/electronic-patient-record',
     },
     {
-        text: 'Patients',
-        href: '/nurse/patients',
+        text: name,
+        href: window.location.href,
     },
 ];
 
-export const Breadcrumbs = () => (
+export const Breadcrumbs = ({ name }: { name: string }) => (
     <BreadcrumbGroup
-        items={resourcesBreadcrumbs}
+        items={resourcesBreadcrumbs(name)}
         expandAriaLabel="Show path"
         ariaLabel="Breadcrumbs"
     />
@@ -598,7 +603,9 @@ function LogsTable() {
                     filteringAriaLabel="Find logs"
                     filteringPlaceholder="Find logs"
                     filteringClearAriaLabel="Clear"
-                    countText={getTextFilterCounterText(filteredItemsCount as number)}
+                    countText={getTextFilterCounterText(
+                        filteredItemsCount as number
+                    )}
                 />
             }
             pagination={<Pagination {...paginationProps} />}
@@ -689,40 +696,40 @@ function useDisclaimerFlashbarItem(
 
 const TAGS_COLUMN_DEFINITIONS = [
     {
-      id: 'key',
-      header: 'Key',
-      cell: (item:any) => item.key,
-      width: 300,
+        id: 'key',
+        header: 'Key',
+        cell: (item: any) => item.key,
+        width: 300,
     },
     {
-      id: 'value',
-      header: 'Value',
-      cell: (item:any) => item.value || '-',
+        id: 'value',
+        header: 'Value',
+        cell: (item: any) => item.value || '-',
     },
-  ];
+];
 
-const EmptyTable = (props: { title: string; columnDefinitions: any; }) => {
+const EmptyTable = (props: { title: string; columnDefinitions: any }) => {
     const resourceType = props.title || 'Tag';
     const colDefs = props.columnDefinitions || TAGS_COLUMN_DEFINITIONS;
     return (
-      <Table
-        empty={<TableEmptyState resourceName={resourceType} />}
-        columnDefinitions={colDefs}
-        items={[]}
-        header={
-          <Header
-            actions={
-              <SpaceBetween size="xs" direction="horizontal">
-                <Button disabled={true}>Edit</Button>
-                <Button disabled={true}>Delete</Button>
-                <Button>Create {resourceType.toLowerCase()}</Button>
-              </SpaceBetween>
+        <Table
+            empty={<TableEmptyState resourceName={resourceType} />}
+            columnDefinitions={colDefs}
+            items={[]}
+            header={
+                <Header
+                    actions={
+                        <SpaceBetween size="xs" direction="horizontal">
+                            <Button disabled={true}>Edit</Button>
+                            <Button disabled={true}>Delete</Button>
+                            <Button>Create {resourceType.toLowerCase()}</Button>
+                        </SpaceBetween>
+                    }
+                >{`${resourceType}s`}</Header>
             }
-          >{`${resourceType}s`}</Header>
-        }
-      />
+        />
     );
-  };
+};
 
 function useNotifications(showSuccessNotification = false) {
     const successId = useId();
@@ -765,23 +772,44 @@ function Notifications({ successNotification }: NotificationsProps) {
 
 const INVALIDATIONS_COLUMN_DEFINITIONS = [
     {
-      id: 'id',
-      header: 'Invalidation ID',
+        id: 'id',
+        header: 'Invalidation ID',
     },
     {
-      id: 'status',
-      header: 'Status',
+        id: 'status',
+        header: 'Status',
     },
     {
-      id: 'date',
-      header: 'Date',
+        id: 'date',
+        header: 'Date',
     },
-  ];
+];
 
 function PatientDetail() {
     const [toolsIndex, setToolsIndex] = useState(0);
     const [toolsOpen, setToolsOpen] = useState(false);
     const appLayout = useRef(null);
+    const user = useContext(UserContext);
+    const [patient, setPatient] = useState<Patient>({} as Patient);
+    const patientID = window.location.href.split('/');
+    const [isLoaded, setIsLoaded] = useState(false);
+    let ID = patientID[patientID.length - 1];
+
+    useEffect(() => {
+        const GetPatient = async () => {
+            const patient = await DataStore.query(Patient, ID);
+            setPatient(patient as Patient);
+            console.log(patient)
+        };
+        
+        
+        GetPatient();
+        
+        return () => {
+
+            setIsLoaded(true);
+        };
+    }, []);
 
     function loadHelpPanelContent(index: React.SetStateAction<number>) {
         setToolsIndex(index);
@@ -820,7 +848,6 @@ function PatientDetail() {
                 />
             ),
         },
-        
     ];
 
     const appLayoutAriaLabels = {
@@ -837,38 +864,40 @@ function PatientDetail() {
     ];
 
     return (
-        <AppLayout
-            ref={appLayout}
-            content={
-                <ContentLayout
-                    header={
-                        <PageHeader
-                            buttons={[
-                                {
-                                    text: 'Actions',
-                                    items: INSTANCE_DROPDOWN_ITEMS,
-                                },
-                                { text: 'Edit' },
-                                { text: 'Delete' },
-                            ]}
-                        />
-                    }
-                >
-                    <SpaceBetween size="l">
-                        <GeneralConfig />
-                        <Tabs tabs={tabs} ariaLabel="Resource details" />
-                    </SpaceBetween>
-                </ContentLayout>
-            }
-            headerSelector="#header"
-            breadcrumbs={<Breadcrumbs />}
-            navigation={<Navigation activeHref="#/distributions" />}
-            tools={toolsIndex}
-            toolsOpen={toolsOpen}
-            onToolsChange={({ detail }) => setToolsOpen(detail.open)}
-            ariaLabels={appLayoutAriaLabels}
-            notifications={<Notifications />}
-        />
+        isLoaded && (
+            <AppLayout
+                ref={appLayout}
+                content={
+                    <ContentLayout
+                        header={
+                            <PageHeader
+                                buttons={[
+                                    {
+                                        text: 'Actions',
+                                        items: INSTANCE_DROPDOWN_ITEMS,
+                                    },
+                                    { text: 'Edit' },
+                                    { text: 'Delete' },
+                                ]}
+                            />
+                        }
+                    >
+                        <SpaceBetween size="l">
+                            <GeneralConfig />
+                            <Tabs tabs={tabs} ariaLabel="Resource details" />
+                        </SpaceBetween>
+                    </ContentLayout>
+                }
+                headerSelector="#header"
+                breadcrumbs={<Breadcrumbs name={patient.name as string} />}
+                navigation={<Navigation activeHref="#/distributions" />}
+                tools={toolsIndex}
+                toolsOpen={toolsOpen}
+                onToolsChange={({ detail }) => setToolsOpen(detail.open)}
+                ariaLabels={appLayoutAriaLabels}
+                notifications={<Notifications />}
+            />
+        )
     );
 }
 

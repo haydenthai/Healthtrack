@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { v4 as uuid4 } from 'uuid';
 import styles from '../styles/styles.module.scss';
 import '../styles/base.scss';
@@ -41,6 +41,10 @@ import { API, Hub } from 'aws-amplify';
 import * as queries from '../graphql/queries';
 import { GraphQLQuery } from '@aws-amplify/api';
 import { ListPatientsQuery } from '../API';
+import { NavLink } from 'react-router-dom';
+import type { AmplifyUser } from '@aws-amplify/ui';
+import { UserContext } from './App';
+
 
 const getTextFilterCounterText = (count: number) =>
     `${count} ${count === 1 ? 'match' : 'matches'}`;
@@ -145,74 +149,56 @@ export function Navigation({
 }
 
 export const CARD_DEFINITIONS = {
-    header: (item: any) => (
+    header: (user: any) => (
         <div>
-            <Link fontSize="heading-m" href="#">
-                {item.name}
-                {/* {console.log('item:', item)} */}
+            <Link fontSize="heading-m" >
+                {/* edit this navlink to detailed curated patient view */}
+                <NavLink to={`/electronic-patient-record/${user.id}`}>
+                    {user.name}
+
+                </NavLink>
+                {/* {console.log('user:', user)} */}
             </Link>
         </div>
     ),
-    //
-    //{
-    //     "id": "2f0e4fc2-03ae-4510-9dca-85c4eab460ad",
-    //     "patientName": "Guy Leonard",
-    //     "telelphoneNumber": "69-69",
-    //     "insuranceCarrierID": "none",
-    //     "dateOfBirth": "2/28/2023",
-    //     "gender": "Male",
-    //     "primaryCarePhysician": "Amar",
-    //     "listCurrentMedications": "Anti-Covid medicine",
-    //     "listScheduledAppointments": "2/27",
-    //     "createdAt": "2023-02-28T21:58:57.012Z",
-    //     "updatedAt": "2023-02-28T21:58:57.012Z",
-    //     "_version": 1,
-    //     "_lastChangedAt": 1677621537045,
-    //     "_deleted": null
-    // }
     sections: [
-        // {
-        //     id: 'name',
-        //     header: 'Patient Name',
-        //     content: (item: { name: string }) => item.name,
-        // },
         {
             id: 'cell',
             header: 'Cellular Number',
-            content: (item: { cell: string }) => item.cell,
+            content: (user: { cell: string }) => user.cell,
         },
         {
             id: 'insuranceCarrierID',
             header: 'Insurance Carrier ID',
-            content: (item: { insuranceCarrierID: any }) =>
-                item.insuranceCarrierID,
+            content: (user: { insuranceCarrierID: any }) =>
+                user.insuranceCarrierID,
         },
         {
             id: 'dateOfBirth',
             header: 'Date of Birth',
-            content: (item: { dateOfBirth: any }) => item.dateOfBirth,
+            content: (user: { dateOfBirth: any }) => user.dateOfBirth,
         },
         {
             id: 'gender',
             header: 'Gender',
-            content: (item: { gender: string }) => item.gender,
+            content: (user: { gender: string }) => user.gender,
         },
         // {
         //     id: 'primaryCarePhysician',
         //     header: 'Primary Care Physician',
-        //     content: (item: { primaryCarePhysician: any }) =>
-        //         item.primaryCarePhysician,
+        //     content: (user: { primaryCarePhysician: any }) =>
+        //         user.primaryCarePhysician,
         // },
         {
             id: 'listCurrentMedications',
             header: 'List Current Medications',
-            content: (item: { listCurrentMedications: any }) =>
-                item.listCurrentMedications,
+            content: (user: { listCurrentMedications: any }) =>
+                user.listCurrentMedications,
         },
         {
             id: 'state',
             header: 'State',
-            content: (item: {
+            content: (user: {
                 state:
                     | string
                     | number
@@ -226,27 +212,16 @@ export const CARD_DEFINITIONS = {
                     | undefined;
             }) => (
                 <StatusIndicator
-                    type={item.state === 'Deactivated' ? 'error' : 'success'}
+                    type={user.state === 'Deactivated' ? 'error' : 'success'}
                 >
-                    {item.state}
+                    {user.state}
                 </StatusIndicator>
             ),
         },
         {
-            id: 'logging',
-            header: 'Logging',
-            content: (item: { logging: any }) => item.logging,
-        },
-        // {
-        //     id: 'listScheduledAppointments',
-        //     header: 'List Scheduled Appointments',
-        //     content: (item: { listScheduledAppointments: any }) =>
-        //         item.listScheduledAppointments,
-        // },
-        {
             id: 'telephonephoneNumber',
             header: 'Phone Number',
-            content: (item: { telephoneNumber: any }) => item.telephoneNumber,
+            content: (user: { telephoneNumber: string }) => user.telephoneNumber,
         },
     ],
 };
@@ -549,7 +524,7 @@ function DetailsCards({
             loading={loading}
             loadingText="Loading patients..."
             items={items}
-            selectionType="multi"
+            selectionType="single"
             variant="full-page"
             ariaLabels={distributionTableAriaLabels as any}
             header={
@@ -617,20 +592,16 @@ const CustomAppLayout = forwardRef<any, any>((props, ref) => {
     );
 });
 
-const resourcesBreadcrumbs = [
+const resourcesBreadcrumbs = (user:AmplifyUser) => [
     {
-        text: 'Nurse',
-        href: '/nurse',
-    },
-    {
-        text: 'Patients',
-        href: '/nurse/patients',
+        text: 'Electronic Patient Record',
+        href: '/electronic-patient-record',
     },
 ];
 
-export const Breadcrumbs = () => (
+export const Breadcrumbs = (user:any) => (
     <BreadcrumbGroup
-        items={resourcesBreadcrumbs}
+        items={resourcesBreadcrumbs(user)}
         expandAriaLabel="Show path"
         ariaLabel="Breadcrumbs"
     />
@@ -756,6 +727,7 @@ export function ElectronicPatientRecord(props: PatientProps) {
     const [successNotification, setSuccessNotification] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const appLayout = useRef<any>();
+    const user = useContext(UserContext);
 
     const handleCreatePatient = () => {
         setIsModalOpen(true);
@@ -776,7 +748,7 @@ export function ElectronicPatientRecord(props: PatientProps) {
             notifications={
                 <Notifications successNotification={successNotification} />
             }
-            breadcrumbs={<Breadcrumbs />}
+            breadcrumbs={<Breadcrumbs user={user}/>}
             content={
                 <>
                     <Modal
