@@ -442,7 +442,6 @@ function BehaviorsTable() {
 }
 
 const GeneralConfig = () => {
-    
     return (
         <Container header={<Header variant="h2">General configuration</Header>}>
             <ColumnLayout columns={4} variant="text-grid">
@@ -799,14 +798,12 @@ function PatientDetail() {
         const GetPatient = async () => {
             const patient = await DataStore.query(Patient, ID);
             setPatient(patient as Patient);
-            console.log(patient)
+            console.log(patient);
         };
-        
-        
-        GetPatient();
-        
-        return () => {
 
+        GetPatient();
+
+        return () => {
             setIsLoaded(true);
         };
     }, []);
@@ -864,40 +861,45 @@ function PatientDetail() {
     ];
 
     return (
-        isLoaded && (
-            <AppLayout
-                ref={appLayout}
-                content={
-                    <ContentLayout
-                        header={
-                            <PageHeader
-                                buttons={[
-                                    {
-                                        text: 'Actions',
-                                        items: INSTANCE_DROPDOWN_ITEMS,
-                                    },
-                                    { text: 'Edit' },
-                                    { text: 'Delete' },
-                                ]}
-                            />
-                        }
-                    >
-                        <SpaceBetween size="l">
-                            <GeneralConfig />
-                            <Tabs tabs={tabs} ariaLabel="Resource details" />
-                        </SpaceBetween>
-                    </ContentLayout>
-                }
-                headerSelector="#header"
-                breadcrumbs={<Breadcrumbs name={patient.name as string} />}
-                navigation={<Navigation activeHref="#/distributions" />}
-                tools={toolsIndex}
-                toolsOpen={toolsOpen}
-                onToolsChange={({ detail }) => setToolsOpen(detail.open)}
-                ariaLabels={appLayoutAriaLabels}
-                notifications={<Notifications />}
-            />
-        )
+        <>
+            {isLoaded && (
+                <AppLayout
+                    ref={appLayout}
+                    content={
+                        <ContentLayout
+                            header={
+                                <PageHeader
+                                    buttons={[
+                                        {
+                                            text: 'Actions',
+                                            items: INSTANCE_DROPDOWN_ITEMS,
+                                        },
+                                        { text: 'Edit' },
+                                        { text: 'Delete' },
+                                    ]}
+                                />
+                            }
+                        >
+                            <SpaceBetween size="l">
+                                <GeneralConfig />
+                                <Tabs
+                                    tabs={tabs}
+                                    ariaLabel="Resource details"
+                                />
+                            </SpaceBetween>
+                        </ContentLayout>
+                    }
+                    headerSelector="#header"
+                    breadcrumbs={<Breadcrumbs name={patient.name as string} />}
+                    navigation={<Navigation activeHref="#/distributions" />}
+                    tools={toolsIndex}
+                    toolsOpen={toolsOpen}
+                    onToolsChange={({ detail }) => setToolsOpen(detail.open)}
+                    ariaLabels={appLayoutAriaLabels}
+                    notifications={<Notifications />}
+                />
+            )}
+        </>
     );
 }
 

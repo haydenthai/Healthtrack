@@ -14,7 +14,6 @@ import { AppLayout, Container } from '@cloudscape-design/components';
 import { Patient } from '../models';
 import { DataStore } from 'aws-amplify';
 
-import DetailsView from './DetailedPatient';
 
 export interface AdminProps {
     user?: AmplifyUser;
@@ -31,7 +30,7 @@ function Admin({ user }: AdminProps) {
     function showView() {
         // show DetailsView
         return (<section>
-            <DetailsView />
+
         </section>);
     }
 

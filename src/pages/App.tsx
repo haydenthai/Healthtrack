@@ -17,6 +17,7 @@ import PhysicianScheduler from './PhysicianScheduler';
 import { createContext, useEffect, useState } from 'react';
 import PatientDetail from './DetailedPatient';
 
+
 export interface AppProps {}
 
 const components = {
