@@ -862,7 +862,7 @@ function PatientDetail() {
 
     return (
         <>
-            {isLoaded && (
+            { (
                 <AppLayout
                     ref={appLayout}
                     content={

@@ -1,7 +1,7 @@
 import React from 'react';
 import jsdom from 'jsdom';
 import { createRoot } from 'react-dom/client';
-import Scheduler from 'src/components/physician/Scheduler';
+import Scheduler from '../components/physician/Scheduler';
 
 const { JSDOM } = jsdom;
 const dom = new JSDOM('<!doctype html><html><body></body></html>');
