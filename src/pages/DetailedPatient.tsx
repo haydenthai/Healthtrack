@@ -799,12 +799,13 @@ function PatientDetail() {
             const patient = await DataStore.query(Patient, ID);
             setPatient(patient as Patient);
             console.log(patient);
+            setIsLoaded(true);
         };
 
         GetPatient();
 
         return () => {
-            setIsLoaded(true);
+            
         };
     }, []);
 
@@ -862,7 +863,7 @@ function PatientDetail() {
 
     return (
         <>
-            { (
+            {isLoaded && (
                 <AppLayout
                     ref={appLayout}
                     content={
