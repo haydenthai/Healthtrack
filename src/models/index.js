@@ -21,9 +21,10 @@ const InsuranceCarrierStatus = {
   "DIFFICULT_TO_GET_PAYMENTS": "DIFFICULT_TO_GET_PAYMENTS"
 };
 
-const { Vendor, EquipmentMaintenance, EquipmentOwned, EquipmentLeased, Equipment, LabTest, ServiceProvidedByClinic, WorkSchedule, Physician, Appointment, LabOrder, Prescription, VitalSign, MedicalEncounter, Medication, InsuranceCarrier, Patient, Day, Week } = initSchema(schema);
+const { Payments, Vendor, EquipmentMaintenance, EquipmentOwned, EquipmentLeased, Equipment, LabTest, ServiceProvidedByClinic, WorkSchedule, Physician, Appointment, LabOrder, Prescription, VitalSign, MedicalEncounter, Medication, InsuranceCarrier, Patient, PatientPayments, Day, Week } = initSchema(schema);
 
 export {
+  Payments,
   Vendor,
   EquipmentMaintenance,
   EquipmentOwned,
@@ -41,6 +42,7 @@ export {
   Medication,
   InsuranceCarrier,
   Patient,
+  PatientPayments,
   Practitioner,
   InsuranceCarrierStatus,
   Day,

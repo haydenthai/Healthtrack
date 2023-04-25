@@ -1,3 +1,12 @@
+type Payments @model @auth(rules: [{allow: private}]) {
+  id: ID!
+  amount: Float!
+  dayIssued: AWSDate!
+  dayFulfilled: AWSDate
+  isPaid: Boolean!
+  patients: [Patient] @manyToMany(relationName: "PatientPayments")
+}
+
 type Vendor @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
@@ -143,14 +152,13 @@ type MedicalEncounter @model @auth(rules: [{allow: public}]) {
   diagnosis: String!
   treatmentPlan: String
   referralToSpecialists: String
-  recommendedFollowUp: String
   patientID: ID! @index(name: "byPatient")
   VitalSign: VitalSign @hasOne
   Prescriptions: [Prescription] @hasMany(indexName: "byMedicalEncounter", fields: ["id"])
   LabOrders: [LabOrder] @hasMany(indexName: "byMedicalEncounter", fields: ["id"])
 }
 
-type Medication @model @auth(rules: [{allow: public}]) {
+type Medication @model @auth(rules: [{allow: public}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}]) {
   id: ID!
   name: String
   usage: String
@@ -171,7 +179,6 @@ type InsuranceCarrier @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   address: String
-  status: InsuranceCarrierStatus
 }
 
 type Patient @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}]) {
@@ -182,9 +189,11 @@ type Patient @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurs
   gender: String
   InsuranceCarrier: InsuranceCarrier @hasOne
   Medications: [Medication] @hasMany(indexName: "byPatient", fields: ["id"])
-  MedicalEncounters: [MedicalEncounter] @hasMany(indexName: "byPatient", fields: ["id"])
-  Appointments: [Appointment] @hasMany(indexName: "byPatient", fields: ["id"])
+  MedicalEncounters: [Medication] @hasMany(indexName: "byPatient", fields: ["id"])
+  Appointments: [Medication] @hasMany(indexName: "byPatient", fields: ["id"])
   Physician: Physician @hasOne
   cell: AWSPhone
+  Payments: [Payments] @manyToMany(relationName: "PatientPayments")
+  paymentStatus: InsuranceCarrierStatus
 }
  

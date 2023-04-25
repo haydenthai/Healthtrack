@@ -156,6 +156,15 @@ function Nav({ user, signOut }: NavigationProps) {
                         external: false,
                         externalIconAriaLabel: ' (opens Lab Order Tracking)',
                     },
+                    
+                    {
+                        type: 'button',
+                        text: 'Log Out',
+                        href: `/`,
+                        external: false,
+                        externalIconAriaLabel: 'Signs out of page',
+                        onClick: signOut,
+                    },
                     {
                         type: 'button',
                         iconName: 'notification',

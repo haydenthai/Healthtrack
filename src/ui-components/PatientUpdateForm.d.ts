@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { Patient } from "../models";
 export declare type ValidationResponse = {
@@ -19,6 +19,7 @@ export declare type PatientUpdateFormInputValues = {
     dateOfBirth?: string;
     gender?: string;
     cell?: string;
+    paymentStatus?: string;
 };
 export declare type PatientUpdateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -26,6 +27,7 @@ export declare type PatientUpdateFormValidationValues = {
     dateOfBirth?: ValidationFunction<string>;
     gender?: ValidationFunction<string>;
     cell?: ValidationFunction<string>;
+    paymentStatus?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type PatientUpdateFormOverridesProps = {
@@ -35,6 +37,7 @@ export declare type PatientUpdateFormOverridesProps = {
     dateOfBirth?: PrimitiveOverrideProps<TextFieldProps>;
     gender?: PrimitiveOverrideProps<TextFieldProps>;
     cell?: PrimitiveOverrideProps<TextFieldProps>;
+    paymentStatus?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type PatientUpdateFormProps = React.PropsWithChildren<{
     overrides?: PatientUpdateFormOverridesProps | undefined | null;

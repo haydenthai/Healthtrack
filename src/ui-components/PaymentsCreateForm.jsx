@@ -6,12 +6,18 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SwitchField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { InsuranceCarrier } from "../models";
+import { Payments } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
-export default function InsuranceCarrierCreateForm(props) {
+export default function PaymentsCreateForm(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
@@ -23,20 +29,30 @@ export default function InsuranceCarrierCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    name: "",
-    address: "",
+    amount: "",
+    dayIssued: "",
+    dayFulfilled: "",
+    isPaid: false,
   };
-  const [name, setName] = React.useState(initialValues.name);
-  const [address, setAddress] = React.useState(initialValues.address);
+  const [amount, setAmount] = React.useState(initialValues.amount);
+  const [dayIssued, setDayIssued] = React.useState(initialValues.dayIssued);
+  const [dayFulfilled, setDayFulfilled] = React.useState(
+    initialValues.dayFulfilled
+  );
+  const [isPaid, setIsPaid] = React.useState(initialValues.isPaid);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setName(initialValues.name);
-    setAddress(initialValues.address);
+    setAmount(initialValues.amount);
+    setDayIssued(initialValues.dayIssued);
+    setDayFulfilled(initialValues.dayFulfilled);
+    setIsPaid(initialValues.isPaid);
     setErrors({});
   };
   const validations = {
-    name: [{ type: "Required" }],
-    address: [],
+    amount: [{ type: "Required" }],
+    dayIssued: [{ type: "Required" }],
+    dayFulfilled: [],
+    isPaid: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -64,8 +80,10 @@ export default function InsuranceCarrierCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name,
-          address,
+          amount,
+          dayIssued,
+          dayFulfilled,
+          isPaid,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -95,7 +113,7 @@ export default function InsuranceCarrierCreateForm(props) {
               modelFields[key] = undefined;
             }
           });
-          await DataStore.save(new InsuranceCarrier(modelFields));
+          await DataStore.save(new Payments(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -108,59 +126,123 @@ export default function InsuranceCarrierCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "InsuranceCarrierCreateForm")}
+      {...getOverrideProps(overrides, "PaymentsCreateForm")}
       {...rest}
     >
       <TextField
-        label="Name"
+        label="Amount"
         isRequired={true}
         isReadOnly={false}
-        value={name}
+        type="number"
+        step="any"
+        value={amount}
         onChange={(e) => {
-          let { value } = e.target;
+          let value = isNaN(parseFloat(e.target.value))
+            ? e.target.value
+            : parseFloat(e.target.value);
           if (onChange) {
             const modelFields = {
-              name: value,
-              address,
+              amount: value,
+              dayIssued,
+              dayFulfilled,
+              isPaid,
             };
             const result = onChange(modelFields);
-            value = result?.name ?? value;
+            value = result?.amount ?? value;
           }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
+          if (errors.amount?.hasError) {
+            runValidationTasks("amount", value);
           }
-          setName(value);
+          setAmount(value);
         }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
+        onBlur={() => runValidationTasks("amount", amount)}
+        errorMessage={errors.amount?.errorMessage}
+        hasError={errors.amount?.hasError}
+        {...getOverrideProps(overrides, "amount")}
       ></TextField>
       <TextField
-        label="Address"
-        isRequired={false}
+        label="Day issued"
+        isRequired={true}
         isReadOnly={false}
-        value={address}
+        type="date"
+        value={dayIssued}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name,
-              address: value,
+              amount,
+              dayIssued: value,
+              dayFulfilled,
+              isPaid,
             };
             const result = onChange(modelFields);
-            value = result?.address ?? value;
+            value = result?.dayIssued ?? value;
           }
-          if (errors.address?.hasError) {
-            runValidationTasks("address", value);
+          if (errors.dayIssued?.hasError) {
+            runValidationTasks("dayIssued", value);
           }
-          setAddress(value);
+          setDayIssued(value);
         }}
-        onBlur={() => runValidationTasks("address", address)}
-        errorMessage={errors.address?.errorMessage}
-        hasError={errors.address?.hasError}
-        {...getOverrideProps(overrides, "address")}
+        onBlur={() => runValidationTasks("dayIssued", dayIssued)}
+        errorMessage={errors.dayIssued?.errorMessage}
+        hasError={errors.dayIssued?.hasError}
+        {...getOverrideProps(overrides, "dayIssued")}
       ></TextField>
+      <TextField
+        label="Day fulfilled"
+        isRequired={false}
+        isReadOnly={false}
+        type="date"
+        value={dayFulfilled}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              amount,
+              dayIssued,
+              dayFulfilled: value,
+              isPaid,
+            };
+            const result = onChange(modelFields);
+            value = result?.dayFulfilled ?? value;
+          }
+          if (errors.dayFulfilled?.hasError) {
+            runValidationTasks("dayFulfilled", value);
+          }
+          setDayFulfilled(value);
+        }}
+        onBlur={() => runValidationTasks("dayFulfilled", dayFulfilled)}
+        errorMessage={errors.dayFulfilled?.errorMessage}
+        hasError={errors.dayFulfilled?.hasError}
+        {...getOverrideProps(overrides, "dayFulfilled")}
+      ></TextField>
+      <SwitchField
+        label="Is paid"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isPaid}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              amount,
+              dayIssued,
+              dayFulfilled,
+              isPaid: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.isPaid ?? value;
+          }
+          if (errors.isPaid?.hasError) {
+            runValidationTasks("isPaid", value);
+          }
+          setIsPaid(value);
+        }}
+        onBlur={() => runValidationTasks("isPaid", isPaid)}
+        errorMessage={errors.isPaid?.errorMessage}
+        hasError={errors.isPaid?.hasError}
+        {...getOverrideProps(overrides, "isPaid")}
+      ></SwitchField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

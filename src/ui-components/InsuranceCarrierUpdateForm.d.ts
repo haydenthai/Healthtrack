@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { InsuranceCarrier } from "../models";
 export declare type ValidationResponse = {
@@ -16,19 +16,16 @@ export declare type ValidationFunction<T> = (value: T, validationResponse: Valid
 export declare type InsuranceCarrierUpdateFormInputValues = {
     name?: string;
     address?: string;
-    status?: string;
 };
 export declare type InsuranceCarrierUpdateFormValidationValues = {
     name?: ValidationFunction<string>;
     address?: ValidationFunction<string>;
-    status?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type InsuranceCarrierUpdateFormOverridesProps = {
     InsuranceCarrierUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
     name?: PrimitiveOverrideProps<TextFieldProps>;
     address?: PrimitiveOverrideProps<TextFieldProps>;
-    status?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type InsuranceCarrierUpdateFormProps = React.PropsWithChildren<{
     overrides?: InsuranceCarrierUpdateFormOverridesProps | undefined | null;

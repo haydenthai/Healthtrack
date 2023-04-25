@@ -51,6 +51,42 @@ export declare type Week = LazyLoading extends LazyLoadingDisabled ? EagerWeek :
 
 export declare const Week: (new (init: ModelInit<Week>) => Week)
 
+type EagerPayments = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Payments, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly amount: number;
+  readonly dayIssued: string;
+  readonly dayFulfilled?: string | null;
+  readonly isPaid: boolean;
+  readonly patients?: (PatientPayments | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyPayments = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Payments, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly amount: number;
+  readonly dayIssued: string;
+  readonly dayFulfilled?: string | null;
+  readonly isPaid: boolean;
+  readonly patients: AsyncCollection<PatientPayments>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Payments = LazyLoading extends LazyLoadingDisabled ? EagerPayments : LazyPayments
+
+export declare const Payments: (new (init: ModelInit<Payments>) => Payments) & {
+  copyOf(source: Payments, mutator: (draft: MutableModel<Payments>) => MutableModel<Payments> | void): Payments;
+}
+
 type EagerVendor = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Vendor, 'id'>;
@@ -533,7 +569,6 @@ type EagerMedicalEncounter = {
   readonly diagnosis: string;
   readonly treatmentPlan?: string | null;
   readonly referralToSpecialists?: string | null;
-  readonly recommendedFollowUp?: string | null;
   readonly patientID: string;
   readonly VitalSign?: VitalSign | null;
   readonly Prescriptions?: (Prescription | null)[] | null;
@@ -555,7 +590,6 @@ type LazyMedicalEncounter = {
   readonly diagnosis: string;
   readonly treatmentPlan?: string | null;
   readonly referralToSpecialists?: string | null;
-  readonly recommendedFollowUp?: string | null;
   readonly patientID: string;
   readonly VitalSign: AsyncItem<VitalSign | undefined>;
   readonly Prescriptions: AsyncCollection<Prescription>;
@@ -619,7 +653,6 @@ type EagerInsuranceCarrier = {
   readonly id: string;
   readonly name: string;
   readonly address?: string | null;
-  readonly status?: InsuranceCarrierStatus | keyof typeof InsuranceCarrierStatus | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -632,7 +665,6 @@ type LazyInsuranceCarrier = {
   readonly id: string;
   readonly name: string;
   readonly address?: string | null;
-  readonly status?: InsuranceCarrierStatus | keyof typeof InsuranceCarrierStatus | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -655,10 +687,12 @@ type EagerPatient = {
   readonly gender?: string | null;
   readonly InsuranceCarrier?: InsuranceCarrier | null;
   readonly Medications?: (Medication | null)[] | null;
-  readonly MedicalEncounters?: (MedicalEncounter | null)[] | null;
-  readonly Appointments?: (Appointment | null)[] | null;
+  readonly MedicalEncounters?: (Medication | null)[] | null;
+  readonly Appointments?: (Medication | null)[] | null;
   readonly Physician?: Physician | null;
   readonly cell?: string | null;
+  readonly Payments?: (PatientPayments | null)[] | null;
+  readonly paymentStatus?: InsuranceCarrierStatus | keyof typeof InsuranceCarrierStatus | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly patientInsuranceCarrierId?: string | null;
@@ -677,10 +711,12 @@ type LazyPatient = {
   readonly gender?: string | null;
   readonly InsuranceCarrier: AsyncItem<InsuranceCarrier | undefined>;
   readonly Medications: AsyncCollection<Medication>;
-  readonly MedicalEncounters: AsyncCollection<MedicalEncounter>;
-  readonly Appointments: AsyncCollection<Appointment>;
+  readonly MedicalEncounters: AsyncCollection<Medication>;
+  readonly Appointments: AsyncCollection<Medication>;
   readonly Physician: AsyncItem<Physician | undefined>;
   readonly cell?: string | null;
+  readonly Payments: AsyncCollection<PatientPayments>;
+  readonly paymentStatus?: InsuranceCarrierStatus | keyof typeof InsuranceCarrierStatus | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly patientInsuranceCarrierId?: string | null;
@@ -691,4 +727,38 @@ export declare type Patient = LazyLoading extends LazyLoadingDisabled ? EagerPat
 
 export declare const Patient: (new (init: ModelInit<Patient>) => Patient) & {
   copyOf(source: Patient, mutator: (draft: MutableModel<Patient>) => MutableModel<Patient> | void): Patient;
+}
+
+type EagerPatientPayments = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<PatientPayments, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly paymentsId?: string | null;
+  readonly patientId?: string | null;
+  readonly payments: Payments;
+  readonly patient: Patient;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyPatientPayments = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<PatientPayments, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly paymentsId?: string | null;
+  readonly patientId?: string | null;
+  readonly payments: AsyncItem<Payments>;
+  readonly patient: AsyncItem<Patient>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type PatientPayments = LazyLoading extends LazyLoadingDisabled ? EagerPatientPayments : LazyPatientPayments
+
+export declare const PatientPayments: (new (init: ModelInit<PatientPayments>) => PatientPayments) & {
+  copyOf(source: PatientPayments, mutator: (draft: MutableModel<PatientPayments>) => MutableModel<PatientPayments> | void): PatientPayments;
 }

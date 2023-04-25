@@ -6,21 +6,14 @@
 
 /* eslint-disable */
 import * as React from "react";
-import {
-  Button,
-  Flex,
-  Grid,
-  SelectField,
-  TextField,
-} from "@aws-amplify/ui-react";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Patient } from "../models";
+import { Medication } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
-export default function PatientUpdateForm(props) {
+export default function MedicationForm(props) {
   const {
-    id: idProp,
-    patient,
+    clearOnSuccess = true,
     onSuccess,
     onError,
     onSubmit,
@@ -31,51 +24,39 @@ export default function PatientUpdateForm(props) {
   } = props;
   const initialValues = {
     name: "",
-    address: "",
-    dateOfBirth: "",
-    gender: "",
-    cell: "",
-    paymentStatus: undefined,
+    usage: "",
+    dosage: "",
+    frequency: "",
+    sideEffects: "",
+    interactions: "",
   };
   const [name, setName] = React.useState(initialValues.name);
-  const [address, setAddress] = React.useState(initialValues.address);
-  const [dateOfBirth, setDateOfBirth] = React.useState(
-    initialValues.dateOfBirth
+  const [usage, setUsage] = React.useState(initialValues.usage);
+  const [dosage, setDosage] = React.useState(initialValues.dosage);
+  const [frequency, setFrequency] = React.useState(initialValues.frequency);
+  const [sideEffects, setSideEffects] = React.useState(
+    initialValues.sideEffects
   );
-  const [gender, setGender] = React.useState(initialValues.gender);
-  const [cell, setCell] = React.useState(initialValues.cell);
-  const [paymentStatus, setPaymentStatus] = React.useState(
-    initialValues.paymentStatus
+  const [interactions, setInteractions] = React.useState(
+    initialValues.interactions
   );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = patientRecord
-      ? { ...initialValues, ...patientRecord }
-      : initialValues;
-    setName(cleanValues.name);
-    setAddress(cleanValues.address);
-    setDateOfBirth(cleanValues.dateOfBirth);
-    setGender(cleanValues.gender);
-    setCell(cleanValues.cell);
-    setPaymentStatus(cleanValues.paymentStatus);
+    setName(initialValues.name);
+    setUsage(initialValues.usage);
+    setDosage(initialValues.dosage);
+    setFrequency(initialValues.frequency);
+    setSideEffects(initialValues.sideEffects);
+    setInteractions(initialValues.interactions);
     setErrors({});
   };
-  const [patientRecord, setPatientRecord] = React.useState(patient);
-  React.useEffect(() => {
-    const queryData = async () => {
-      const record = idProp ? await DataStore.query(Patient, idProp) : patient;
-      setPatientRecord(record);
-    };
-    queryData();
-  }, [idProp, patient]);
-  React.useEffect(resetStateValues, [patientRecord]);
   const validations = {
     name: [],
-    address: [],
-    dateOfBirth: [],
-    gender: [],
-    cell: [{ type: "Phone" }],
-    paymentStatus: [],
+    usage: [],
+    dosage: [],
+    frequency: [],
+    sideEffects: [],
+    interactions: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -104,11 +85,11 @@ export default function PatientUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           name,
-          address,
-          dateOfBirth,
-          gender,
-          cell,
-          paymentStatus,
+          usage,
+          dosage,
+          frequency,
+          sideEffects,
+          interactions,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -138,13 +119,12 @@ export default function PatientUpdateForm(props) {
               modelFields[key] = undefined;
             }
           });
-          await DataStore.save(
-            Patient.copyOf(patientRecord, (updated) => {
-              Object.assign(updated, modelFields);
-            })
-          );
+          await DataStore.save(new Medication(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
+          }
+          if (clearOnSuccess) {
+            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -152,7 +132,7 @@ export default function PatientUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "PatientUpdateForm")}
+      {...getOverrideProps(overrides, "MedicationForm")}
       {...rest}
     >
       <TextField
@@ -165,11 +145,11 @@ export default function PatientUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               name: value,
-              address,
-              dateOfBirth,
-              gender,
-              cell,
-              paymentStatus,
+              usage,
+              dosage,
+              frequency,
+              sideEffects,
+              interactions,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -185,181 +165,162 @@ export default function PatientUpdateForm(props) {
         {...getOverrideProps(overrides, "name")}
       ></TextField>
       <TextField
-        label="Address"
+        label="Usage"
         isRequired={false}
         isReadOnly={false}
-        value={address}
+        value={usage}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               name,
-              address: value,
-              dateOfBirth,
-              gender,
-              cell,
-              paymentStatus,
+              usage: value,
+              dosage,
+              frequency,
+              sideEffects,
+              interactions,
             };
             const result = onChange(modelFields);
-            value = result?.address ?? value;
+            value = result?.usage ?? value;
           }
-          if (errors.address?.hasError) {
-            runValidationTasks("address", value);
+          if (errors.usage?.hasError) {
+            runValidationTasks("usage", value);
           }
-          setAddress(value);
+          setUsage(value);
         }}
-        onBlur={() => runValidationTasks("address", address)}
-        errorMessage={errors.address?.errorMessage}
-        hasError={errors.address?.hasError}
-        {...getOverrideProps(overrides, "address")}
+        onBlur={() => runValidationTasks("usage", usage)}
+        errorMessage={errors.usage?.errorMessage}
+        hasError={errors.usage?.hasError}
+        {...getOverrideProps(overrides, "usage")}
       ></TextField>
       <TextField
-        label="Date of birth"
+        label="Dosage"
         isRequired={false}
         isReadOnly={false}
-        type="date"
-        value={dateOfBirth}
+        value={dosage}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               name,
-              address,
-              dateOfBirth: value,
-              gender,
-              cell,
-              paymentStatus,
+              usage,
+              dosage: value,
+              frequency,
+              sideEffects,
+              interactions,
             };
             const result = onChange(modelFields);
-            value = result?.dateOfBirth ?? value;
+            value = result?.dosage ?? value;
           }
-          if (errors.dateOfBirth?.hasError) {
-            runValidationTasks("dateOfBirth", value);
+          if (errors.dosage?.hasError) {
+            runValidationTasks("dosage", value);
           }
-          setDateOfBirth(value);
+          setDosage(value);
         }}
-        onBlur={() => runValidationTasks("dateOfBirth", dateOfBirth)}
-        errorMessage={errors.dateOfBirth?.errorMessage}
-        hasError={errors.dateOfBirth?.hasError}
-        {...getOverrideProps(overrides, "dateOfBirth")}
+        onBlur={() => runValidationTasks("dosage", dosage)}
+        errorMessage={errors.dosage?.errorMessage}
+        hasError={errors.dosage?.hasError}
+        {...getOverrideProps(overrides, "dosage")}
       ></TextField>
       <TextField
-        label="Gender"
+        label="Frequency"
         isRequired={false}
         isReadOnly={false}
-        value={gender}
+        value={frequency}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               name,
-              address,
-              dateOfBirth,
-              gender: value,
-              cell,
-              paymentStatus,
+              usage,
+              dosage,
+              frequency: value,
+              sideEffects,
+              interactions,
             };
             const result = onChange(modelFields);
-            value = result?.gender ?? value;
+            value = result?.frequency ?? value;
           }
-          if (errors.gender?.hasError) {
-            runValidationTasks("gender", value);
+          if (errors.frequency?.hasError) {
+            runValidationTasks("frequency", value);
           }
-          setGender(value);
+          setFrequency(value);
         }}
-        onBlur={() => runValidationTasks("gender", gender)}
-        errorMessage={errors.gender?.errorMessage}
-        hasError={errors.gender?.hasError}
-        {...getOverrideProps(overrides, "gender")}
+        onBlur={() => runValidationTasks("frequency", frequency)}
+        errorMessage={errors.frequency?.errorMessage}
+        hasError={errors.frequency?.hasError}
+        {...getOverrideProps(overrides, "frequency")}
       ></TextField>
       <TextField
-        label="Cell"
+        label="Side effects"
         isRequired={false}
         isReadOnly={false}
-        type="tel"
-        value={cell}
+        value={sideEffects}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               name,
-              address,
-              dateOfBirth,
-              gender,
-              cell: value,
-              paymentStatus,
+              usage,
+              dosage,
+              frequency,
+              sideEffects: value,
+              interactions,
             };
             const result = onChange(modelFields);
-            value = result?.cell ?? value;
+            value = result?.sideEffects ?? value;
           }
-          if (errors.cell?.hasError) {
-            runValidationTasks("cell", value);
+          if (errors.sideEffects?.hasError) {
+            runValidationTasks("sideEffects", value);
           }
-          setCell(value);
+          setSideEffects(value);
         }}
-        onBlur={() => runValidationTasks("cell", cell)}
-        errorMessage={errors.cell?.errorMessage}
-        hasError={errors.cell?.hasError}
-        {...getOverrideProps(overrides, "cell")}
+        onBlur={() => runValidationTasks("sideEffects", sideEffects)}
+        errorMessage={errors.sideEffects?.errorMessage}
+        hasError={errors.sideEffects?.hasError}
+        {...getOverrideProps(overrides, "sideEffects")}
       ></TextField>
-      <SelectField
-        label="Payment status"
-        placeholder="Please select an option"
-        isDisabled={false}
-        value={paymentStatus}
+      <TextField
+        label="Interactions"
+        isRequired={false}
+        isReadOnly={false}
+        value={interactions}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               name,
-              address,
-              dateOfBirth,
-              gender,
-              cell,
-              paymentStatus: value,
+              usage,
+              dosage,
+              frequency,
+              sideEffects,
+              interactions: value,
             };
             const result = onChange(modelFields);
-            value = result?.paymentStatus ?? value;
+            value = result?.interactions ?? value;
           }
-          if (errors.paymentStatus?.hasError) {
-            runValidationTasks("paymentStatus", value);
+          if (errors.interactions?.hasError) {
+            runValidationTasks("interactions", value);
           }
-          setPaymentStatus(value);
+          setInteractions(value);
         }}
-        onBlur={() => runValidationTasks("paymentStatus", paymentStatus)}
-        errorMessage={errors.paymentStatus?.errorMessage}
-        hasError={errors.paymentStatus?.hasError}
-        {...getOverrideProps(overrides, "paymentStatus")}
-      >
-        <option
-          children="Pays on time"
-          value="PAYS_ON_TIME"
-          {...getOverrideProps(overrides, "paymentStatusoption0")}
-        ></option>
-        <option
-          children="Late with payments"
-          value="LATE_WITH_PAYMENTS"
-          {...getOverrideProps(overrides, "paymentStatusoption1")}
-        ></option>
-        <option
-          children="Difficult to get payments"
-          value="DIFFICULT_TO_GET_PAYMENTS"
-          {...getOverrideProps(overrides, "paymentStatusoption2")}
-        ></option>
-      </SelectField>
+        onBlur={() => runValidationTasks("interactions", interactions)}
+        errorMessage={errors.interactions?.errorMessage}
+        hasError={errors.interactions?.hasError}
+        {...getOverrideProps(overrides, "interactions")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Reset"
+          children="Clear"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || patient)}
-          {...getOverrideProps(overrides, "ResetButton")}
+          {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -369,10 +330,7 @@ export default function PatientUpdateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || patient) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

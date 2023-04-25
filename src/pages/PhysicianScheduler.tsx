@@ -1,4 +1,5 @@
-import { Flex, Icon, useAuthenticator, View } from '@aws-amplify/ui-react';
+import { Flex, useAuthenticator, View } from '@aws-amplify/ui-react';
+
 import React, { useEffect, useState } from 'react';
 import * as AmpUI from '@aws-amplify/ui-react';
 import { calendar } from '../util/schedulerMockData';
@@ -14,7 +15,9 @@ import {
     CancelableEventHandler,
     ClickDetail,
 } from '@cloudscape-design/components/internal/events';
-import { AppLayout, Button, Container } from '@cloudscape-design/components';
+import { AppLayout, Button, Container, Icon } from '@cloudscape-design/components';
+import { Physician } from '../models';
+import { DataStore, Hub } from 'aws-amplify';
 
 export interface PhysicianProps {
     user?: AmplifyUser;
@@ -30,6 +33,7 @@ function PhysicianScheduler({ user }: PhysicianProps) {
         new Date(getCurrentMonday()).getDate()
     );
     const [weekCounter, setWeekCounter] = useState(0);
+    const [physicians,  setPhysicians] = useState<any[]>([]);
 
     function handleShiftWeekLeft():
         | CancelableEventHandler<ClickDetail>
@@ -452,10 +456,34 @@ function PhysicianScheduler({ user }: PhysicianProps) {
         }
     }
     useEffect(() => {
-        console.log(
-            `UE month: ${month} day: ${day} year: ${year} weekCounter: ${weekCounter}`
-        );
+        // console.log(
+        //     `UE month: ${month} day: ${day} year: ${year} weekCounter: ${weekCounter}`
+        // );
     }, [day, month, year, weekCounter]);
+
+    useEffect(() => {
+        const removeListener = Hub.listen('datastore', async (capsule) => {
+            const {
+                payload: { event, data },
+            } = capsule;
+
+            if (event === 'ready') {
+               const physicians = await DataStore.query(Physician)
+               setPhysicians(physicians)
+                console.log(physicians)
+            }
+        });
+        DataStore.start();
+    
+        // setTimeout(async ()=>{
+        //     console.log(await DataStore.query(Physician, '6d7051de-bb75-47d0-8854-54333f26531e'))
+        // }, 5000)
+
+
+        return () => {
+            removeListener();
+        };
+    },[])
 
     return (
         <AppLayout
@@ -469,8 +497,6 @@ function PhysicianScheduler({ user }: PhysicianProps) {
             }
             content={
                 <>
-                    <Button onClick={signOut}>Sign Out</Button>
-
                     <AmpUI.Flex
                         direction="row"
                         justifyContent="space-between"

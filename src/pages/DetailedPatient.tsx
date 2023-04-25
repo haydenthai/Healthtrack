@@ -29,11 +29,13 @@ import * as React from 'react';
 import Link, { LinkProps } from '@cloudscape-design/components/link';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import styles from '../styles/styles.module.scss';
-import { Patient } from '../models';
+import { InsuranceCarrier, Patient } from '../models';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import { TableEmptyState, TableNoMatchState } from './ElectronicPatientRecord';
 import type { AmplifyUser } from '@aws-amplify/ui';
 import { UserContext } from './App';
+import { Divider } from '@aws-amplify/ui-react';
+import MedicationsInfo from '../components/patient/MedicationsInfo';
 
 interface InfoLinkProps {
     id?: string;
@@ -47,7 +49,7 @@ const InfoLink = ({ id, onFollow, ariaLabel }: InfoLinkProps) => (
 );
 
 export interface PatientDetailProps {}
-const PageHeader = ({ buttons }: any) => {
+const PageHeader = ({ buttons, patient }: any) => {
     return (
         <Header
             variant="h1"
@@ -59,6 +61,7 @@ const PageHeader = ({ buttons }: any) => {
                                 href={button.href || ''}
                                 disabled={button.disabled || false}
                                 key={key}
+                                onClick={button.onClick}
                             >
                                 {button.text}
                             </Button>
@@ -71,12 +74,12 @@ const PageHeader = ({ buttons }: any) => {
                 </SpaceBetween>
             }
         >
-            {DEMO_DISTRIBUTION.id}
+            {/* {patient.name} */}
         </Header>
     );
 };
 
-const DistSettings = ({ loadHelpPanelContent, isInProgress }: any) => (
+const DistSettings = ({ patient, loadHelpPanelContent, isInProgress }: any) => (
     <Container
         header={
             <Header
@@ -92,7 +95,7 @@ const DistSettings = ({ loadHelpPanelContent, isInProgress }: any) => (
             </Header>
         }
     >
-        <SettingsDetails isInProgress={isInProgress} />
+        <SettingsDetails patient={patient} isInProgress={isInProgress} />
     </Container>
 );
 
@@ -169,23 +172,26 @@ function CopyText({
 }
 
 const SettingsDetails = ({
-    distribution = DEMO_DISTRIBUTION,
+    patient,
     isInProgress,
-}: any) => (
+}: {
+    patient: Patient;
+    isInProgress: any;
+}) => (
     <ColumnLayout columns={4} variant="text-grid">
         <SpaceBetween size="l">
             <div>
-                <Box variant="awsui-key-label">Distribution ID</Box>
-                <div>{distribution.id}</div>
+                <Box variant="awsui-key-label">Patient Name</Box>
+                {/* <div>{patient.name}</div> */}
             </div>
             <div>
                 <Box variant="awsui-key-label">Domain name</Box>
-                <div>{distribution.domainName}</div>
+                {/* <div>{patient.address}</div> */}
             </div>
             <div>
                 <Box variant="awsui-key-label">ARN</Box>
                 <CopyText
-                    copyText={`arn:aws:cloudfront::${distribution.domainName}/${distribution.id}`}
+                    copyText={`arn:aws:cloudfront::${``}/${``}`}
                     copyButtonLabel="Copy ARN"
                     successText="ARN copied"
                     errorText="ARN failed to copy"
@@ -194,42 +200,9 @@ const SettingsDetails = ({
         </SpaceBetween>
 
         <SpaceBetween size="l">
-            {distribution.state ? (
-                <StatusIndicator
-                    type={
-                        distribution.state === 'Deactivated'
-                            ? 'error'
-                            : 'success'
-                    }
-                >
-                    {distribution.state}
-                </StatusIndicator>
-            ) : (
-                <ProgressBar
-                    value={27}
-                    label="Status"
-                    description={
-                        isInProgress ? 'Update in progress' : undefined
-                    }
-                    variant="key-value"
-                    resultText="Available"
-                    status={isInProgress ? 'in-progress' : 'success'}
-                />
-            )}
-
-            <div>
-                <Box variant="awsui-key-label">Price class</Box>
-                <div>{distribution.priceClass}</div>
-            </div>
-            <div>
-                <Box variant="awsui-key-label">CNAMEs</Box>
-                <div>-</div>
-            </div>
-        </SpaceBetween>
-        <SpaceBetween size="l">
             <div>
                 <Box variant="awsui-key-label">SSL certificate</Box>
-                <div>{distribution.sslCertificate}</div>
+                {/* <div>{patient.insurance}</div> */}
             </div>
             <div>
                 <Box variant="awsui-key-label">Custom SSL client support</Box>
@@ -237,7 +210,7 @@ const SettingsDetails = ({
             </div>
             <div>
                 <Box variant="awsui-key-label">Logging</Box>
-                <div>{distribution.logging}</div>
+                {/* <div>{patient.logging}</div> */}
             </div>
         </SpaceBetween>
         <SpaceBetween size="l">
@@ -441,25 +414,41 @@ function BehaviorsTable() {
     );
 }
 
-const GeneralConfig = () => {
+const GeneralConfig = ({ patient }: { patient: Patient }) => {
     return (
-        <Container header={<Header variant="h2">General configuration</Header>}>
+        <Container header={<Header variant="h2">{patient.name}</Header>}>
             <ColumnLayout columns={4} variant="text-grid">
                 <div>
-                    <Box variant="awsui-key-label">Insurance Carrier</Box>
-                    <div>Oracle Enterprise Edition 12.1.0.2.v7</div>
+                    <Box variant="awsui-key-label">Address</Box>
+                    <div>{patient.address}</div>
                 </div>
                 <div>
-                    <Box variant="awsui-key-label">DB instance class</Box>
-                    <div>db.t2.large</div>
+                    <Box variant="awsui-key-label">Date Of Birth</Box>
+                    <div>{patient.dateOfBirth}</div>
                 </div>
                 <div>
-                    <Box variant="awsui-key-label">DB instance status</Box>
-                    <StatusIndicator type="success">Available</StatusIndicator>
+                    <Box variant="awsui-key-label">Gender</Box>
+                    <div>{patient.gender}</div>
                 </div>
                 <div>
-                    <Box variant="awsui-key-label">Pending maintenance</Box>
-                    <div>None</div>
+                    <Box variant="awsui-key-label">Payment Status</Box>
+                    <StatusIndicator
+                        type={
+                            patient.paymentStatus === 'PAYS_ON_TIME'
+                                ? 'success'
+                                : patient.paymentStatus ===
+                                  'DIFFICULT_TO_GET_PAYMENTS'
+                                ? 'in-progress'
+                                : 'error'
+                        }
+                    >
+                        {patient.paymentStatus === 'PAYS_ON_TIME'
+                            ? 'Pays on time'
+                            : patient.paymentStatus ===
+                              'DIFFICULT_TO_GET_PAYMENTS'
+                            ? 'Difficult to get payment'
+                            : 'Late on payment'}
+                    </StatusIndicator>
                 </div>
             </ColumnLayout>
         </Container>
@@ -469,7 +458,7 @@ const GeneralConfig = () => {
 const resourcesBreadcrumbs = (name: string) => [
     {
         text: 'Electronic Patient Record',
-        href: '/electronic-patient-record',
+        href: `/electronic-patient-record`,
     },
     {
         text: name,
@@ -485,7 +474,7 @@ export const Breadcrumbs = ({ name }: { name: string }) => (
     />
 );
 
-const Details = ({ loadHelpPanelContent }: any) => (
+const Details = ({ loadHelpPanelContent, patient }: any) => (
     <Container
         header={
             <Header
@@ -502,7 +491,7 @@ const Details = ({ loadHelpPanelContent }: any) => (
             </Header>
         }
     >
-        <SettingsDetails isInProgress={true} />
+        <SettingsDetails patient={patient} isInProgress={true} />
     </Container>
 );
 
@@ -791,6 +780,7 @@ function PatientDetail() {
     const user = useContext(UserContext);
     const [patient, setPatient] = useState<Patient>({} as Patient);
     const patientID = window.location.href.split('/');
+    const [insuranceProvider, setInsuranceProvider] = useState<any>(null);
     const [isLoaded, setIsLoaded] = useState(false);
     let ID = patientID[patientID.length - 1];
 
@@ -798,15 +788,18 @@ function PatientDetail() {
         const GetPatient = async () => {
             const patient = await DataStore.query(Patient, ID);
             setPatient(patient as Patient);
-            console.log(patient);
+            console.log(patient?.InsuranceCarrier);
             setIsLoaded(true);
         };
 
-        GetPatient();
-
-        return () => {
-            
+        const GetInsurance = async () => {
+            const insurance = patient.InsuranceCarrier;
+            // console.log(insurance)
         };
+
+        GetPatient().then(() => GetInsurance());
+
+        return () => {};
     }, []);
 
     function loadHelpPanelContent(index: React.SetStateAction<number>) {
@@ -816,6 +809,16 @@ function PatientDetail() {
     }
 
     const tabs = [
+        {
+            label: 'Medications',
+            id: 'medications',
+            content: (
+                <MedicationsInfo
+                    patient={patient}
+                    loadHelpPanelContent={loadHelpPanelContent}
+                />
+            ),
+        },
         {
             label: 'Details',
             id: 'details',
@@ -856,13 +859,14 @@ function PatientDetail() {
     };
 
     const INSTANCE_DROPDOWN_ITEMS = [
-        { text: 'Refresh' },
+        { text: 'Refresh', onClick: () => alert('refresh') },
         { text: 'Advanced' },
         { text: 'Delete' },
     ];
 
     return (
         <>
+            {/* <Button onClick={CreateInsurance}>Create Insurance</Button> */}
             {isLoaded && (
                 <AppLayout
                     ref={appLayout}
@@ -878,11 +882,12 @@ function PatientDetail() {
                                         { text: 'Edit' },
                                         { text: 'Delete' },
                                     ]}
+                                    patient={patient}
                                 />
                             }
                         >
                             <SpaceBetween size="l">
-                                <GeneralConfig />
+                                <GeneralConfig patient={patient} />
                                 <Tabs
                                     tabs={tabs}
                                     ariaLabel="Resource details"

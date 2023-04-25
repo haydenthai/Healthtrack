@@ -1,5 +1,101 @@
 export const schema = {
     "models": {
+        "Payments": {
+            "name": "Payments",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "amount": {
+                    "name": "amount",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "dayIssued": {
+                    "name": "dayIssued",
+                    "isArray": false,
+                    "type": "AWSDate",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "dayFulfilled": {
+                    "name": "dayFulfilled",
+                    "isArray": false,
+                    "type": "AWSDate",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isPaid": {
+                    "name": "isPaid",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "patients": {
+                    "name": "patients",
+                    "isArray": true,
+                    "type": {
+                        "model": "PatientPayments"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "payments"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Payments",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "private",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Vendor": {
             "name": "Vendor",
             "fields": {
@@ -1368,13 +1464,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "recommendedFollowUp": {
-                    "name": "recommendedFollowUp",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "patientID": {
                     "name": "patientID",
                     "isArray": false,
@@ -1594,6 +1683,76 @@ export const schema = {
                                     "delete",
                                     "read"
                                 ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "Nurse"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "Pharmacist"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "Physician"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "PhysicianAssistant"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "LabTechnician"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
                             }
                         ]
                     }
@@ -1621,15 +1780,6 @@ export const schema = {
                     "name": "address",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "status": {
-                    "name": "status",
-                    "isArray": false,
-                    "type": {
-                        "enum": "InsuranceCarrierStatus"
-                    },
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1751,7 +1901,7 @@ export const schema = {
                     "name": "MedicalEncounters",
                     "isArray": true,
                     "type": {
-                        "model": "MedicalEncounter"
+                        "model": "Medication"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -1767,7 +1917,7 @@ export const schema = {
                     "name": "Appointments",
                     "isArray": true,
                     "type": {
-                        "model": "Appointment"
+                        "model": "Medication"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -1801,6 +1951,31 @@ export const schema = {
                     "name": "cell",
                     "isArray": false,
                     "type": "AWSPhone",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "Payments": {
+                    "name": "Payments",
+                    "isArray": true,
+                    "type": {
+                        "model": "PatientPayments"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "patient"
+                        ]
+                    }
+                },
+                "paymentStatus": {
+                    "name": "paymentStatus",
+                    "isArray": false,
+                    "type": {
+                        "enum": "InsuranceCarrierStatus"
+                    },
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1872,6 +2047,104 @@ export const schema = {
                                     "delete"
                                 ]
                             }
+                        ]
+                    }
+                }
+            ]
+        },
+        "PatientPayments": {
+            "name": "PatientPayments",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "paymentsId": {
+                    "name": "paymentsId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "patientId": {
+                    "name": "patientId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "payments": {
+                    "name": "payments",
+                    "isArray": false,
+                    "type": {
+                        "model": "Payments"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "paymentsId"
+                        ]
+                    }
+                },
+                "patient": {
+                    "name": "patient",
+                    "isArray": false,
+                    "type": {
+                        "model": "Patient"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "patientId"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "PatientPayments",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byPayments",
+                        "fields": [
+                            "paymentsId"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byPatient",
+                        "fields": [
+                            "patientId"
                         ]
                     }
                 }
@@ -1954,5 +2227,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.3.6",
-    "version": "1d851ba46739793c3f1096224bfb6692"
+    "version": "6228ff1df8a4ecb9fc64e9269eb03e64"
 };

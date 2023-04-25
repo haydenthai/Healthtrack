@@ -506,6 +506,7 @@ function DetailsCards({
                     setPatients(patients);
                     setLoading(false);
                 });
+                console.log(patients)
             }
         });
         DataStore.start();
@@ -723,6 +724,7 @@ type handleCreatePatientSubmitType = (
 ) => Promise<PatientCreateFormInputValues>;
 
 export function ElectronicPatientRecord(props: PatientProps) {
+
     const [toolsOpen, setToolsOpen] = useState(false);
     const [successNotification, setSuccessNotification] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);

@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SelectField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Patient } from "../models";
 import { fetchByPath, validateField } from "./utils";
@@ -28,6 +34,7 @@ export default function PatientCreateForm(props) {
     dateOfBirth: "",
     gender: "",
     cell: "",
+    paymentStatus: undefined,
   };
   const [name, setName] = React.useState(initialValues.name);
   const [address, setAddress] = React.useState(initialValues.address);
@@ -36,6 +43,9 @@ export default function PatientCreateForm(props) {
   );
   const [gender, setGender] = React.useState(initialValues.gender);
   const [cell, setCell] = React.useState(initialValues.cell);
+  const [paymentStatus, setPaymentStatus] = React.useState(
+    initialValues.paymentStatus
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
@@ -43,6 +53,7 @@ export default function PatientCreateForm(props) {
     setDateOfBirth(initialValues.dateOfBirth);
     setGender(initialValues.gender);
     setCell(initialValues.cell);
+    setPaymentStatus(initialValues.paymentStatus);
     setErrors({});
   };
   const validations = {
@@ -51,6 +62,7 @@ export default function PatientCreateForm(props) {
     dateOfBirth: [],
     gender: [],
     cell: [{ type: "Phone" }],
+    paymentStatus: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -83,6 +95,7 @@ export default function PatientCreateForm(props) {
           dateOfBirth,
           gender,
           cell,
+          paymentStatus,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -142,6 +155,7 @@ export default function PatientCreateForm(props) {
               dateOfBirth,
               gender,
               cell,
+              paymentStatus,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -170,6 +184,7 @@ export default function PatientCreateForm(props) {
               dateOfBirth,
               gender,
               cell,
+              paymentStatus,
             };
             const result = onChange(modelFields);
             value = result?.address ?? value;
@@ -199,6 +214,7 @@ export default function PatientCreateForm(props) {
               dateOfBirth: value,
               gender,
               cell,
+              paymentStatus,
             };
             const result = onChange(modelFields);
             value = result?.dateOfBirth ?? value;
@@ -227,6 +243,7 @@ export default function PatientCreateForm(props) {
               dateOfBirth,
               gender: value,
               cell,
+              paymentStatus,
             };
             const result = onChange(modelFields);
             value = result?.gender ?? value;
@@ -256,6 +273,7 @@ export default function PatientCreateForm(props) {
               dateOfBirth,
               gender,
               cell: value,
+              paymentStatus,
             };
             const result = onChange(modelFields);
             value = result?.cell ?? value;
@@ -270,6 +288,51 @@ export default function PatientCreateForm(props) {
         hasError={errors.cell?.hasError}
         {...getOverrideProps(overrides, "cell")}
       ></TextField>
+      <SelectField
+        label="Payment status"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={paymentStatus}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              address,
+              dateOfBirth,
+              gender,
+              cell,
+              paymentStatus: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.paymentStatus ?? value;
+          }
+          if (errors.paymentStatus?.hasError) {
+            runValidationTasks("paymentStatus", value);
+          }
+          setPaymentStatus(value);
+        }}
+        onBlur={() => runValidationTasks("paymentStatus", paymentStatus)}
+        errorMessage={errors.paymentStatus?.errorMessage}
+        hasError={errors.paymentStatus?.hasError}
+        {...getOverrideProps(overrides, "paymentStatus")}
+      >
+        <option
+          children="Pays on time"
+          value="PAYS_ON_TIME"
+          {...getOverrideProps(overrides, "paymentStatusoption0")}
+        ></option>
+        <option
+          children="Late with payments"
+          value="LATE_WITH_PAYMENTS"
+          {...getOverrideProps(overrides, "paymentStatusoption1")}
+        ></option>
+        <option
+          children="Difficult to get payments"
+          value="DIFFICULT_TO_GET_PAYMENTS"
+          {...getOverrideProps(overrides, "paymentStatusoption2")}
+        ></option>
+      </SelectField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
