@@ -98,7 +98,7 @@ interface NavigationProps {
     onFollowHandler?: SideNavigationProps['onFollow'];
 }
 
-const navHeader = { text: 'Service', href: '#/' };
+const navHeader = { text: 'Service', href: '/' };
 export const navItems: SideNavigationProps['items'] = [
     {
         type: 'section',
@@ -129,7 +129,8 @@ export const navItems: SideNavigationProps['items'] = [
 
 const defaultOnFollowHandler: SideNavigationProps['onFollow'] = (event) => {
     // keep the locked href for our demo pages
-    event.preventDefault();
+    // event.preventDefault();
+
 };
 
 export function Navigation({

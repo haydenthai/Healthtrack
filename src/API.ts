@@ -2,30 +2,50 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreatePatientInput = {
+export type CreatePaymentsInput = {
   id?: string | null,
-  user: string,
-  address?: string | null,
-  dateOfBirth?: string | null,
-  gender?: string | null,
-  cell?: string | null,
+  amount: number,
+  dayIssued: string,
+  dayFulfilled?: string | null,
+  isPaid: boolean,
   _version?: number | null,
-  patientInsuranceCarrierId?: string | null,
-  patientPhysicianId?: string | null,
 };
 
-export type ModelPatientConditionInput = {
-  user?: ModelStringInput | null,
-  address?: ModelStringInput | null,
-  dateOfBirth?: ModelStringInput | null,
-  gender?: ModelStringInput | null,
-  cell?: ModelStringInput | null,
-  and?: Array< ModelPatientConditionInput | null > | null,
-  or?: Array< ModelPatientConditionInput | null > | null,
-  not?: ModelPatientConditionInput | null,
-  patientInsuranceCarrierId?: ModelIDInput | null,
-  patientPhysicianId?: ModelIDInput | null,
+export type ModelPaymentsConditionInput = {
+  amount?: ModelFloatInput | null,
+  dayIssued?: ModelStringInput | null,
+  dayFulfilled?: ModelStringInput | null,
+  isPaid?: ModelBooleanInput | null,
+  and?: Array< ModelPaymentsConditionInput | null > | null,
+  or?: Array< ModelPaymentsConditionInput | null > | null,
+  not?: ModelPaymentsConditionInput | null,
 };
+
+export type ModelFloatInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export enum ModelAttributeTypes {
+  binary = "binary",
+  binarySet = "binarySet",
+  bool = "bool",
+  list = "list",
+  map = "map",
+  number = "number",
+  numberSet = "numberSet",
+  string = "string",
+  stringSet = "stringSet",
+  _null = "_null",
+}
+
 
 export type ModelStringInput = {
   ne?: string | null,
@@ -43,20 +63,6 @@ export type ModelStringInput = {
   size?: ModelSizeInput | null,
 };
 
-export enum ModelAttributeTypes {
-  binary = "binary",
-  binarySet = "binarySet",
-  bool = "bool",
-  list = "list",
-  map = "map",
-  number = "number",
-  numberSet = "numberSet",
-  string = "string",
-  stringSet = "stringSet",
-  _null = "_null",
-}
-
-
 export type ModelSizeInput = {
   ne?: number | null,
   eq?: number | null,
@@ -67,26 +73,55 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
+};
+
+export type Payments = {
+  __typename: "Payments",
+  id: string,
+  amount: number,
+  dayIssued: string,
+  dayFulfilled?: string | null,
+  isPaid: boolean,
+  patients?: ModelPatientPaymentsConnection | null,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+  owner?: string | null,
+};
+
+export type ModelPatientPaymentsConnection = {
+  __typename: "ModelPatientPaymentsConnection",
+  items:  Array<PatientPayments | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
+export type PatientPayments = {
+  __typename: "PatientPayments",
+  id: string,
+  paymentsId: string,
+  patientId: string,
+  payments: Payments,
+  patient: Patient,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+  owner?: string | null,
 };
 
 export type Patient = {
   __typename: "Patient",
   id: string,
-  user: string,
+  name?: string | null,
   address?: string | null,
   dateOfBirth?: string | null,
   gender?: string | null,
@@ -96,6 +131,8 @@ export type Patient = {
   Appointments?: ModelAppointmentConnection | null,
   Physician?: Physician | null,
   cell?: string | null,
+  Payments?: ModelPatientPaymentsConnection | null,
+  paymentStatus?: InsuranceCarrierStatus | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -111,20 +148,13 @@ export type InsuranceCarrier = {
   id: string,
   name: string,
   address?: string | null,
-  status?: InsuranceCarrierStatus | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
+  owner?: string | null,
 };
-
-export enum InsuranceCarrierStatus {
-  PAYS_ON_TIME = "PAYS_ON_TIME",
-  LATE_WITH_PAYMENTS = "LATE_WITH_PAYMENTS",
-  DIFFICULT_TO_GET_PAYMENTS = "DIFFICULT_TO_GET_PAYMENTS",
-}
-
 
 export type ModelMedicationConnection = {
   __typename: "ModelMedicationConnection",
@@ -166,7 +196,6 @@ export type MedicalEncounter = {
   diagnosis: string,
   treatmentPlan?: string | null,
   referralToSpecialists?: string | null,
-  recommendedFollowUp?: string | null,
   patientID: string,
   VitalSign?: VitalSign | null,
   Prescriptions?: ModelPrescriptionConnection | null,
@@ -177,6 +206,7 @@ export type MedicalEncounter = {
   _deleted?: boolean | null,
   _lastChangedAt: number,
   medicalEncounterVitalSignId?: string | null,
+  owner?: string | null,
 };
 
 export enum Practitioner {
@@ -205,6 +235,7 @@ export type VitalSign = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
+  owner?: string | null,
 };
 
 export type ModelPrescriptionConnection = {
@@ -231,6 +262,7 @@ export type Prescription = {
   _deleted?: boolean | null,
   _lastChangedAt: number,
   prescriptionServiceProvidedByClinicId?: string | null,
+  owner?: string | null,
 };
 
 export type ServiceProvidedByClinic = {
@@ -244,6 +276,7 @@ export type ServiceProvidedByClinic = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
+  owner?: string | null,
 };
 
 export type ModelLabOrderConnection = {
@@ -270,6 +303,7 @@ export type LabOrder = {
   _deleted?: boolean | null,
   _lastChangedAt: number,
   labOrderServiceProvidedByClinicId?: string | null,
+  owner?: string | null,
 };
 
 export type ModelLabTestConnection = {
@@ -292,6 +326,7 @@ export type LabTest = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
+  owner?: string | null,
 };
 
 export type ModelAppointmentConnection = {
@@ -315,6 +350,7 @@ export type Appointment = {
   _deleted?: boolean | null,
   _lastChangedAt: number,
   appointmentServiceProvidedByClinicId?: string | null,
+  owner?: string | null,
 };
 
 export type Physician = {
@@ -329,6 +365,7 @@ export type Physician = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
+  owner?: string | null,
 };
 
 export type ModelWorkScheduleConnection = {
@@ -348,6 +385,7 @@ export type WorkSchedule = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
+  owner?: string | null,
 };
 
 export type Week = {
@@ -363,19 +401,23 @@ export type Day = {
   number: number,
 };
 
-export type UpdatePatientInput = {
+export enum InsuranceCarrierStatus {
+  PAYS_ON_TIME = "PAYS_ON_TIME",
+  LATE_WITH_PAYMENTS = "LATE_WITH_PAYMENTS",
+  DIFFICULT_TO_GET_PAYMENTS = "DIFFICULT_TO_GET_PAYMENTS",
+}
+
+
+export type UpdatePaymentsInput = {
   id: string,
-  user?: string | null,
-  address?: string | null,
-  dateOfBirth?: string | null,
-  gender?: string | null,
-  cell?: string | null,
+  amount?: number | null,
+  dayIssued?: string | null,
+  dayFulfilled?: string | null,
+  isPaid?: boolean | null,
   _version?: number | null,
-  patientInsuranceCarrierId?: string | null,
-  patientPhysicianId?: string | null,
 };
 
-export type DeletePatientInput = {
+export type DeletePaymentsInput = {
   id: string,
   _version?: number | null,
 };
@@ -399,11 +441,20 @@ export type ModelVendorConditionInput = {
   not?: ModelVendorConditionInput | null,
 };
 
-export type ModelBooleanInput = {
-  ne?: boolean | null,
-  eq?: boolean | null,
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
 };
 
 export type Vendor = {
@@ -418,6 +469,7 @@ export type Vendor = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
+  owner?: string | null,
 };
 
 export type UpdateVendorInput = {
@@ -468,6 +520,7 @@ export type EquipmentMaintenance = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
+  owner?: string | null,
 };
 
 export type UpdateEquipmentMaintenanceInput = {
@@ -510,6 +563,7 @@ export type EquipmentOwned = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
+  owner?: string | null,
 };
 
 export type UpdateEquipmentOwnedInput = {
@@ -549,6 +603,7 @@ export type EquipmentLeased = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
+  owner?: string | null,
 };
 
 export type UpdateEquipmentLeasedInput = {
@@ -607,6 +662,7 @@ export type Equipment = {
   _lastChangedAt: number,
   equipmentEquipmentOwnedId?: string | null,
   equipmentEquipmentLeasedId?: string | null,
+  owner?: string | null,
 };
 
 export type ModelVendorConnection = {
@@ -691,18 +747,6 @@ export type ModelServiceProvidedByClinicConditionInput = {
   and?: Array< ModelServiceProvidedByClinicConditionInput | null > | null,
   or?: Array< ModelServiceProvidedByClinicConditionInput | null > | null,
   not?: ModelServiceProvidedByClinicConditionInput | null,
-};
-
-export type ModelFloatInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
 };
 
 export type UpdateServiceProvidedByClinicInput = {
@@ -958,7 +1002,6 @@ export type CreateMedicalEncounterInput = {
   diagnosis: string,
   treatmentPlan?: string | null,
   referralToSpecialists?: string | null,
-  recommendedFollowUp?: string | null,
   patientID: string,
   _version?: number | null,
   medicalEncounterVitalSignId?: string | null,
@@ -971,7 +1014,6 @@ export type ModelMedicalEncounterConditionInput = {
   diagnosis?: ModelStringInput | null,
   treatmentPlan?: ModelStringInput | null,
   referralToSpecialists?: ModelStringInput | null,
-  recommendedFollowUp?: ModelStringInput | null,
   patientID?: ModelIDInput | null,
   and?: Array< ModelMedicalEncounterConditionInput | null > | null,
   or?: Array< ModelMedicalEncounterConditionInput | null > | null,
@@ -992,7 +1034,6 @@ export type UpdateMedicalEncounterInput = {
   diagnosis?: string | null,
   treatmentPlan?: string | null,
   referralToSpecialists?: string | null,
-  recommendedFollowUp?: string | null,
   patientID?: string | null,
   _version?: number | null,
   medicalEncounterVitalSignId?: string | null,
@@ -1049,29 +1090,21 @@ export type CreateInsuranceCarrierInput = {
   id?: string | null,
   name: string,
   address?: string | null,
-  status?: InsuranceCarrierStatus | null,
   _version?: number | null,
 };
 
 export type ModelInsuranceCarrierConditionInput = {
   name?: ModelStringInput | null,
   address?: ModelStringInput | null,
-  status?: ModelInsuranceCarrierStatusInput | null,
   and?: Array< ModelInsuranceCarrierConditionInput | null > | null,
   or?: Array< ModelInsuranceCarrierConditionInput | null > | null,
   not?: ModelInsuranceCarrierConditionInput | null,
-};
-
-export type ModelInsuranceCarrierStatusInput = {
-  eq?: InsuranceCarrierStatus | null,
-  ne?: InsuranceCarrierStatus | null,
 };
 
 export type UpdateInsuranceCarrierInput = {
   id: string,
   name?: string | null,
   address?: string | null,
-  status?: InsuranceCarrierStatus | null,
   _version?: number | null,
 };
 
@@ -1080,23 +1113,97 @@ export type DeleteInsuranceCarrierInput = {
   _version?: number | null,
 };
 
-export type ModelPatientFilterInput = {
-  id?: ModelIDInput | null,
-  user?: ModelStringInput | null,
+export type CreatePatientInput = {
+  id?: string | null,
+  name?: string | null,
+  address?: string | null,
+  dateOfBirth?: string | null,
+  gender?: string | null,
+  cell?: string | null,
+  paymentStatus?: InsuranceCarrierStatus | null,
+  _version?: number | null,
+  patientInsuranceCarrierId?: string | null,
+  patientPhysicianId?: string | null,
+};
+
+export type ModelPatientConditionInput = {
+  name?: ModelStringInput | null,
   address?: ModelStringInput | null,
   dateOfBirth?: ModelStringInput | null,
   gender?: ModelStringInput | null,
   cell?: ModelStringInput | null,
-  and?: Array< ModelPatientFilterInput | null > | null,
-  or?: Array< ModelPatientFilterInput | null > | null,
-  not?: ModelPatientFilterInput | null,
+  paymentStatus?: ModelInsuranceCarrierStatusInput | null,
+  and?: Array< ModelPatientConditionInput | null > | null,
+  or?: Array< ModelPatientConditionInput | null > | null,
+  not?: ModelPatientConditionInput | null,
   patientInsuranceCarrierId?: ModelIDInput | null,
   patientPhysicianId?: ModelIDInput | null,
 };
 
-export type ModelPatientConnection = {
-  __typename: "ModelPatientConnection",
-  items:  Array<Patient | null >,
+export type ModelInsuranceCarrierStatusInput = {
+  eq?: InsuranceCarrierStatus | null,
+  ne?: InsuranceCarrierStatus | null,
+};
+
+export type UpdatePatientInput = {
+  id: string,
+  name?: string | null,
+  address?: string | null,
+  dateOfBirth?: string | null,
+  gender?: string | null,
+  cell?: string | null,
+  paymentStatus?: InsuranceCarrierStatus | null,
+  _version?: number | null,
+  patientInsuranceCarrierId?: string | null,
+  patientPhysicianId?: string | null,
+};
+
+export type DeletePatientInput = {
+  id: string,
+  _version?: number | null,
+};
+
+export type CreatePatientPaymentsInput = {
+  id?: string | null,
+  paymentsId: string,
+  patientId: string,
+  _version?: number | null,
+};
+
+export type ModelPatientPaymentsConditionInput = {
+  paymentsId?: ModelIDInput | null,
+  patientId?: ModelIDInput | null,
+  and?: Array< ModelPatientPaymentsConditionInput | null > | null,
+  or?: Array< ModelPatientPaymentsConditionInput | null > | null,
+  not?: ModelPatientPaymentsConditionInput | null,
+};
+
+export type UpdatePatientPaymentsInput = {
+  id: string,
+  paymentsId?: string | null,
+  patientId?: string | null,
+  _version?: number | null,
+};
+
+export type DeletePatientPaymentsInput = {
+  id: string,
+  _version?: number | null,
+};
+
+export type ModelPaymentsFilterInput = {
+  id?: ModelIDInput | null,
+  amount?: ModelFloatInput | null,
+  dayIssued?: ModelStringInput | null,
+  dayFulfilled?: ModelStringInput | null,
+  isPaid?: ModelBooleanInput | null,
+  and?: Array< ModelPaymentsFilterInput | null > | null,
+  or?: Array< ModelPaymentsFilterInput | null > | null,
+  not?: ModelPaymentsFilterInput | null,
+};
+
+export type ModelPaymentsConnection = {
+  __typename: "ModelPaymentsConnection",
+  items:  Array<Payments | null >,
   nextToken?: string | null,
   startedAt?: number | null,
 };
@@ -1303,7 +1410,6 @@ export type ModelMedicalEncounterFilterInput = {
   diagnosis?: ModelStringInput | null,
   treatmentPlan?: ModelStringInput | null,
   referralToSpecialists?: ModelStringInput | null,
-  recommendedFollowUp?: ModelStringInput | null,
   patientID?: ModelIDInput | null,
   and?: Array< ModelMedicalEncounterFilterInput | null > | null,
   or?: Array< ModelMedicalEncounterFilterInput | null > | null,
@@ -1329,7 +1435,6 @@ export type ModelInsuranceCarrierFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
   address?: ModelStringInput | null,
-  status?: ModelInsuranceCarrierStatusInput | null,
   and?: Array< ModelInsuranceCarrierFilterInput | null > | null,
   or?: Array< ModelInsuranceCarrierFilterInput | null > | null,
   not?: ModelInsuranceCarrierFilterInput | null,
@@ -1342,15 +1447,45 @@ export type ModelInsuranceCarrierConnection = {
   startedAt?: number | null,
 };
 
-export type ModelSubscriptionPatientFilterInput = {
+export type ModelPatientFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  address?: ModelStringInput | null,
+  dateOfBirth?: ModelStringInput | null,
+  gender?: ModelStringInput | null,
+  cell?: ModelStringInput | null,
+  paymentStatus?: ModelInsuranceCarrierStatusInput | null,
+  and?: Array< ModelPatientFilterInput | null > | null,
+  or?: Array< ModelPatientFilterInput | null > | null,
+  not?: ModelPatientFilterInput | null,
+  patientInsuranceCarrierId?: ModelIDInput | null,
+  patientPhysicianId?: ModelIDInput | null,
+};
+
+export type ModelPatientConnection = {
+  __typename: "ModelPatientConnection",
+  items:  Array<Patient | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
+export type ModelPatientPaymentsFilterInput = {
+  id?: ModelIDInput | null,
+  paymentsId?: ModelIDInput | null,
+  patientId?: ModelIDInput | null,
+  and?: Array< ModelPatientPaymentsFilterInput | null > | null,
+  or?: Array< ModelPatientPaymentsFilterInput | null > | null,
+  not?: ModelPatientPaymentsFilterInput | null,
+};
+
+export type ModelSubscriptionPaymentsFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  user?: ModelSubscriptionStringInput | null,
-  address?: ModelSubscriptionStringInput | null,
-  dateOfBirth?: ModelSubscriptionStringInput | null,
-  gender?: ModelSubscriptionStringInput | null,
-  cell?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionPatientFilterInput | null > | null,
-  or?: Array< ModelSubscriptionPatientFilterInput | null > | null,
+  amount?: ModelSubscriptionFloatInput | null,
+  dayIssued?: ModelSubscriptionStringInput | null,
+  dayFulfilled?: ModelSubscriptionStringInput | null,
+  isPaid?: ModelSubscriptionBooleanInput | null,
+  and?: Array< ModelSubscriptionPaymentsFilterInput | null > | null,
+  or?: Array< ModelSubscriptionPaymentsFilterInput | null > | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -1368,6 +1503,18 @@ export type ModelSubscriptionIDInput = {
   notIn?: Array< string | null > | null,
 };
 
+export type ModelSubscriptionFloatInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  in?: Array< number | null > | null,
+  notIn?: Array< number | null > | null,
+};
+
 export type ModelSubscriptionStringInput = {
   ne?: string | null,
   eq?: string | null,
@@ -1383,6 +1530,11 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
+export type ModelSubscriptionBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+};
+
 export type ModelSubscriptionVendorFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
@@ -1391,11 +1543,6 @@ export type ModelSubscriptionVendorFilterInput = {
   equipmentID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionVendorFilterInput | null > | null,
   or?: Array< ModelSubscriptionVendorFilterInput | null > | null,
-};
-
-export type ModelSubscriptionBooleanInput = {
-  ne?: boolean | null,
-  eq?: boolean | null,
 };
 
 export type ModelSubscriptionEquipmentMaintenanceFilterInput = {
@@ -1454,18 +1601,6 @@ export type ModelSubscriptionServiceProvidedByClinicFilterInput = {
   cost?: ModelSubscriptionFloatInput | null,
   and?: Array< ModelSubscriptionServiceProvidedByClinicFilterInput | null > | null,
   or?: Array< ModelSubscriptionServiceProvidedByClinicFilterInput | null > | null,
-};
-
-export type ModelSubscriptionFloatInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  in?: Array< number | null > | null,
-  notIn?: Array< number | null > | null,
 };
 
 export type ModelSubscriptionWorkScheduleFilterInput = {
@@ -1548,7 +1683,6 @@ export type ModelSubscriptionMedicalEncounterFilterInput = {
   diagnosis?: ModelSubscriptionStringInput | null,
   treatmentPlan?: ModelSubscriptionStringInput | null,
   referralToSpecialists?: ModelSubscriptionStringInput | null,
-  recommendedFollowUp?: ModelSubscriptionStringInput | null,
   patientID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionMedicalEncounterFilterInput | null > | null,
   or?: Array< ModelSubscriptionMedicalEncounterFilterInput | null > | null,
@@ -1571,370 +1705,143 @@ export type ModelSubscriptionInsuranceCarrierFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
   address?: ModelSubscriptionStringInput | null,
-  status?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionInsuranceCarrierFilterInput | null > | null,
   or?: Array< ModelSubscriptionInsuranceCarrierFilterInput | null > | null,
 };
 
-export type CreatePatientMutationVariables = {
-  input: CreatePatientInput,
-  condition?: ModelPatientConditionInput | null,
+export type ModelSubscriptionPatientFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  address?: ModelSubscriptionStringInput | null,
+  dateOfBirth?: ModelSubscriptionStringInput | null,
+  gender?: ModelSubscriptionStringInput | null,
+  cell?: ModelSubscriptionStringInput | null,
+  paymentStatus?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionPatientFilterInput | null > | null,
+  or?: Array< ModelSubscriptionPatientFilterInput | null > | null,
 };
 
-export type CreatePatientMutation = {
-  createPatient?:  {
-    __typename: "Patient",
+export type ModelSubscriptionPatientPaymentsFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  paymentsId?: ModelSubscriptionIDInput | null,
+  patientId?: ModelSubscriptionIDInput | null,
+  and?: Array< ModelSubscriptionPatientPaymentsFilterInput | null > | null,
+  or?: Array< ModelSubscriptionPatientPaymentsFilterInput | null > | null,
+};
+
+export type CreatePaymentsMutationVariables = {
+  input: CreatePaymentsInput,
+  condition?: ModelPaymentsConditionInput | null,
+};
+
+export type CreatePaymentsMutation = {
+  createPayments?:  {
+    __typename: "Payments",
     id: string,
-    user: string,
-    address?: string | null,
-    dateOfBirth?: string | null,
-    gender?: string | null,
-    InsuranceCarrier?:  {
-      __typename: "InsuranceCarrier",
-      id: string,
-      name: string,
-      address?: string | null,
-      status?: InsuranceCarrierStatus | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
-    Medications?:  {
-      __typename: "ModelMedicationConnection",
+    amount: number,
+    dayIssued: string,
+    dayFulfilled?: string | null,
+    isPaid: boolean,
+    patients?:  {
+      __typename: "ModelPatientPaymentsConnection",
       items:  Array< {
-        __typename: "Medication",
+        __typename: "PatientPayments",
         id: string,
-        name?: string | null,
-        usage?: string | null,
-        dosage?: string | null,
-        frequency?: string | null,
-        sideEffects?: string | null,
-        interactions?: string | null,
-        patientID: string,
+        paymentsId: string,
+        patientId: string,
         createdAt: string,
         updatedAt: string,
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    MedicalEncounters?:  {
-      __typename: "ModelMedicalEncounterConnection",
-      items:  Array< {
-        __typename: "MedicalEncounter",
-        id: string,
-        date: string,
-        practitionerSeen: Array< Practitioner | null >,
-        complaints?: string | null,
-        diagnosis: string,
-        treatmentPlan?: string | null,
-        referralToSpecialists?: string | null,
-        recommendedFollowUp?: string | null,
-        patientID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        medicalEncounterVitalSignId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    Appointments?:  {
-      __typename: "ModelAppointmentConnection",
-      items:  Array< {
-        __typename: "Appointment",
-        id: string,
-        time?: string | null,
-        type?: string | null,
-        patientID: string,
-        physicianID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        appointmentServiceProvidedByClinicId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    Physician?:  {
-      __typename: "Physician",
-      id: string,
-      name?: string | null,
-      cellPhoneNumber?: string | null,
-      WorkSchedules?:  {
-        __typename: "ModelWorkScheduleConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      Appointments?:  {
-        __typename: "ModelAppointmentConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
-    cell?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    patientInsuranceCarrierId?: string | null,
-    patientPhysicianId?: string | null,
     owner?: string | null,
   } | null,
 };
 
-export type UpdatePatientMutationVariables = {
-  input: UpdatePatientInput,
-  condition?: ModelPatientConditionInput | null,
+export type UpdatePaymentsMutationVariables = {
+  input: UpdatePaymentsInput,
+  condition?: ModelPaymentsConditionInput | null,
 };
 
-export type UpdatePatientMutation = {
-  updatePatient?:  {
-    __typename: "Patient",
+export type UpdatePaymentsMutation = {
+  updatePayments?:  {
+    __typename: "Payments",
     id: string,
-    user: string,
-    address?: string | null,
-    dateOfBirth?: string | null,
-    gender?: string | null,
-    InsuranceCarrier?:  {
-      __typename: "InsuranceCarrier",
-      id: string,
-      name: string,
-      address?: string | null,
-      status?: InsuranceCarrierStatus | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
-    Medications?:  {
-      __typename: "ModelMedicationConnection",
+    amount: number,
+    dayIssued: string,
+    dayFulfilled?: string | null,
+    isPaid: boolean,
+    patients?:  {
+      __typename: "ModelPatientPaymentsConnection",
       items:  Array< {
-        __typename: "Medication",
+        __typename: "PatientPayments",
         id: string,
-        name?: string | null,
-        usage?: string | null,
-        dosage?: string | null,
-        frequency?: string | null,
-        sideEffects?: string | null,
-        interactions?: string | null,
-        patientID: string,
+        paymentsId: string,
+        patientId: string,
         createdAt: string,
         updatedAt: string,
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    MedicalEncounters?:  {
-      __typename: "ModelMedicalEncounterConnection",
-      items:  Array< {
-        __typename: "MedicalEncounter",
-        id: string,
-        date: string,
-        practitionerSeen: Array< Practitioner | null >,
-        complaints?: string | null,
-        diagnosis: string,
-        treatmentPlan?: string | null,
-        referralToSpecialists?: string | null,
-        recommendedFollowUp?: string | null,
-        patientID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        medicalEncounterVitalSignId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    Appointments?:  {
-      __typename: "ModelAppointmentConnection",
-      items:  Array< {
-        __typename: "Appointment",
-        id: string,
-        time?: string | null,
-        type?: string | null,
-        patientID: string,
-        physicianID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        appointmentServiceProvidedByClinicId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    Physician?:  {
-      __typename: "Physician",
-      id: string,
-      name?: string | null,
-      cellPhoneNumber?: string | null,
-      WorkSchedules?:  {
-        __typename: "ModelWorkScheduleConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      Appointments?:  {
-        __typename: "ModelAppointmentConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
-    cell?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    patientInsuranceCarrierId?: string | null,
-    patientPhysicianId?: string | null,
     owner?: string | null,
   } | null,
 };
 
-export type DeletePatientMutationVariables = {
-  input: DeletePatientInput,
-  condition?: ModelPatientConditionInput | null,
+export type DeletePaymentsMutationVariables = {
+  input: DeletePaymentsInput,
+  condition?: ModelPaymentsConditionInput | null,
 };
 
-export type DeletePatientMutation = {
-  deletePatient?:  {
-    __typename: "Patient",
+export type DeletePaymentsMutation = {
+  deletePayments?:  {
+    __typename: "Payments",
     id: string,
-    user: string,
-    address?: string | null,
-    dateOfBirth?: string | null,
-    gender?: string | null,
-    InsuranceCarrier?:  {
-      __typename: "InsuranceCarrier",
-      id: string,
-      name: string,
-      address?: string | null,
-      status?: InsuranceCarrierStatus | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
-    Medications?:  {
-      __typename: "ModelMedicationConnection",
+    amount: number,
+    dayIssued: string,
+    dayFulfilled?: string | null,
+    isPaid: boolean,
+    patients?:  {
+      __typename: "ModelPatientPaymentsConnection",
       items:  Array< {
-        __typename: "Medication",
+        __typename: "PatientPayments",
         id: string,
-        name?: string | null,
-        usage?: string | null,
-        dosage?: string | null,
-        frequency?: string | null,
-        sideEffects?: string | null,
-        interactions?: string | null,
-        patientID: string,
+        paymentsId: string,
+        patientId: string,
         createdAt: string,
         updatedAt: string,
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    MedicalEncounters?:  {
-      __typename: "ModelMedicalEncounterConnection",
-      items:  Array< {
-        __typename: "MedicalEncounter",
-        id: string,
-        date: string,
-        practitionerSeen: Array< Practitioner | null >,
-        complaints?: string | null,
-        diagnosis: string,
-        treatmentPlan?: string | null,
-        referralToSpecialists?: string | null,
-        recommendedFollowUp?: string | null,
-        patientID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        medicalEncounterVitalSignId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    Appointments?:  {
-      __typename: "ModelAppointmentConnection",
-      items:  Array< {
-        __typename: "Appointment",
-        id: string,
-        time?: string | null,
-        type?: string | null,
-        patientID: string,
-        physicianID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        appointmentServiceProvidedByClinicId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    Physician?:  {
-      __typename: "Physician",
-      id: string,
-      name?: string | null,
-      cellPhoneNumber?: string | null,
-      WorkSchedules?:  {
-        __typename: "ModelWorkScheduleConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      Appointments?:  {
-        __typename: "ModelAppointmentConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
-    cell?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    patientInsuranceCarrierId?: string | null,
-    patientPhysicianId?: string | null,
     owner?: string | null,
   } | null,
 };
@@ -1957,6 +1864,7 @@ export type CreateVendorMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -1978,6 +1886,7 @@ export type UpdateVendorMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -1999,6 +1908,7 @@ export type DeleteVendorMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2021,6 +1931,7 @@ export type CreateEquipmentMaintenanceMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2043,6 +1954,7 @@ export type UpdateEquipmentMaintenanceMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2065,6 +1977,7 @@ export type DeleteEquipmentMaintenanceMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2084,6 +1997,7 @@ export type CreateEquipmentOwnedMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2103,6 +2017,7 @@ export type UpdateEquipmentOwnedMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2122,6 +2037,7 @@ export type DeleteEquipmentOwnedMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2141,6 +2057,7 @@ export type CreateEquipmentLeasedMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2160,6 +2077,7 @@ export type UpdateEquipmentLeasedMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2179,6 +2097,7 @@ export type DeleteEquipmentLeasedMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2210,6 +2129,7 @@ export type CreateEquipmentMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -2229,6 +2149,7 @@ export type CreateEquipmentMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -2243,6 +2164,7 @@ export type CreateEquipmentMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     EquipmentLeased?:  {
       __typename: "EquipmentLeased",
@@ -2254,6 +2176,7 @@ export type CreateEquipmentMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -2262,6 +2185,7 @@ export type CreateEquipmentMutation = {
     _lastChangedAt: number,
     equipmentEquipmentOwnedId?: string | null,
     equipmentEquipmentLeasedId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -2293,6 +2217,7 @@ export type UpdateEquipmentMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -2312,6 +2237,7 @@ export type UpdateEquipmentMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -2326,6 +2252,7 @@ export type UpdateEquipmentMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     EquipmentLeased?:  {
       __typename: "EquipmentLeased",
@@ -2337,6 +2264,7 @@ export type UpdateEquipmentMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -2345,6 +2273,7 @@ export type UpdateEquipmentMutation = {
     _lastChangedAt: number,
     equipmentEquipmentOwnedId?: string | null,
     equipmentEquipmentLeasedId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -2376,6 +2305,7 @@ export type DeleteEquipmentMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -2395,6 +2325,7 @@ export type DeleteEquipmentMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -2409,6 +2340,7 @@ export type DeleteEquipmentMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     EquipmentLeased?:  {
       __typename: "EquipmentLeased",
@@ -2420,6 +2352,7 @@ export type DeleteEquipmentMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -2428,6 +2361,7 @@ export type DeleteEquipmentMutation = {
     _lastChangedAt: number,
     equipmentEquipmentOwnedId?: string | null,
     equipmentEquipmentLeasedId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -2450,6 +2384,7 @@ export type CreateLabTestMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2472,6 +2407,7 @@ export type UpdateLabTestMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2494,6 +2430,7 @@ export type DeleteLabTestMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2514,6 +2451,7 @@ export type CreateServiceProvidedByClinicMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2534,6 +2472,7 @@ export type UpdateServiceProvidedByClinicMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2554,6 +2493,7 @@ export type DeleteServiceProvidedByClinicMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2582,6 +2522,7 @@ export type CreateWorkScheduleMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2610,6 +2551,7 @@ export type UpdateWorkScheduleMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2638,6 +2580,7 @@ export type DeleteWorkScheduleMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2663,6 +2606,7 @@ export type CreatePhysicianMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -2682,6 +2626,7 @@ export type CreatePhysicianMutation = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         appointmentServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -2691,6 +2636,7 @@ export type CreatePhysicianMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2716,6 +2662,7 @@ export type UpdatePhysicianMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -2735,6 +2682,7 @@ export type UpdatePhysicianMutation = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         appointmentServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -2744,6 +2692,7 @@ export type UpdatePhysicianMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2769,6 +2718,7 @@ export type DeletePhysicianMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -2788,6 +2738,7 @@ export type DeletePhysicianMutation = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         appointmentServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -2797,6 +2748,7 @@ export type DeletePhysicianMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -2824,6 +2776,7 @@ export type CreateAppointmentMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -2831,6 +2784,7 @@ export type CreateAppointmentMutation = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     appointmentServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -2858,6 +2812,7 @@ export type UpdateAppointmentMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -2865,6 +2820,7 @@ export type UpdateAppointmentMutation = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     appointmentServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -2892,6 +2848,7 @@ export type DeleteAppointmentMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -2899,6 +2856,7 @@ export type DeleteAppointmentMutation = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     appointmentServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -2928,6 +2886,7 @@ export type CreateLabOrderMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     LabTests?:  {
       __typename: "ModelLabTestConnection",
@@ -2944,6 +2903,7 @@ export type CreateLabOrderMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -2954,6 +2914,7 @@ export type CreateLabOrderMutation = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     labOrderServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -2983,6 +2944,7 @@ export type UpdateLabOrderMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     LabTests?:  {
       __typename: "ModelLabTestConnection",
@@ -2999,6 +2961,7 @@ export type UpdateLabOrderMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -3009,6 +2972,7 @@ export type UpdateLabOrderMutation = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     labOrderServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -3038,6 +3002,7 @@ export type DeleteLabOrderMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     LabTests?:  {
       __typename: "ModelLabTestConnection",
@@ -3054,6 +3019,7 @@ export type DeleteLabOrderMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -3064,6 +3030,7 @@ export type DeleteLabOrderMutation = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     labOrderServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -3094,6 +3061,7 @@ export type CreatePrescriptionMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -3101,6 +3069,7 @@ export type CreatePrescriptionMutation = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     prescriptionServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -3131,6 +3100,7 @@ export type UpdatePrescriptionMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -3138,6 +3108,7 @@ export type UpdatePrescriptionMutation = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     prescriptionServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -3168,6 +3139,7 @@ export type DeletePrescriptionMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -3175,6 +3147,7 @@ export type DeletePrescriptionMutation = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     prescriptionServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -3196,6 +3169,7 @@ export type CreateVitalSignMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -3217,6 +3191,7 @@ export type UpdateVitalSignMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -3238,6 +3213,7 @@ export type DeleteVitalSignMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -3256,7 +3232,6 @@ export type CreateMedicalEncounterMutation = {
     diagnosis: string,
     treatmentPlan?: string | null,
     referralToSpecialists?: string | null,
-    recommendedFollowUp?: string | null,
     patientID: string,
     VitalSign?:  {
       __typename: "VitalSign",
@@ -3270,6 +3245,7 @@ export type CreateMedicalEncounterMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     Prescriptions?:  {
       __typename: "ModelPrescriptionConnection",
@@ -3289,6 +3265,7 @@ export type CreateMedicalEncounterMutation = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         prescriptionServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -3310,6 +3287,7 @@ export type CreateMedicalEncounterMutation = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         labOrderServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -3320,6 +3298,7 @@ export type CreateMedicalEncounterMutation = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     medicalEncounterVitalSignId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -3338,7 +3317,6 @@ export type UpdateMedicalEncounterMutation = {
     diagnosis: string,
     treatmentPlan?: string | null,
     referralToSpecialists?: string | null,
-    recommendedFollowUp?: string | null,
     patientID: string,
     VitalSign?:  {
       __typename: "VitalSign",
@@ -3352,6 +3330,7 @@ export type UpdateMedicalEncounterMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     Prescriptions?:  {
       __typename: "ModelPrescriptionConnection",
@@ -3371,6 +3350,7 @@ export type UpdateMedicalEncounterMutation = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         prescriptionServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -3392,6 +3372,7 @@ export type UpdateMedicalEncounterMutation = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         labOrderServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -3402,6 +3383,7 @@ export type UpdateMedicalEncounterMutation = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     medicalEncounterVitalSignId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -3420,7 +3402,6 @@ export type DeleteMedicalEncounterMutation = {
     diagnosis: string,
     treatmentPlan?: string | null,
     referralToSpecialists?: string | null,
-    recommendedFollowUp?: string | null,
     patientID: string,
     VitalSign?:  {
       __typename: "VitalSign",
@@ -3434,6 +3415,7 @@ export type DeleteMedicalEncounterMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     Prescriptions?:  {
       __typename: "ModelPrescriptionConnection",
@@ -3453,6 +3435,7 @@ export type DeleteMedicalEncounterMutation = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         prescriptionServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -3474,6 +3457,7 @@ export type DeleteMedicalEncounterMutation = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         labOrderServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -3484,6 +3468,7 @@ export type DeleteMedicalEncounterMutation = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     medicalEncounterVitalSignId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -3570,12 +3555,12 @@ export type CreateInsuranceCarrierMutation = {
     id: string,
     name: string,
     address?: string | null,
-    status?: InsuranceCarrierStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -3590,12 +3575,12 @@ export type UpdateInsuranceCarrierMutation = {
     id: string,
     name: string,
     address?: string | null,
-    status?: InsuranceCarrierStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -3610,24 +3595,25 @@ export type DeleteInsuranceCarrierMutation = {
     id: string,
     name: string,
     address?: string | null,
-    status?: InsuranceCarrierStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
-export type GetPatientQueryVariables = {
-  id: string,
+export type CreatePatientMutationVariables = {
+  input: CreatePatientInput,
+  condition?: ModelPatientConditionInput | null,
 };
 
-export type GetPatientQuery = {
-  getPatient?:  {
+export type CreatePatientMutation = {
+  createPatient?:  {
     __typename: "Patient",
     id: string,
-    user: string,
+    name?: string | null,
     address?: string | null,
     dateOfBirth?: string | null,
     gender?: string | null,
@@ -3636,12 +3622,12 @@ export type GetPatientQuery = {
       id: string,
       name: string,
       address?: string | null,
-      status?: InsuranceCarrierStatus | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     Medications?:  {
       __typename: "ModelMedicationConnection",
@@ -3675,7 +3661,6 @@ export type GetPatientQuery = {
         diagnosis: string,
         treatmentPlan?: string | null,
         referralToSpecialists?: string | null,
-        recommendedFollowUp?: string | null,
         patientID: string,
         createdAt: string,
         updatedAt: string,
@@ -3683,6 +3668,7 @@ export type GetPatientQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         medicalEncounterVitalSignId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -3702,6 +3688,7 @@ export type GetPatientQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         appointmentServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -3726,8 +3713,27 @@ export type GetPatientQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     cell?: string | null,
+    Payments?:  {
+      __typename: "ModelPatientPaymentsConnection",
+      items:  Array< {
+        __typename: "PatientPayments",
+        id: string,
+        paymentsId: string,
+        patientId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    paymentStatus?: InsuranceCarrierStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -3739,19 +3745,322 @@ export type GetPatientQuery = {
   } | null,
 };
 
-export type ListPatientsQueryVariables = {
-  filter?: ModelPatientFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
+export type UpdatePatientMutationVariables = {
+  input: UpdatePatientInput,
+  condition?: ModelPatientConditionInput | null,
 };
 
-export type ListPatientsQuery = {
-  listPatients?:  {
-    __typename: "ModelPatientConnection",
-    items:  Array< {
+export type UpdatePatientMutation = {
+  updatePatient?:  {
+    __typename: "Patient",
+    id: string,
+    name?: string | null,
+    address?: string | null,
+    dateOfBirth?: string | null,
+    gender?: string | null,
+    InsuranceCarrier?:  {
+      __typename: "InsuranceCarrier",
+      id: string,
+      name: string,
+      address?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    Medications?:  {
+      __typename: "ModelMedicationConnection",
+      items:  Array< {
+        __typename: "Medication",
+        id: string,
+        name?: string | null,
+        usage?: string | null,
+        dosage?: string | null,
+        frequency?: string | null,
+        sideEffects?: string | null,
+        interactions?: string | null,
+        patientID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    MedicalEncounters?:  {
+      __typename: "ModelMedicalEncounterConnection",
+      items:  Array< {
+        __typename: "MedicalEncounter",
+        id: string,
+        date: string,
+        practitionerSeen: Array< Practitioner | null >,
+        complaints?: string | null,
+        diagnosis: string,
+        treatmentPlan?: string | null,
+        referralToSpecialists?: string | null,
+        patientID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        medicalEncounterVitalSignId?: string | null,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Appointments?:  {
+      __typename: "ModelAppointmentConnection",
+      items:  Array< {
+        __typename: "Appointment",
+        id: string,
+        time?: string | null,
+        type?: string | null,
+        patientID: string,
+        physicianID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        appointmentServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Physician?:  {
+      __typename: "Physician",
+      id: string,
+      name?: string | null,
+      cellPhoneNumber?: string | null,
+      WorkSchedules?:  {
+        __typename: "ModelWorkScheduleConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Appointments?:  {
+        __typename: "ModelAppointmentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    cell?: string | null,
+    Payments?:  {
+      __typename: "ModelPatientPaymentsConnection",
+      items:  Array< {
+        __typename: "PatientPayments",
+        id: string,
+        paymentsId: string,
+        patientId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    paymentStatus?: InsuranceCarrierStatus | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    patientInsuranceCarrierId?: string | null,
+    patientPhysicianId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeletePatientMutationVariables = {
+  input: DeletePatientInput,
+  condition?: ModelPatientConditionInput | null,
+};
+
+export type DeletePatientMutation = {
+  deletePatient?:  {
+    __typename: "Patient",
+    id: string,
+    name?: string | null,
+    address?: string | null,
+    dateOfBirth?: string | null,
+    gender?: string | null,
+    InsuranceCarrier?:  {
+      __typename: "InsuranceCarrier",
+      id: string,
+      name: string,
+      address?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    Medications?:  {
+      __typename: "ModelMedicationConnection",
+      items:  Array< {
+        __typename: "Medication",
+        id: string,
+        name?: string | null,
+        usage?: string | null,
+        dosage?: string | null,
+        frequency?: string | null,
+        sideEffects?: string | null,
+        interactions?: string | null,
+        patientID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    MedicalEncounters?:  {
+      __typename: "ModelMedicalEncounterConnection",
+      items:  Array< {
+        __typename: "MedicalEncounter",
+        id: string,
+        date: string,
+        practitionerSeen: Array< Practitioner | null >,
+        complaints?: string | null,
+        diagnosis: string,
+        treatmentPlan?: string | null,
+        referralToSpecialists?: string | null,
+        patientID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        medicalEncounterVitalSignId?: string | null,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Appointments?:  {
+      __typename: "ModelAppointmentConnection",
+      items:  Array< {
+        __typename: "Appointment",
+        id: string,
+        time?: string | null,
+        type?: string | null,
+        patientID: string,
+        physicianID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        appointmentServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Physician?:  {
+      __typename: "Physician",
+      id: string,
+      name?: string | null,
+      cellPhoneNumber?: string | null,
+      WorkSchedules?:  {
+        __typename: "ModelWorkScheduleConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Appointments?:  {
+        __typename: "ModelAppointmentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    cell?: string | null,
+    Payments?:  {
+      __typename: "ModelPatientPaymentsConnection",
+      items:  Array< {
+        __typename: "PatientPayments",
+        id: string,
+        paymentsId: string,
+        patientId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    paymentStatus?: InsuranceCarrierStatus | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    patientInsuranceCarrierId?: string | null,
+    patientPhysicianId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type CreatePatientPaymentsMutationVariables = {
+  input: CreatePatientPaymentsInput,
+  condition?: ModelPatientPaymentsConditionInput | null,
+};
+
+export type CreatePatientPaymentsMutation = {
+  createPatientPayments?:  {
+    __typename: "PatientPayments",
+    id: string,
+    paymentsId: string,
+    patientId: string,
+    payments:  {
+      __typename: "Payments",
+      id: string,
+      amount: number,
+      dayIssued: string,
+      dayFulfilled?: string | null,
+      isPaid: boolean,
+      patients?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    patient:  {
       __typename: "Patient",
       id: string,
-      user: string,
+      name?: string | null,
       address?: string | null,
       dateOfBirth?: string | null,
       gender?: string | null,
@@ -3760,12 +4069,12 @@ export type ListPatientsQuery = {
         id: string,
         name: string,
         address?: string | null,
-        status?: InsuranceCarrierStatus | null,
         createdAt: string,
         updatedAt: string,
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       Medications?:  {
         __typename: "ModelMedicationConnection",
@@ -3792,8 +4101,15 @@ export type ListPatientsQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       cell?: string | null,
+      Payments?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      paymentStatus?: InsuranceCarrierStatus | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -3802,26 +4118,50 @@ export type ListPatientsQuery = {
       patientInsuranceCarrierId?: string | null,
       patientPhysicianId?: string | null,
       owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
-export type SyncPatientsQueryVariables = {
-  filter?: ModelPatientFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
+export type UpdatePatientPaymentsMutationVariables = {
+  input: UpdatePatientPaymentsInput,
+  condition?: ModelPatientPaymentsConditionInput | null,
 };
 
-export type SyncPatientsQuery = {
-  syncPatients?:  {
-    __typename: "ModelPatientConnection",
-    items:  Array< {
+export type UpdatePatientPaymentsMutation = {
+  updatePatientPayments?:  {
+    __typename: "PatientPayments",
+    id: string,
+    paymentsId: string,
+    patientId: string,
+    payments:  {
+      __typename: "Payments",
+      id: string,
+      amount: number,
+      dayIssued: string,
+      dayFulfilled?: string | null,
+      isPaid: boolean,
+      patients?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    patient:  {
       __typename: "Patient",
       id: string,
-      user: string,
+      name?: string | null,
       address?: string | null,
       dateOfBirth?: string | null,
       gender?: string | null,
@@ -3830,12 +4170,12 @@ export type SyncPatientsQuery = {
         id: string,
         name: string,
         address?: string | null,
-        status?: InsuranceCarrierStatus | null,
         createdAt: string,
         updatedAt: string,
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       Medications?:  {
         __typename: "ModelMedicationConnection",
@@ -3862,8 +4202,15 @@ export type SyncPatientsQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       cell?: string | null,
+      Payments?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      paymentStatus?: InsuranceCarrierStatus | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -3871,6 +4218,216 @@ export type SyncPatientsQuery = {
       _lastChangedAt: number,
       patientInsuranceCarrierId?: string | null,
       patientPhysicianId?: string | null,
+      owner?: string | null,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeletePatientPaymentsMutationVariables = {
+  input: DeletePatientPaymentsInput,
+  condition?: ModelPatientPaymentsConditionInput | null,
+};
+
+export type DeletePatientPaymentsMutation = {
+  deletePatientPayments?:  {
+    __typename: "PatientPayments",
+    id: string,
+    paymentsId: string,
+    patientId: string,
+    payments:  {
+      __typename: "Payments",
+      id: string,
+      amount: number,
+      dayIssued: string,
+      dayFulfilled?: string | null,
+      isPaid: boolean,
+      patients?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    patient:  {
+      __typename: "Patient",
+      id: string,
+      name?: string | null,
+      address?: string | null,
+      dateOfBirth?: string | null,
+      gender?: string | null,
+      InsuranceCarrier?:  {
+        __typename: "InsuranceCarrier",
+        id: string,
+        name: string,
+        address?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      Medications?:  {
+        __typename: "ModelMedicationConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      MedicalEncounters?:  {
+        __typename: "ModelMedicalEncounterConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Appointments?:  {
+        __typename: "ModelAppointmentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Physician?:  {
+        __typename: "Physician",
+        id: string,
+        name?: string | null,
+        cellPhoneNumber?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      cell?: string | null,
+      Payments?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      paymentStatus?: InsuranceCarrierStatus | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      patientInsuranceCarrierId?: string | null,
+      patientPhysicianId?: string | null,
+      owner?: string | null,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type GetPaymentsQueryVariables = {
+  id: string,
+};
+
+export type GetPaymentsQuery = {
+  getPayments?:  {
+    __typename: "Payments",
+    id: string,
+    amount: number,
+    dayIssued: string,
+    dayFulfilled?: string | null,
+    isPaid: boolean,
+    patients?:  {
+      __typename: "ModelPatientPaymentsConnection",
+      items:  Array< {
+        __typename: "PatientPayments",
+        id: string,
+        paymentsId: string,
+        patientId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListPaymentsQueryVariables = {
+  filter?: ModelPaymentsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListPaymentsQuery = {
+  listPayments?:  {
+    __typename: "ModelPaymentsConnection",
+    items:  Array< {
+      __typename: "Payments",
+      id: string,
+      amount: number,
+      dayIssued: string,
+      dayFulfilled?: string | null,
+      isPaid: boolean,
+      patients?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncPaymentsQueryVariables = {
+  filter?: ModelPaymentsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncPaymentsQuery = {
+  syncPayments?:  {
+    __typename: "ModelPaymentsConnection",
+    items:  Array< {
+      __typename: "Payments",
+      id: string,
+      amount: number,
+      dayIssued: string,
+      dayFulfilled?: string | null,
+      isPaid: boolean,
+      patients?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
       owner?: string | null,
     } | null >,
     nextToken?: string | null,
@@ -3895,6 +4452,7 @@ export type GetVendorQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -3919,6 +4477,7 @@ export type ListVendorsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -3947,6 +4506,7 @@ export type SyncVendorsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -3976,6 +4536,7 @@ export type VendorsByEquipmentIDQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4000,6 +4561,7 @@ export type GetEquipmentMaintenanceQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -4025,6 +4587,7 @@ export type ListEquipmentMaintenancesQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4054,6 +4617,7 @@ export type SyncEquipmentMaintenancesQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4084,6 +4648,7 @@ export type EquipmentMaintenancesByEquipmentIDQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4105,6 +4670,7 @@ export type GetEquipmentOwnedQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -4127,6 +4693,7 @@ export type ListEquipmentOwnedsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4153,6 +4720,7 @@ export type SyncEquipmentOwnedsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4174,6 +4742,7 @@ export type GetEquipmentLeasedQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -4196,6 +4765,7 @@ export type ListEquipmentLeasedsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4222,6 +4792,7 @@ export type SyncEquipmentLeasedsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4255,6 +4826,7 @@ export type GetEquipmentQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -4274,6 +4846,7 @@ export type GetEquipmentQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -4288,6 +4861,7 @@ export type GetEquipmentQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     EquipmentLeased?:  {
       __typename: "EquipmentLeased",
@@ -4299,6 +4873,7 @@ export type GetEquipmentQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -4307,6 +4882,7 @@ export type GetEquipmentQuery = {
     _lastChangedAt: number,
     equipmentEquipmentOwnedId?: string | null,
     equipmentEquipmentLeasedId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -4347,6 +4923,7 @@ export type ListEquipmentQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       EquipmentLeased?:  {
         __typename: "EquipmentLeased",
@@ -4358,6 +4935,7 @@ export type ListEquipmentQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -4366,6 +4944,7 @@ export type ListEquipmentQuery = {
       _lastChangedAt: number,
       equipmentEquipmentOwnedId?: string | null,
       equipmentEquipmentLeasedId?: string | null,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4410,6 +4989,7 @@ export type SyncEquipmentQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       EquipmentLeased?:  {
         __typename: "EquipmentLeased",
@@ -4421,6 +5001,7 @@ export type SyncEquipmentQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -4429,6 +5010,7 @@ export type SyncEquipmentQuery = {
       _lastChangedAt: number,
       equipmentEquipmentOwnedId?: string | null,
       equipmentEquipmentLeasedId?: string | null,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4453,6 +5035,7 @@ export type GetLabTestQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -4478,6 +5061,7 @@ export type ListLabTestsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4507,6 +5091,7 @@ export type SyncLabTestsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4537,6 +5122,7 @@ export type LabTestsByLaborderIDQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4559,6 +5145,7 @@ export type GetServiceProvidedByClinicQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -4582,6 +5169,7 @@ export type ListServiceProvidedByClinicsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4609,6 +5197,7 @@ export type SyncServiceProvidedByClinicsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4639,6 +5228,7 @@ export type GetWorkScheduleQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -4660,6 +5250,7 @@ export type ListWorkSchedulesQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4685,6 +5276,7 @@ export type SyncWorkSchedulesQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4711,6 +5303,7 @@ export type WorkSchedulesByPhysicianIDQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4738,6 +5331,7 @@ export type GetPhysicianQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -4757,6 +5351,7 @@ export type GetPhysicianQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         appointmentServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -4766,6 +5361,7 @@ export type GetPhysicianQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -4798,6 +5394,7 @@ export type ListPhysiciansQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4834,6 +5431,7 @@ export type SyncPhysiciansQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4863,6 +5461,7 @@ export type GetAppointmentQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -4870,6 +5469,7 @@ export type GetAppointmentQuery = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     appointmentServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -4900,6 +5500,7 @@ export type ListAppointmentsQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -4907,6 +5508,7 @@ export type ListAppointmentsQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       appointmentServiceProvidedByClinicId?: string | null,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4941,6 +5543,7 @@ export type SyncAppointmentsQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -4948,6 +5551,7 @@ export type SyncAppointmentsQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       appointmentServiceProvidedByClinicId?: string | null,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -4983,6 +5587,7 @@ export type AppointmentsByPatientIDQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -4990,6 +5595,7 @@ export type AppointmentsByPatientIDQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       appointmentServiceProvidedByClinicId?: string | null,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -5025,6 +5631,7 @@ export type AppointmentsByPhysicianIDQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -5032,6 +5639,7 @@ export type AppointmentsByPhysicianIDQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       appointmentServiceProvidedByClinicId?: string | null,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -5063,6 +5671,7 @@ export type GetLabOrderQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     LabTests?:  {
       __typename: "ModelLabTestConnection",
@@ -5079,6 +5688,7 @@ export type GetLabOrderQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -5089,6 +5699,7 @@ export type GetLabOrderQuery = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     labOrderServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -5121,6 +5732,7 @@ export type ListLabOrdersQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       LabTests?:  {
         __typename: "ModelLabTestConnection",
@@ -5133,6 +5745,7 @@ export type ListLabOrdersQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       labOrderServiceProvidedByClinicId?: string | null,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -5169,6 +5782,7 @@ export type SyncLabOrdersQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       LabTests?:  {
         __typename: "ModelLabTestConnection",
@@ -5181,6 +5795,7 @@ export type SyncLabOrdersQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       labOrderServiceProvidedByClinicId?: string | null,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -5218,6 +5833,7 @@ export type LabOrdersByMedicalencounterIDQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       LabTests?:  {
         __typename: "ModelLabTestConnection",
@@ -5230,6 +5846,7 @@ export type LabOrdersByMedicalencounterIDQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       labOrderServiceProvidedByClinicId?: string | null,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -5262,6 +5879,7 @@ export type GetPrescriptionQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -5269,6 +5887,7 @@ export type GetPrescriptionQuery = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     prescriptionServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -5302,6 +5921,7 @@ export type ListPrescriptionsQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -5309,6 +5929,7 @@ export type ListPrescriptionsQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       prescriptionServiceProvidedByClinicId?: string | null,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -5346,6 +5967,7 @@ export type SyncPrescriptionsQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -5353,6 +5975,7 @@ export type SyncPrescriptionsQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       prescriptionServiceProvidedByClinicId?: string | null,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -5391,6 +6014,7 @@ export type PrescriptionsByMedicalencounterIDQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -5398,6 +6022,7 @@ export type PrescriptionsByMedicalencounterIDQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       prescriptionServiceProvidedByClinicId?: string | null,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -5421,6 +6046,7 @@ export type GetVitalSignQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -5445,6 +6071,7 @@ export type ListVitalSignsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -5473,6 +6100,7 @@ export type SyncVitalSignsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -5493,7 +6121,6 @@ export type GetMedicalEncounterQuery = {
     diagnosis: string,
     treatmentPlan?: string | null,
     referralToSpecialists?: string | null,
-    recommendedFollowUp?: string | null,
     patientID: string,
     VitalSign?:  {
       __typename: "VitalSign",
@@ -5507,6 +6134,7 @@ export type GetMedicalEncounterQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     Prescriptions?:  {
       __typename: "ModelPrescriptionConnection",
@@ -5526,6 +6154,7 @@ export type GetMedicalEncounterQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         prescriptionServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -5547,6 +6176,7 @@ export type GetMedicalEncounterQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         labOrderServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -5557,6 +6187,7 @@ export type GetMedicalEncounterQuery = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     medicalEncounterVitalSignId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -5578,7 +6209,6 @@ export type ListMedicalEncountersQuery = {
       diagnosis: string,
       treatmentPlan?: string | null,
       referralToSpecialists?: string | null,
-      recommendedFollowUp?: string | null,
       patientID: string,
       VitalSign?:  {
         __typename: "VitalSign",
@@ -5592,6 +6222,7 @@ export type ListMedicalEncountersQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       Prescriptions?:  {
         __typename: "ModelPrescriptionConnection",
@@ -5609,6 +6240,7 @@ export type ListMedicalEncountersQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       medicalEncounterVitalSignId?: string | null,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -5634,7 +6266,6 @@ export type SyncMedicalEncountersQuery = {
       diagnosis: string,
       treatmentPlan?: string | null,
       referralToSpecialists?: string | null,
-      recommendedFollowUp?: string | null,
       patientID: string,
       VitalSign?:  {
         __typename: "VitalSign",
@@ -5648,6 +6279,7 @@ export type SyncMedicalEncountersQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       Prescriptions?:  {
         __typename: "ModelPrescriptionConnection",
@@ -5665,6 +6297,7 @@ export type SyncMedicalEncountersQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       medicalEncounterVitalSignId?: string | null,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -5691,7 +6324,6 @@ export type MedicalEncountersByPatientIDQuery = {
       diagnosis: string,
       treatmentPlan?: string | null,
       referralToSpecialists?: string | null,
-      recommendedFollowUp?: string | null,
       patientID: string,
       VitalSign?:  {
         __typename: "VitalSign",
@@ -5705,6 +6337,7 @@ export type MedicalEncountersByPatientIDQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null,
       Prescriptions?:  {
         __typename: "ModelPrescriptionConnection",
@@ -5722,6 +6355,7 @@ export type MedicalEncountersByPatientIDQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       medicalEncounterVitalSignId?: string | null,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -5854,12 +6488,12 @@ export type GetInsuranceCarrierQuery = {
     id: string,
     name: string,
     address?: string | null,
-    status?: InsuranceCarrierStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -5877,12 +6511,12 @@ export type ListInsuranceCarriersQuery = {
       id: string,
       name: string,
       address?: string | null,
-      status?: InsuranceCarrierStatus | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -5904,28 +6538,27 @@ export type SyncInsuranceCarriersQuery = {
       id: string,
       name: string,
       address?: string | null,
-      status?: InsuranceCarrierStatus | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
   } | null,
 };
 
-export type OnCreatePatientSubscriptionVariables = {
-  filter?: ModelSubscriptionPatientFilterInput | null,
-  owner?: string | null,
+export type GetPatientQueryVariables = {
+  id: string,
 };
 
-export type OnCreatePatientSubscription = {
-  onCreatePatient?:  {
+export type GetPatientQuery = {
+  getPatient?:  {
     __typename: "Patient",
     id: string,
-    user: string,
+    name?: string | null,
     address?: string | null,
     dateOfBirth?: string | null,
     gender?: string | null,
@@ -5934,12 +6567,12 @@ export type OnCreatePatientSubscription = {
       id: string,
       name: string,
       address?: string | null,
-      status?: InsuranceCarrierStatus | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     Medications?:  {
       __typename: "ModelMedicationConnection",
@@ -5973,7 +6606,6 @@ export type OnCreatePatientSubscription = {
         diagnosis: string,
         treatmentPlan?: string | null,
         referralToSpecialists?: string | null,
-        recommendedFollowUp?: string | null,
         patientID: string,
         createdAt: string,
         updatedAt: string,
@@ -5981,6 +6613,7 @@ export type OnCreatePatientSubscription = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         medicalEncounterVitalSignId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -6000,6 +6633,7 @@ export type OnCreatePatientSubscription = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         appointmentServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -6024,8 +6658,27 @@ export type OnCreatePatientSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     cell?: string | null,
+    Payments?:  {
+      __typename: "ModelPatientPaymentsConnection",
+      items:  Array< {
+        __typename: "PatientPayments",
+        id: string,
+        paymentsId: string,
+        patientId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    paymentStatus?: InsuranceCarrierStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -6037,101 +6690,41 @@ export type OnCreatePatientSubscription = {
   } | null,
 };
 
-export type OnUpdatePatientSubscriptionVariables = {
-  filter?: ModelSubscriptionPatientFilterInput | null,
-  owner?: string | null,
+export type ListPatientsQueryVariables = {
+  filter?: ModelPatientFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
 };
 
-export type OnUpdatePatientSubscription = {
-  onUpdatePatient?:  {
-    __typename: "Patient",
-    id: string,
-    user: string,
-    address?: string | null,
-    dateOfBirth?: string | null,
-    gender?: string | null,
-    InsuranceCarrier?:  {
-      __typename: "InsuranceCarrier",
-      id: string,
-      name: string,
-      address?: string | null,
-      status?: InsuranceCarrierStatus | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
-    Medications?:  {
-      __typename: "ModelMedicationConnection",
-      items:  Array< {
-        __typename: "Medication",
-        id: string,
-        name?: string | null,
-        usage?: string | null,
-        dosage?: string | null,
-        frequency?: string | null,
-        sideEffects?: string | null,
-        interactions?: string | null,
-        patientID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    MedicalEncounters?:  {
-      __typename: "ModelMedicalEncounterConnection",
-      items:  Array< {
-        __typename: "MedicalEncounter",
-        id: string,
-        date: string,
-        practitionerSeen: Array< Practitioner | null >,
-        complaints?: string | null,
-        diagnosis: string,
-        treatmentPlan?: string | null,
-        referralToSpecialists?: string | null,
-        recommendedFollowUp?: string | null,
-        patientID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        medicalEncounterVitalSignId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    Appointments?:  {
-      __typename: "ModelAppointmentConnection",
-      items:  Array< {
-        __typename: "Appointment",
-        id: string,
-        time?: string | null,
-        type?: string | null,
-        patientID: string,
-        physicianID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        appointmentServiceProvidedByClinicId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    Physician?:  {
-      __typename: "Physician",
+export type ListPatientsQuery = {
+  listPatients?:  {
+    __typename: "ModelPatientConnection",
+    items:  Array< {
+      __typename: "Patient",
       id: string,
       name?: string | null,
-      cellPhoneNumber?: string | null,
-      WorkSchedules?:  {
-        __typename: "ModelWorkScheduleConnection",
+      address?: string | null,
+      dateOfBirth?: string | null,
+      gender?: string | null,
+      InsuranceCarrier?:  {
+        __typename: "InsuranceCarrier",
+        id: string,
+        name: string,
+        address?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      Medications?:  {
+        __typename: "ModelMedicationConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      MedicalEncounters?:  {
+        __typename: "ModelMedicalEncounterConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -6140,147 +6733,573 @@ export type OnUpdatePatientSubscription = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
+      Physician?:  {
+        __typename: "Physician",
+        id: string,
+        name?: string | null,
+        cellPhoneNumber?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      cell?: string | null,
+      Payments?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      paymentStatus?: InsuranceCarrierStatus | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
-    cell?: string | null,
+      patientInsuranceCarrierId?: string | null,
+      patientPhysicianId?: string | null,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncPatientsQueryVariables = {
+  filter?: ModelPatientFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncPatientsQuery = {
+  syncPatients?:  {
+    __typename: "ModelPatientConnection",
+    items:  Array< {
+      __typename: "Patient",
+      id: string,
+      name?: string | null,
+      address?: string | null,
+      dateOfBirth?: string | null,
+      gender?: string | null,
+      InsuranceCarrier?:  {
+        __typename: "InsuranceCarrier",
+        id: string,
+        name: string,
+        address?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      Medications?:  {
+        __typename: "ModelMedicationConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      MedicalEncounters?:  {
+        __typename: "ModelMedicalEncounterConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Appointments?:  {
+        __typename: "ModelAppointmentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Physician?:  {
+        __typename: "Physician",
+        id: string,
+        name?: string | null,
+        cellPhoneNumber?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      cell?: string | null,
+      Payments?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      paymentStatus?: InsuranceCarrierStatus | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      patientInsuranceCarrierId?: string | null,
+      patientPhysicianId?: string | null,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type GetPatientPaymentsQueryVariables = {
+  id: string,
+};
+
+export type GetPatientPaymentsQuery = {
+  getPatientPayments?:  {
+    __typename: "PatientPayments",
+    id: string,
+    paymentsId: string,
+    patientId: string,
+    payments:  {
+      __typename: "Payments",
+      id: string,
+      amount: number,
+      dayIssued: string,
+      dayFulfilled?: string | null,
+      isPaid: boolean,
+      patients?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    patient:  {
+      __typename: "Patient",
+      id: string,
+      name?: string | null,
+      address?: string | null,
+      dateOfBirth?: string | null,
+      gender?: string | null,
+      InsuranceCarrier?:  {
+        __typename: "InsuranceCarrier",
+        id: string,
+        name: string,
+        address?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      Medications?:  {
+        __typename: "ModelMedicationConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      MedicalEncounters?:  {
+        __typename: "ModelMedicalEncounterConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Appointments?:  {
+        __typename: "ModelAppointmentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Physician?:  {
+        __typename: "Physician",
+        id: string,
+        name?: string | null,
+        cellPhoneNumber?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      cell?: string | null,
+      Payments?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      paymentStatus?: InsuranceCarrierStatus | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      patientInsuranceCarrierId?: string | null,
+      patientPhysicianId?: string | null,
+      owner?: string | null,
+    },
     createdAt: string,
     updatedAt: string,
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    patientInsuranceCarrierId?: string | null,
-    patientPhysicianId?: string | null,
     owner?: string | null,
   } | null,
 };
 
-export type OnDeletePatientSubscriptionVariables = {
-  filter?: ModelSubscriptionPatientFilterInput | null,
+export type ListPatientPaymentsQueryVariables = {
+  filter?: ModelPatientPaymentsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListPatientPaymentsQuery = {
+  listPatientPayments?:  {
+    __typename: "ModelPatientPaymentsConnection",
+    items:  Array< {
+      __typename: "PatientPayments",
+      id: string,
+      paymentsId: string,
+      patientId: string,
+      payments:  {
+        __typename: "Payments",
+        id: string,
+        amount: number,
+        dayIssued: string,
+        dayFulfilled?: string | null,
+        isPaid: boolean,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      },
+      patient:  {
+        __typename: "Patient",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        dateOfBirth?: string | null,
+        gender?: string | null,
+        cell?: string | null,
+        paymentStatus?: InsuranceCarrierStatus | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        patientInsuranceCarrierId?: string | null,
+        patientPhysicianId?: string | null,
+        owner?: string | null,
+      },
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncPatientPaymentsQueryVariables = {
+  filter?: ModelPatientPaymentsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncPatientPaymentsQuery = {
+  syncPatientPayments?:  {
+    __typename: "ModelPatientPaymentsConnection",
+    items:  Array< {
+      __typename: "PatientPayments",
+      id: string,
+      paymentsId: string,
+      patientId: string,
+      payments:  {
+        __typename: "Payments",
+        id: string,
+        amount: number,
+        dayIssued: string,
+        dayFulfilled?: string | null,
+        isPaid: boolean,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      },
+      patient:  {
+        __typename: "Patient",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        dateOfBirth?: string | null,
+        gender?: string | null,
+        cell?: string | null,
+        paymentStatus?: InsuranceCarrierStatus | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        patientInsuranceCarrierId?: string | null,
+        patientPhysicianId?: string | null,
+        owner?: string | null,
+      },
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type PatientPaymentsByPaymentsIdQueryVariables = {
+  paymentsId: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPatientPaymentsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type PatientPaymentsByPaymentsIdQuery = {
+  patientPaymentsByPaymentsId?:  {
+    __typename: "ModelPatientPaymentsConnection",
+    items:  Array< {
+      __typename: "PatientPayments",
+      id: string,
+      paymentsId: string,
+      patientId: string,
+      payments:  {
+        __typename: "Payments",
+        id: string,
+        amount: number,
+        dayIssued: string,
+        dayFulfilled?: string | null,
+        isPaid: boolean,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      },
+      patient:  {
+        __typename: "Patient",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        dateOfBirth?: string | null,
+        gender?: string | null,
+        cell?: string | null,
+        paymentStatus?: InsuranceCarrierStatus | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        patientInsuranceCarrierId?: string | null,
+        patientPhysicianId?: string | null,
+        owner?: string | null,
+      },
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type PatientPaymentsByPatientIdQueryVariables = {
+  patientId: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPatientPaymentsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type PatientPaymentsByPatientIdQuery = {
+  patientPaymentsByPatientId?:  {
+    __typename: "ModelPatientPaymentsConnection",
+    items:  Array< {
+      __typename: "PatientPayments",
+      id: string,
+      paymentsId: string,
+      patientId: string,
+      payments:  {
+        __typename: "Payments",
+        id: string,
+        amount: number,
+        dayIssued: string,
+        dayFulfilled?: string | null,
+        isPaid: boolean,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      },
+      patient:  {
+        __typename: "Patient",
+        id: string,
+        name?: string | null,
+        address?: string | null,
+        dateOfBirth?: string | null,
+        gender?: string | null,
+        cell?: string | null,
+        paymentStatus?: InsuranceCarrierStatus | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        patientInsuranceCarrierId?: string | null,
+        patientPhysicianId?: string | null,
+        owner?: string | null,
+      },
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type OnCreatePaymentsSubscriptionVariables = {
+  filter?: ModelSubscriptionPaymentsFilterInput | null,
   owner?: string | null,
 };
 
-export type OnDeletePatientSubscription = {
-  onDeletePatient?:  {
-    __typename: "Patient",
+export type OnCreatePaymentsSubscription = {
+  onCreatePayments?:  {
+    __typename: "Payments",
     id: string,
-    user: string,
-    address?: string | null,
-    dateOfBirth?: string | null,
-    gender?: string | null,
-    InsuranceCarrier?:  {
-      __typename: "InsuranceCarrier",
-      id: string,
-      name: string,
-      address?: string | null,
-      status?: InsuranceCarrierStatus | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
-    Medications?:  {
-      __typename: "ModelMedicationConnection",
+    amount: number,
+    dayIssued: string,
+    dayFulfilled?: string | null,
+    isPaid: boolean,
+    patients?:  {
+      __typename: "ModelPatientPaymentsConnection",
       items:  Array< {
-        __typename: "Medication",
+        __typename: "PatientPayments",
         id: string,
-        name?: string | null,
-        usage?: string | null,
-        dosage?: string | null,
-        frequency?: string | null,
-        sideEffects?: string | null,
-        interactions?: string | null,
-        patientID: string,
+        paymentsId: string,
+        patientId: string,
         createdAt: string,
         updatedAt: string,
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    MedicalEncounters?:  {
-      __typename: "ModelMedicalEncounterConnection",
-      items:  Array< {
-        __typename: "MedicalEncounter",
-        id: string,
-        date: string,
-        practitionerSeen: Array< Practitioner | null >,
-        complaints?: string | null,
-        diagnosis: string,
-        treatmentPlan?: string | null,
-        referralToSpecialists?: string | null,
-        recommendedFollowUp?: string | null,
-        patientID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        medicalEncounterVitalSignId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    Appointments?:  {
-      __typename: "ModelAppointmentConnection",
-      items:  Array< {
-        __typename: "Appointment",
-        id: string,
-        time?: string | null,
-        type?: string | null,
-        patientID: string,
-        physicianID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        appointmentServiceProvidedByClinicId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    Physician?:  {
-      __typename: "Physician",
-      id: string,
-      name?: string | null,
-      cellPhoneNumber?: string | null,
-      WorkSchedules?:  {
-        __typename: "ModelWorkScheduleConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      Appointments?:  {
-        __typename: "ModelAppointmentConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
-    cell?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    patientInsuranceCarrierId?: string | null,
-    patientPhysicianId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdatePaymentsSubscriptionVariables = {
+  filter?: ModelSubscriptionPaymentsFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdatePaymentsSubscription = {
+  onUpdatePayments?:  {
+    __typename: "Payments",
+    id: string,
+    amount: number,
+    dayIssued: string,
+    dayFulfilled?: string | null,
+    isPaid: boolean,
+    patients?:  {
+      __typename: "ModelPatientPaymentsConnection",
+      items:  Array< {
+        __typename: "PatientPayments",
+        id: string,
+        paymentsId: string,
+        patientId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeletePaymentsSubscriptionVariables = {
+  filter?: ModelSubscriptionPaymentsFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeletePaymentsSubscription = {
+  onDeletePayments?:  {
+    __typename: "Payments",
+    id: string,
+    amount: number,
+    dayIssued: string,
+    dayFulfilled?: string | null,
+    isPaid: boolean,
+    patients?:  {
+      __typename: "ModelPatientPaymentsConnection",
+      items:  Array< {
+        __typename: "PatientPayments",
+        id: string,
+        paymentsId: string,
+        patientId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
     owner?: string | null,
   } | null,
 };
 
 export type OnCreateVendorSubscriptionVariables = {
   filter?: ModelSubscriptionVendorFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateVendorSubscription = {
@@ -6296,11 +7315,13 @@ export type OnCreateVendorSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateVendorSubscriptionVariables = {
   filter?: ModelSubscriptionVendorFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateVendorSubscription = {
@@ -6316,11 +7337,13 @@ export type OnUpdateVendorSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteVendorSubscriptionVariables = {
   filter?: ModelSubscriptionVendorFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteVendorSubscription = {
@@ -6336,11 +7359,13 @@ export type OnDeleteVendorSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnCreateEquipmentMaintenanceSubscriptionVariables = {
   filter?: ModelSubscriptionEquipmentMaintenanceFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateEquipmentMaintenanceSubscription = {
@@ -6357,11 +7382,13 @@ export type OnCreateEquipmentMaintenanceSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateEquipmentMaintenanceSubscriptionVariables = {
   filter?: ModelSubscriptionEquipmentMaintenanceFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateEquipmentMaintenanceSubscription = {
@@ -6378,11 +7405,13 @@ export type OnUpdateEquipmentMaintenanceSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteEquipmentMaintenanceSubscriptionVariables = {
   filter?: ModelSubscriptionEquipmentMaintenanceFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteEquipmentMaintenanceSubscription = {
@@ -6399,11 +7428,13 @@ export type OnDeleteEquipmentMaintenanceSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnCreateEquipmentOwnedSubscriptionVariables = {
   filter?: ModelSubscriptionEquipmentOwnedFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateEquipmentOwnedSubscription = {
@@ -6417,11 +7448,13 @@ export type OnCreateEquipmentOwnedSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateEquipmentOwnedSubscriptionVariables = {
   filter?: ModelSubscriptionEquipmentOwnedFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateEquipmentOwnedSubscription = {
@@ -6435,11 +7468,13 @@ export type OnUpdateEquipmentOwnedSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteEquipmentOwnedSubscriptionVariables = {
   filter?: ModelSubscriptionEquipmentOwnedFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteEquipmentOwnedSubscription = {
@@ -6453,11 +7488,13 @@ export type OnDeleteEquipmentOwnedSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnCreateEquipmentLeasedSubscriptionVariables = {
   filter?: ModelSubscriptionEquipmentLeasedFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateEquipmentLeasedSubscription = {
@@ -6471,11 +7508,13 @@ export type OnCreateEquipmentLeasedSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateEquipmentLeasedSubscriptionVariables = {
   filter?: ModelSubscriptionEquipmentLeasedFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateEquipmentLeasedSubscription = {
@@ -6489,11 +7528,13 @@ export type OnUpdateEquipmentLeasedSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteEquipmentLeasedSubscriptionVariables = {
   filter?: ModelSubscriptionEquipmentLeasedFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteEquipmentLeasedSubscription = {
@@ -6507,11 +7548,13 @@ export type OnDeleteEquipmentLeasedSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnCreateEquipmentSubscriptionVariables = {
   filter?: ModelSubscriptionEquipmentFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateEquipmentSubscription = {
@@ -6537,6 +7580,7 @@ export type OnCreateEquipmentSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -6556,6 +7600,7 @@ export type OnCreateEquipmentSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -6570,6 +7615,7 @@ export type OnCreateEquipmentSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     EquipmentLeased?:  {
       __typename: "EquipmentLeased",
@@ -6581,6 +7627,7 @@ export type OnCreateEquipmentSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -6589,11 +7636,13 @@ export type OnCreateEquipmentSubscription = {
     _lastChangedAt: number,
     equipmentEquipmentOwnedId?: string | null,
     equipmentEquipmentLeasedId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateEquipmentSubscriptionVariables = {
   filter?: ModelSubscriptionEquipmentFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateEquipmentSubscription = {
@@ -6619,6 +7668,7 @@ export type OnUpdateEquipmentSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -6638,6 +7688,7 @@ export type OnUpdateEquipmentSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -6652,6 +7703,7 @@ export type OnUpdateEquipmentSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     EquipmentLeased?:  {
       __typename: "EquipmentLeased",
@@ -6663,6 +7715,7 @@ export type OnUpdateEquipmentSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -6671,11 +7724,13 @@ export type OnUpdateEquipmentSubscription = {
     _lastChangedAt: number,
     equipmentEquipmentOwnedId?: string | null,
     equipmentEquipmentLeasedId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteEquipmentSubscriptionVariables = {
   filter?: ModelSubscriptionEquipmentFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteEquipmentSubscription = {
@@ -6701,6 +7756,7 @@ export type OnDeleteEquipmentSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -6720,6 +7776,7 @@ export type OnDeleteEquipmentSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -6734,6 +7791,7 @@ export type OnDeleteEquipmentSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     EquipmentLeased?:  {
       __typename: "EquipmentLeased",
@@ -6745,6 +7803,7 @@ export type OnDeleteEquipmentSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -6753,11 +7812,13 @@ export type OnDeleteEquipmentSubscription = {
     _lastChangedAt: number,
     equipmentEquipmentOwnedId?: string | null,
     equipmentEquipmentLeasedId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
 export type OnCreateLabTestSubscriptionVariables = {
   filter?: ModelSubscriptionLabTestFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateLabTestSubscription = {
@@ -6774,11 +7835,13 @@ export type OnCreateLabTestSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateLabTestSubscriptionVariables = {
   filter?: ModelSubscriptionLabTestFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateLabTestSubscription = {
@@ -6795,11 +7858,13 @@ export type OnUpdateLabTestSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteLabTestSubscriptionVariables = {
   filter?: ModelSubscriptionLabTestFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteLabTestSubscription = {
@@ -6816,11 +7881,13 @@ export type OnDeleteLabTestSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnCreateServiceProvidedByClinicSubscriptionVariables = {
   filter?: ModelSubscriptionServiceProvidedByClinicFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateServiceProvidedByClinicSubscription = {
@@ -6835,11 +7902,13 @@ export type OnCreateServiceProvidedByClinicSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateServiceProvidedByClinicSubscriptionVariables = {
   filter?: ModelSubscriptionServiceProvidedByClinicFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateServiceProvidedByClinicSubscription = {
@@ -6854,11 +7923,13 @@ export type OnUpdateServiceProvidedByClinicSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteServiceProvidedByClinicSubscriptionVariables = {
   filter?: ModelSubscriptionServiceProvidedByClinicFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteServiceProvidedByClinicSubscription = {
@@ -6873,11 +7944,13 @@ export type OnDeleteServiceProvidedByClinicSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnCreateWorkScheduleSubscriptionVariables = {
   filter?: ModelSubscriptionWorkScheduleFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateWorkScheduleSubscription = {
@@ -6900,11 +7973,13 @@ export type OnCreateWorkScheduleSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateWorkScheduleSubscriptionVariables = {
   filter?: ModelSubscriptionWorkScheduleFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateWorkScheduleSubscription = {
@@ -6927,11 +8002,13 @@ export type OnUpdateWorkScheduleSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteWorkScheduleSubscriptionVariables = {
   filter?: ModelSubscriptionWorkScheduleFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteWorkScheduleSubscription = {
@@ -6954,11 +8031,13 @@ export type OnDeleteWorkScheduleSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnCreatePhysicianSubscriptionVariables = {
   filter?: ModelSubscriptionPhysicianFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreatePhysicianSubscription = {
@@ -6978,6 +8057,7 @@ export type OnCreatePhysicianSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -6997,6 +8077,7 @@ export type OnCreatePhysicianSubscription = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         appointmentServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -7006,11 +8087,13 @@ export type OnCreatePhysicianSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdatePhysicianSubscriptionVariables = {
   filter?: ModelSubscriptionPhysicianFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdatePhysicianSubscription = {
@@ -7030,6 +8113,7 @@ export type OnUpdatePhysicianSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -7049,6 +8133,7 @@ export type OnUpdatePhysicianSubscription = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         appointmentServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -7058,11 +8143,13 @@ export type OnUpdatePhysicianSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeletePhysicianSubscriptionVariables = {
   filter?: ModelSubscriptionPhysicianFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeletePhysicianSubscription = {
@@ -7082,6 +8169,7 @@ export type OnDeletePhysicianSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -7101,6 +8189,7 @@ export type OnDeletePhysicianSubscription = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         appointmentServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -7110,11 +8199,13 @@ export type OnDeletePhysicianSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnCreateAppointmentSubscriptionVariables = {
   filter?: ModelSubscriptionAppointmentFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateAppointmentSubscription = {
@@ -7136,6 +8227,7 @@ export type OnCreateAppointmentSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -7143,11 +8235,13 @@ export type OnCreateAppointmentSubscription = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     appointmentServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateAppointmentSubscriptionVariables = {
   filter?: ModelSubscriptionAppointmentFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateAppointmentSubscription = {
@@ -7169,6 +8263,7 @@ export type OnUpdateAppointmentSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -7176,11 +8271,13 @@ export type OnUpdateAppointmentSubscription = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     appointmentServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteAppointmentSubscriptionVariables = {
   filter?: ModelSubscriptionAppointmentFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteAppointmentSubscription = {
@@ -7202,6 +8299,7 @@ export type OnDeleteAppointmentSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -7209,11 +8307,13 @@ export type OnDeleteAppointmentSubscription = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     appointmentServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
 export type OnCreateLabOrderSubscriptionVariables = {
   filter?: ModelSubscriptionLabOrderFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateLabOrderSubscription = {
@@ -7237,6 +8337,7 @@ export type OnCreateLabOrderSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     LabTests?:  {
       __typename: "ModelLabTestConnection",
@@ -7253,6 +8354,7 @@ export type OnCreateLabOrderSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -7263,11 +8365,13 @@ export type OnCreateLabOrderSubscription = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     labOrderServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateLabOrderSubscriptionVariables = {
   filter?: ModelSubscriptionLabOrderFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateLabOrderSubscription = {
@@ -7291,6 +8395,7 @@ export type OnUpdateLabOrderSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     LabTests?:  {
       __typename: "ModelLabTestConnection",
@@ -7307,6 +8412,7 @@ export type OnUpdateLabOrderSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -7317,11 +8423,13 @@ export type OnUpdateLabOrderSubscription = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     labOrderServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteLabOrderSubscriptionVariables = {
   filter?: ModelSubscriptionLabOrderFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteLabOrderSubscription = {
@@ -7345,6 +8453,7 @@ export type OnDeleteLabOrderSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     LabTests?:  {
       __typename: "ModelLabTestConnection",
@@ -7361,6 +8470,7 @@ export type OnDeleteLabOrderSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -7371,11 +8481,13 @@ export type OnDeleteLabOrderSubscription = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     labOrderServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
 export type OnCreatePrescriptionSubscriptionVariables = {
   filter?: ModelSubscriptionPrescriptionFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreatePrescriptionSubscription = {
@@ -7400,6 +8512,7 @@ export type OnCreatePrescriptionSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -7407,11 +8520,13 @@ export type OnCreatePrescriptionSubscription = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     prescriptionServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdatePrescriptionSubscriptionVariables = {
   filter?: ModelSubscriptionPrescriptionFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdatePrescriptionSubscription = {
@@ -7436,6 +8551,7 @@ export type OnUpdatePrescriptionSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -7443,11 +8559,13 @@ export type OnUpdatePrescriptionSubscription = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     prescriptionServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeletePrescriptionSubscriptionVariables = {
   filter?: ModelSubscriptionPrescriptionFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeletePrescriptionSubscription = {
@@ -7472,6 +8590,7 @@ export type OnDeletePrescriptionSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -7479,11 +8598,13 @@ export type OnDeletePrescriptionSubscription = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     prescriptionServiceProvidedByClinicId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
 export type OnCreateVitalSignSubscriptionVariables = {
   filter?: ModelSubscriptionVitalSignFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateVitalSignSubscription = {
@@ -7499,11 +8620,13 @@ export type OnCreateVitalSignSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateVitalSignSubscriptionVariables = {
   filter?: ModelSubscriptionVitalSignFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateVitalSignSubscription = {
@@ -7519,11 +8642,13 @@ export type OnUpdateVitalSignSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteVitalSignSubscriptionVariables = {
   filter?: ModelSubscriptionVitalSignFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteVitalSignSubscription = {
@@ -7539,11 +8664,13 @@ export type OnDeleteVitalSignSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnCreateMedicalEncounterSubscriptionVariables = {
   filter?: ModelSubscriptionMedicalEncounterFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateMedicalEncounterSubscription = {
@@ -7556,7 +8683,6 @@ export type OnCreateMedicalEncounterSubscription = {
     diagnosis: string,
     treatmentPlan?: string | null,
     referralToSpecialists?: string | null,
-    recommendedFollowUp?: string | null,
     patientID: string,
     VitalSign?:  {
       __typename: "VitalSign",
@@ -7570,6 +8696,7 @@ export type OnCreateMedicalEncounterSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     Prescriptions?:  {
       __typename: "ModelPrescriptionConnection",
@@ -7589,6 +8716,7 @@ export type OnCreateMedicalEncounterSubscription = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         prescriptionServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -7610,6 +8738,7 @@ export type OnCreateMedicalEncounterSubscription = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         labOrderServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -7620,11 +8749,13 @@ export type OnCreateMedicalEncounterSubscription = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     medicalEncounterVitalSignId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateMedicalEncounterSubscriptionVariables = {
   filter?: ModelSubscriptionMedicalEncounterFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateMedicalEncounterSubscription = {
@@ -7637,7 +8768,6 @@ export type OnUpdateMedicalEncounterSubscription = {
     diagnosis: string,
     treatmentPlan?: string | null,
     referralToSpecialists?: string | null,
-    recommendedFollowUp?: string | null,
     patientID: string,
     VitalSign?:  {
       __typename: "VitalSign",
@@ -7651,6 +8781,7 @@ export type OnUpdateMedicalEncounterSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     Prescriptions?:  {
       __typename: "ModelPrescriptionConnection",
@@ -7670,6 +8801,7 @@ export type OnUpdateMedicalEncounterSubscription = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         prescriptionServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -7691,6 +8823,7 @@ export type OnUpdateMedicalEncounterSubscription = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         labOrderServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -7701,11 +8834,13 @@ export type OnUpdateMedicalEncounterSubscription = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     medicalEncounterVitalSignId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteMedicalEncounterSubscriptionVariables = {
   filter?: ModelSubscriptionMedicalEncounterFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteMedicalEncounterSubscription = {
@@ -7718,7 +8853,6 @@ export type OnDeleteMedicalEncounterSubscription = {
     diagnosis: string,
     treatmentPlan?: string | null,
     referralToSpecialists?: string | null,
-    recommendedFollowUp?: string | null,
     patientID: string,
     VitalSign?:  {
       __typename: "VitalSign",
@@ -7732,6 +8866,7 @@ export type OnDeleteMedicalEncounterSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+      owner?: string | null,
     } | null,
     Prescriptions?:  {
       __typename: "ModelPrescriptionConnection",
@@ -7751,6 +8886,7 @@ export type OnDeleteMedicalEncounterSubscription = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         prescriptionServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -7772,6 +8908,7 @@ export type OnDeleteMedicalEncounterSubscription = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         labOrderServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -7782,6 +8919,7 @@ export type OnDeleteMedicalEncounterSubscription = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     medicalEncounterVitalSignId?: string | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -7856,6 +8994,7 @@ export type OnDeleteMedicationSubscription = {
 
 export type OnCreateInsuranceCarrierSubscriptionVariables = {
   filter?: ModelSubscriptionInsuranceCarrierFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateInsuranceCarrierSubscription = {
@@ -7864,17 +9003,18 @@ export type OnCreateInsuranceCarrierSubscription = {
     id: string,
     name: string,
     address?: string | null,
-    status?: InsuranceCarrierStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateInsuranceCarrierSubscriptionVariables = {
   filter?: ModelSubscriptionInsuranceCarrierFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateInsuranceCarrierSubscription = {
@@ -7883,17 +9023,18 @@ export type OnUpdateInsuranceCarrierSubscription = {
     id: string,
     name: string,
     address?: string | null,
-    status?: InsuranceCarrierStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteInsuranceCarrierSubscriptionVariables = {
   filter?: ModelSubscriptionInsuranceCarrierFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteInsuranceCarrierSubscription = {
@@ -7902,11 +9043,737 @@ export type OnDeleteInsuranceCarrierSubscription = {
     id: string,
     name: string,
     address?: string | null,
-    status?: InsuranceCarrierStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnCreatePatientSubscriptionVariables = {
+  filter?: ModelSubscriptionPatientFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreatePatientSubscription = {
+  onCreatePatient?:  {
+    __typename: "Patient",
+    id: string,
+    name?: string | null,
+    address?: string | null,
+    dateOfBirth?: string | null,
+    gender?: string | null,
+    InsuranceCarrier?:  {
+      __typename: "InsuranceCarrier",
+      id: string,
+      name: string,
+      address?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    Medications?:  {
+      __typename: "ModelMedicationConnection",
+      items:  Array< {
+        __typename: "Medication",
+        id: string,
+        name?: string | null,
+        usage?: string | null,
+        dosage?: string | null,
+        frequency?: string | null,
+        sideEffects?: string | null,
+        interactions?: string | null,
+        patientID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    MedicalEncounters?:  {
+      __typename: "ModelMedicalEncounterConnection",
+      items:  Array< {
+        __typename: "MedicalEncounter",
+        id: string,
+        date: string,
+        practitionerSeen: Array< Practitioner | null >,
+        complaints?: string | null,
+        diagnosis: string,
+        treatmentPlan?: string | null,
+        referralToSpecialists?: string | null,
+        patientID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        medicalEncounterVitalSignId?: string | null,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Appointments?:  {
+      __typename: "ModelAppointmentConnection",
+      items:  Array< {
+        __typename: "Appointment",
+        id: string,
+        time?: string | null,
+        type?: string | null,
+        patientID: string,
+        physicianID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        appointmentServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Physician?:  {
+      __typename: "Physician",
+      id: string,
+      name?: string | null,
+      cellPhoneNumber?: string | null,
+      WorkSchedules?:  {
+        __typename: "ModelWorkScheduleConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Appointments?:  {
+        __typename: "ModelAppointmentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    cell?: string | null,
+    Payments?:  {
+      __typename: "ModelPatientPaymentsConnection",
+      items:  Array< {
+        __typename: "PatientPayments",
+        id: string,
+        paymentsId: string,
+        patientId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    paymentStatus?: InsuranceCarrierStatus | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    patientInsuranceCarrierId?: string | null,
+    patientPhysicianId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdatePatientSubscriptionVariables = {
+  filter?: ModelSubscriptionPatientFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdatePatientSubscription = {
+  onUpdatePatient?:  {
+    __typename: "Patient",
+    id: string,
+    name?: string | null,
+    address?: string | null,
+    dateOfBirth?: string | null,
+    gender?: string | null,
+    InsuranceCarrier?:  {
+      __typename: "InsuranceCarrier",
+      id: string,
+      name: string,
+      address?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    Medications?:  {
+      __typename: "ModelMedicationConnection",
+      items:  Array< {
+        __typename: "Medication",
+        id: string,
+        name?: string | null,
+        usage?: string | null,
+        dosage?: string | null,
+        frequency?: string | null,
+        sideEffects?: string | null,
+        interactions?: string | null,
+        patientID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    MedicalEncounters?:  {
+      __typename: "ModelMedicalEncounterConnection",
+      items:  Array< {
+        __typename: "MedicalEncounter",
+        id: string,
+        date: string,
+        practitionerSeen: Array< Practitioner | null >,
+        complaints?: string | null,
+        diagnosis: string,
+        treatmentPlan?: string | null,
+        referralToSpecialists?: string | null,
+        patientID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        medicalEncounterVitalSignId?: string | null,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Appointments?:  {
+      __typename: "ModelAppointmentConnection",
+      items:  Array< {
+        __typename: "Appointment",
+        id: string,
+        time?: string | null,
+        type?: string | null,
+        patientID: string,
+        physicianID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        appointmentServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Physician?:  {
+      __typename: "Physician",
+      id: string,
+      name?: string | null,
+      cellPhoneNumber?: string | null,
+      WorkSchedules?:  {
+        __typename: "ModelWorkScheduleConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Appointments?:  {
+        __typename: "ModelAppointmentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    cell?: string | null,
+    Payments?:  {
+      __typename: "ModelPatientPaymentsConnection",
+      items:  Array< {
+        __typename: "PatientPayments",
+        id: string,
+        paymentsId: string,
+        patientId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    paymentStatus?: InsuranceCarrierStatus | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    patientInsuranceCarrierId?: string | null,
+    patientPhysicianId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeletePatientSubscriptionVariables = {
+  filter?: ModelSubscriptionPatientFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeletePatientSubscription = {
+  onDeletePatient?:  {
+    __typename: "Patient",
+    id: string,
+    name?: string | null,
+    address?: string | null,
+    dateOfBirth?: string | null,
+    gender?: string | null,
+    InsuranceCarrier?:  {
+      __typename: "InsuranceCarrier",
+      id: string,
+      name: string,
+      address?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    Medications?:  {
+      __typename: "ModelMedicationConnection",
+      items:  Array< {
+        __typename: "Medication",
+        id: string,
+        name?: string | null,
+        usage?: string | null,
+        dosage?: string | null,
+        frequency?: string | null,
+        sideEffects?: string | null,
+        interactions?: string | null,
+        patientID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    MedicalEncounters?:  {
+      __typename: "ModelMedicalEncounterConnection",
+      items:  Array< {
+        __typename: "MedicalEncounter",
+        id: string,
+        date: string,
+        practitionerSeen: Array< Practitioner | null >,
+        complaints?: string | null,
+        diagnosis: string,
+        treatmentPlan?: string | null,
+        referralToSpecialists?: string | null,
+        patientID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        medicalEncounterVitalSignId?: string | null,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Appointments?:  {
+      __typename: "ModelAppointmentConnection",
+      items:  Array< {
+        __typename: "Appointment",
+        id: string,
+        time?: string | null,
+        type?: string | null,
+        patientID: string,
+        physicianID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        appointmentServiceProvidedByClinicId?: string | null,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    Physician?:  {
+      __typename: "Physician",
+      id: string,
+      name?: string | null,
+      cellPhoneNumber?: string | null,
+      WorkSchedules?:  {
+        __typename: "ModelWorkScheduleConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Appointments?:  {
+        __typename: "ModelAppointmentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null,
+    cell?: string | null,
+    Payments?:  {
+      __typename: "ModelPatientPaymentsConnection",
+      items:  Array< {
+        __typename: "PatientPayments",
+        id: string,
+        paymentsId: string,
+        patientId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    paymentStatus?: InsuranceCarrierStatus | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    patientInsuranceCarrierId?: string | null,
+    patientPhysicianId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnCreatePatientPaymentsSubscriptionVariables = {
+  filter?: ModelSubscriptionPatientPaymentsFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreatePatientPaymentsSubscription = {
+  onCreatePatientPayments?:  {
+    __typename: "PatientPayments",
+    id: string,
+    paymentsId: string,
+    patientId: string,
+    payments:  {
+      __typename: "Payments",
+      id: string,
+      amount: number,
+      dayIssued: string,
+      dayFulfilled?: string | null,
+      isPaid: boolean,
+      patients?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    patient:  {
+      __typename: "Patient",
+      id: string,
+      name?: string | null,
+      address?: string | null,
+      dateOfBirth?: string | null,
+      gender?: string | null,
+      InsuranceCarrier?:  {
+        __typename: "InsuranceCarrier",
+        id: string,
+        name: string,
+        address?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      Medications?:  {
+        __typename: "ModelMedicationConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      MedicalEncounters?:  {
+        __typename: "ModelMedicalEncounterConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Appointments?:  {
+        __typename: "ModelAppointmentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Physician?:  {
+        __typename: "Physician",
+        id: string,
+        name?: string | null,
+        cellPhoneNumber?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      cell?: string | null,
+      Payments?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      paymentStatus?: InsuranceCarrierStatus | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      patientInsuranceCarrierId?: string | null,
+      patientPhysicianId?: string | null,
+      owner?: string | null,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdatePatientPaymentsSubscriptionVariables = {
+  filter?: ModelSubscriptionPatientPaymentsFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdatePatientPaymentsSubscription = {
+  onUpdatePatientPayments?:  {
+    __typename: "PatientPayments",
+    id: string,
+    paymentsId: string,
+    patientId: string,
+    payments:  {
+      __typename: "Payments",
+      id: string,
+      amount: number,
+      dayIssued: string,
+      dayFulfilled?: string | null,
+      isPaid: boolean,
+      patients?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    patient:  {
+      __typename: "Patient",
+      id: string,
+      name?: string | null,
+      address?: string | null,
+      dateOfBirth?: string | null,
+      gender?: string | null,
+      InsuranceCarrier?:  {
+        __typename: "InsuranceCarrier",
+        id: string,
+        name: string,
+        address?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      Medications?:  {
+        __typename: "ModelMedicationConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      MedicalEncounters?:  {
+        __typename: "ModelMedicalEncounterConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Appointments?:  {
+        __typename: "ModelAppointmentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Physician?:  {
+        __typename: "Physician",
+        id: string,
+        name?: string | null,
+        cellPhoneNumber?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      cell?: string | null,
+      Payments?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      paymentStatus?: InsuranceCarrierStatus | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      patientInsuranceCarrierId?: string | null,
+      patientPhysicianId?: string | null,
+      owner?: string | null,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeletePatientPaymentsSubscriptionVariables = {
+  filter?: ModelSubscriptionPatientPaymentsFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeletePatientPaymentsSubscription = {
+  onDeletePatientPayments?:  {
+    __typename: "PatientPayments",
+    id: string,
+    paymentsId: string,
+    patientId: string,
+    payments:  {
+      __typename: "Payments",
+      id: string,
+      amount: number,
+      dayIssued: string,
+      dayFulfilled?: string | null,
+      isPaid: boolean,
+      patients?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    patient:  {
+      __typename: "Patient",
+      id: string,
+      name?: string | null,
+      address?: string | null,
+      dateOfBirth?: string | null,
+      gender?: string | null,
+      InsuranceCarrier?:  {
+        __typename: "InsuranceCarrier",
+        id: string,
+        name: string,
+        address?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      Medications?:  {
+        __typename: "ModelMedicationConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      MedicalEncounters?:  {
+        __typename: "ModelMedicalEncounterConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Appointments?:  {
+        __typename: "ModelAppointmentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Physician?:  {
+        __typename: "Physician",
+        id: string,
+        name?: string | null,
+        cellPhoneNumber?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      cell?: string | null,
+      Payments?:  {
+        __typename: "ModelPatientPaymentsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      paymentStatus?: InsuranceCarrierStatus | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      patientInsuranceCarrierId?: string | null,
+      patientPhysicianId?: string | null,
+      owner?: string | null,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };

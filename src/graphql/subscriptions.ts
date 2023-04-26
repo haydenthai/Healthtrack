@@ -2,336 +2,117 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreatePatient = /* GraphQL */ `
-  subscription OnCreatePatient(
-    $filter: ModelSubscriptionPatientFilterInput
+export const onCreatePayments = /* GraphQL */ `
+  subscription OnCreatePayments(
+    $filter: ModelSubscriptionPaymentsFilterInput
     $owner: String
   ) {
-    onCreatePatient(filter: $filter, owner: $owner) {
+    onCreatePayments(filter: $filter, owner: $owner) {
       id
-      user
-      address
-      dateOfBirth
-      gender
-      InsuranceCarrier {
-        id
-        name
-        address
-        status
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      Medications {
+      amount
+      dayIssued
+      dayFulfilled
+      isPaid
+      patients {
         items {
           id
-          name
-          usage
-          dosage
-          frequency
-          sideEffects
-          interactions
-          patientID
+          paymentsId
+          patientId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
       }
-      MedicalEncounters {
-        items {
-          id
-          date
-          practitionerSeen
-          complaints
-          diagnosis
-          treatmentPlan
-          referralToSpecialists
-          recommendedFollowUp
-          patientID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          medicalEncounterVitalSignId
-        }
-        nextToken
-        startedAt
-      }
-      Appointments {
-        items {
-          id
-          time
-          type
-          patientID
-          physicianID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          appointmentServiceProvidedByClinicId
-        }
-        nextToken
-        startedAt
-      }
-      Physician {
-        id
-        name
-        cellPhoneNumber
-        WorkSchedules {
-          nextToken
-          startedAt
-        }
-        Appointments {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      cell
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      patientInsuranceCarrierId
-      patientPhysicianId
       owner
     }
   }
 `;
-export const onUpdatePatient = /* GraphQL */ `
-  subscription OnUpdatePatient(
-    $filter: ModelSubscriptionPatientFilterInput
+export const onUpdatePayments = /* GraphQL */ `
+  subscription OnUpdatePayments(
+    $filter: ModelSubscriptionPaymentsFilterInput
     $owner: String
   ) {
-    onUpdatePatient(filter: $filter, owner: $owner) {
+    onUpdatePayments(filter: $filter, owner: $owner) {
       id
-      user
-      address
-      dateOfBirth
-      gender
-      InsuranceCarrier {
-        id
-        name
-        address
-        status
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      Medications {
+      amount
+      dayIssued
+      dayFulfilled
+      isPaid
+      patients {
         items {
           id
-          name
-          usage
-          dosage
-          frequency
-          sideEffects
-          interactions
-          patientID
+          paymentsId
+          patientId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
       }
-      MedicalEncounters {
-        items {
-          id
-          date
-          practitionerSeen
-          complaints
-          diagnosis
-          treatmentPlan
-          referralToSpecialists
-          recommendedFollowUp
-          patientID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          medicalEncounterVitalSignId
-        }
-        nextToken
-        startedAt
-      }
-      Appointments {
-        items {
-          id
-          time
-          type
-          patientID
-          physicianID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          appointmentServiceProvidedByClinicId
-        }
-        nextToken
-        startedAt
-      }
-      Physician {
-        id
-        name
-        cellPhoneNumber
-        WorkSchedules {
-          nextToken
-          startedAt
-        }
-        Appointments {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      cell
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      patientInsuranceCarrierId
-      patientPhysicianId
       owner
     }
   }
 `;
-export const onDeletePatient = /* GraphQL */ `
-  subscription OnDeletePatient(
-    $filter: ModelSubscriptionPatientFilterInput
+export const onDeletePayments = /* GraphQL */ `
+  subscription OnDeletePayments(
+    $filter: ModelSubscriptionPaymentsFilterInput
     $owner: String
   ) {
-    onDeletePatient(filter: $filter, owner: $owner) {
+    onDeletePayments(filter: $filter, owner: $owner) {
       id
-      user
-      address
-      dateOfBirth
-      gender
-      InsuranceCarrier {
-        id
-        name
-        address
-        status
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      Medications {
+      amount
+      dayIssued
+      dayFulfilled
+      isPaid
+      patients {
         items {
           id
-          name
-          usage
-          dosage
-          frequency
-          sideEffects
-          interactions
-          patientID
+          paymentsId
+          patientId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
       }
-      MedicalEncounters {
-        items {
-          id
-          date
-          practitionerSeen
-          complaints
-          diagnosis
-          treatmentPlan
-          referralToSpecialists
-          recommendedFollowUp
-          patientID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          medicalEncounterVitalSignId
-        }
-        nextToken
-        startedAt
-      }
-      Appointments {
-        items {
-          id
-          time
-          type
-          patientID
-          physicianID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          appointmentServiceProvidedByClinicId
-        }
-        nextToken
-        startedAt
-      }
-      Physician {
-        id
-        name
-        cellPhoneNumber
-        WorkSchedules {
-          nextToken
-          startedAt
-        }
-        Appointments {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      cell
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      patientInsuranceCarrierId
-      patientPhysicianId
       owner
     }
   }
 `;
 export const onCreateVendor = /* GraphQL */ `
-  subscription OnCreateVendor($filter: ModelSubscriptionVendorFilterInput) {
-    onCreateVendor(filter: $filter) {
+  subscription OnCreateVendor(
+    $filter: ModelSubscriptionVendorFilterInput
+    $owner: String
+  ) {
+    onCreateVendor(filter: $filter, owner: $owner) {
       id
       name
       address
@@ -342,12 +123,16 @@ export const onCreateVendor = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onUpdateVendor = /* GraphQL */ `
-  subscription OnUpdateVendor($filter: ModelSubscriptionVendorFilterInput) {
-    onUpdateVendor(filter: $filter) {
+  subscription OnUpdateVendor(
+    $filter: ModelSubscriptionVendorFilterInput
+    $owner: String
+  ) {
+    onUpdateVendor(filter: $filter, owner: $owner) {
       id
       name
       address
@@ -358,12 +143,16 @@ export const onUpdateVendor = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onDeleteVendor = /* GraphQL */ `
-  subscription OnDeleteVendor($filter: ModelSubscriptionVendorFilterInput) {
-    onDeleteVendor(filter: $filter) {
+  subscription OnDeleteVendor(
+    $filter: ModelSubscriptionVendorFilterInput
+    $owner: String
+  ) {
+    onDeleteVendor(filter: $filter, owner: $owner) {
       id
       name
       address
@@ -374,14 +163,16 @@ export const onDeleteVendor = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onCreateEquipmentMaintenance = /* GraphQL */ `
   subscription OnCreateEquipmentMaintenance(
     $filter: ModelSubscriptionEquipmentMaintenanceFilterInput
+    $owner: String
   ) {
-    onCreateEquipmentMaintenance(filter: $filter) {
+    onCreateEquipmentMaintenance(filter: $filter, owner: $owner) {
       id
       type
       description
@@ -393,14 +184,16 @@ export const onCreateEquipmentMaintenance = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onUpdateEquipmentMaintenance = /* GraphQL */ `
   subscription OnUpdateEquipmentMaintenance(
     $filter: ModelSubscriptionEquipmentMaintenanceFilterInput
+    $owner: String
   ) {
-    onUpdateEquipmentMaintenance(filter: $filter) {
+    onUpdateEquipmentMaintenance(filter: $filter, owner: $owner) {
       id
       type
       description
@@ -412,14 +205,16 @@ export const onUpdateEquipmentMaintenance = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onDeleteEquipmentMaintenance = /* GraphQL */ `
   subscription OnDeleteEquipmentMaintenance(
     $filter: ModelSubscriptionEquipmentMaintenanceFilterInput
+    $owner: String
   ) {
-    onDeleteEquipmentMaintenance(filter: $filter) {
+    onDeleteEquipmentMaintenance(filter: $filter, owner: $owner) {
       id
       type
       description
@@ -431,14 +226,16 @@ export const onDeleteEquipmentMaintenance = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onCreateEquipmentOwned = /* GraphQL */ `
   subscription OnCreateEquipmentOwned(
     $filter: ModelSubscriptionEquipmentOwnedFilterInput
+    $owner: String
   ) {
-    onCreateEquipmentOwned(filter: $filter) {
+    onCreateEquipmentOwned(filter: $filter, owner: $owner) {
       id
       datePurchased
       warranty
@@ -447,14 +244,16 @@ export const onCreateEquipmentOwned = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onUpdateEquipmentOwned = /* GraphQL */ `
   subscription OnUpdateEquipmentOwned(
     $filter: ModelSubscriptionEquipmentOwnedFilterInput
+    $owner: String
   ) {
-    onUpdateEquipmentOwned(filter: $filter) {
+    onUpdateEquipmentOwned(filter: $filter, owner: $owner) {
       id
       datePurchased
       warranty
@@ -463,14 +262,16 @@ export const onUpdateEquipmentOwned = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onDeleteEquipmentOwned = /* GraphQL */ `
   subscription OnDeleteEquipmentOwned(
     $filter: ModelSubscriptionEquipmentOwnedFilterInput
+    $owner: String
   ) {
-    onDeleteEquipmentOwned(filter: $filter) {
+    onDeleteEquipmentOwned(filter: $filter, owner: $owner) {
       id
       datePurchased
       warranty
@@ -479,14 +280,16 @@ export const onDeleteEquipmentOwned = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onCreateEquipmentLeased = /* GraphQL */ `
   subscription OnCreateEquipmentLeased(
     $filter: ModelSubscriptionEquipmentLeasedFilterInput
+    $owner: String
   ) {
-    onCreateEquipmentLeased(filter: $filter) {
+    onCreateEquipmentLeased(filter: $filter, owner: $owner) {
       id
       startDate
       endDate
@@ -495,14 +298,16 @@ export const onCreateEquipmentLeased = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onUpdateEquipmentLeased = /* GraphQL */ `
   subscription OnUpdateEquipmentLeased(
     $filter: ModelSubscriptionEquipmentLeasedFilterInput
+    $owner: String
   ) {
-    onUpdateEquipmentLeased(filter: $filter) {
+    onUpdateEquipmentLeased(filter: $filter, owner: $owner) {
       id
       startDate
       endDate
@@ -511,14 +316,16 @@ export const onUpdateEquipmentLeased = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onDeleteEquipmentLeased = /* GraphQL */ `
   subscription OnDeleteEquipmentLeased(
     $filter: ModelSubscriptionEquipmentLeasedFilterInput
+    $owner: String
   ) {
-    onDeleteEquipmentLeased(filter: $filter) {
+    onDeleteEquipmentLeased(filter: $filter, owner: $owner) {
       id
       startDate
       endDate
@@ -527,14 +334,16 @@ export const onDeleteEquipmentLeased = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onCreateEquipment = /* GraphQL */ `
   subscription OnCreateEquipment(
     $filter: ModelSubscriptionEquipmentFilterInput
+    $owner: String
   ) {
-    onCreateEquipment(filter: $filter) {
+    onCreateEquipment(filter: $filter, owner: $owner) {
       id
       type
       description
@@ -553,6 +362,7 @@ export const onCreateEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -570,6 +380,7 @@ export const onCreateEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -583,6 +394,7 @@ export const onCreateEquipment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       EquipmentLeased {
         id
@@ -593,6 +405,7 @@ export const onCreateEquipment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -601,14 +414,16 @@ export const onCreateEquipment = /* GraphQL */ `
       _lastChangedAt
       equipmentEquipmentOwnedId
       equipmentEquipmentLeasedId
+      owner
     }
   }
 `;
 export const onUpdateEquipment = /* GraphQL */ `
   subscription OnUpdateEquipment(
     $filter: ModelSubscriptionEquipmentFilterInput
+    $owner: String
   ) {
-    onUpdateEquipment(filter: $filter) {
+    onUpdateEquipment(filter: $filter, owner: $owner) {
       id
       type
       description
@@ -627,6 +442,7 @@ export const onUpdateEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -644,6 +460,7 @@ export const onUpdateEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -657,6 +474,7 @@ export const onUpdateEquipment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       EquipmentLeased {
         id
@@ -667,6 +485,7 @@ export const onUpdateEquipment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -675,14 +494,16 @@ export const onUpdateEquipment = /* GraphQL */ `
       _lastChangedAt
       equipmentEquipmentOwnedId
       equipmentEquipmentLeasedId
+      owner
     }
   }
 `;
 export const onDeleteEquipment = /* GraphQL */ `
   subscription OnDeleteEquipment(
     $filter: ModelSubscriptionEquipmentFilterInput
+    $owner: String
   ) {
-    onDeleteEquipment(filter: $filter) {
+    onDeleteEquipment(filter: $filter, owner: $owner) {
       id
       type
       description
@@ -701,6 +522,7 @@ export const onDeleteEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -718,6 +540,7 @@ export const onDeleteEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -731,6 +554,7 @@ export const onDeleteEquipment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       EquipmentLeased {
         id
@@ -741,6 +565,7 @@ export const onDeleteEquipment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -749,12 +574,16 @@ export const onDeleteEquipment = /* GraphQL */ `
       _lastChangedAt
       equipmentEquipmentOwnedId
       equipmentEquipmentLeasedId
+      owner
     }
   }
 `;
 export const onCreateLabTest = /* GraphQL */ `
-  subscription OnCreateLabTest($filter: ModelSubscriptionLabTestFilterInput) {
-    onCreateLabTest(filter: $filter) {
+  subscription OnCreateLabTest(
+    $filter: ModelSubscriptionLabTestFilterInput
+    $owner: String
+  ) {
+    onCreateLabTest(filter: $filter, owner: $owner) {
       id
       testTypeName
       normalRange
@@ -766,12 +595,16 @@ export const onCreateLabTest = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onUpdateLabTest = /* GraphQL */ `
-  subscription OnUpdateLabTest($filter: ModelSubscriptionLabTestFilterInput) {
-    onUpdateLabTest(filter: $filter) {
+  subscription OnUpdateLabTest(
+    $filter: ModelSubscriptionLabTestFilterInput
+    $owner: String
+  ) {
+    onUpdateLabTest(filter: $filter, owner: $owner) {
       id
       testTypeName
       normalRange
@@ -783,12 +616,16 @@ export const onUpdateLabTest = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onDeleteLabTest = /* GraphQL */ `
-  subscription OnDeleteLabTest($filter: ModelSubscriptionLabTestFilterInput) {
-    onDeleteLabTest(filter: $filter) {
+  subscription OnDeleteLabTest(
+    $filter: ModelSubscriptionLabTestFilterInput
+    $owner: String
+  ) {
+    onDeleteLabTest(filter: $filter, owner: $owner) {
       id
       testTypeName
       normalRange
@@ -800,14 +637,16 @@ export const onDeleteLabTest = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onCreateServiceProvidedByClinic = /* GraphQL */ `
   subscription OnCreateServiceProvidedByClinic(
     $filter: ModelSubscriptionServiceProvidedByClinicFilterInput
+    $owner: String
   ) {
-    onCreateServiceProvidedByClinic(filter: $filter) {
+    onCreateServiceProvidedByClinic(filter: $filter, owner: $owner) {
       id
       type
       description
@@ -817,14 +656,16 @@ export const onCreateServiceProvidedByClinic = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onUpdateServiceProvidedByClinic = /* GraphQL */ `
   subscription OnUpdateServiceProvidedByClinic(
     $filter: ModelSubscriptionServiceProvidedByClinicFilterInput
+    $owner: String
   ) {
-    onUpdateServiceProvidedByClinic(filter: $filter) {
+    onUpdateServiceProvidedByClinic(filter: $filter, owner: $owner) {
       id
       type
       description
@@ -834,14 +675,16 @@ export const onUpdateServiceProvidedByClinic = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onDeleteServiceProvidedByClinic = /* GraphQL */ `
   subscription OnDeleteServiceProvidedByClinic(
     $filter: ModelSubscriptionServiceProvidedByClinicFilterInput
+    $owner: String
   ) {
-    onDeleteServiceProvidedByClinic(filter: $filter) {
+    onDeleteServiceProvidedByClinic(filter: $filter, owner: $owner) {
       id
       type
       description
@@ -851,14 +694,16 @@ export const onDeleteServiceProvidedByClinic = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onCreateWorkSchedule = /* GraphQL */ `
   subscription OnCreateWorkSchedule(
     $filter: ModelSubscriptionWorkScheduleFilterInput
+    $owner: String
   ) {
-    onCreateWorkSchedule(filter: $filter) {
+    onCreateWorkSchedule(filter: $filter, owner: $owner) {
       id
       twoMonthCalendar {
         weekDays {
@@ -874,14 +719,16 @@ export const onCreateWorkSchedule = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onUpdateWorkSchedule = /* GraphQL */ `
   subscription OnUpdateWorkSchedule(
     $filter: ModelSubscriptionWorkScheduleFilterInput
+    $owner: String
   ) {
-    onUpdateWorkSchedule(filter: $filter) {
+    onUpdateWorkSchedule(filter: $filter, owner: $owner) {
       id
       twoMonthCalendar {
         weekDays {
@@ -897,14 +744,16 @@ export const onUpdateWorkSchedule = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onDeleteWorkSchedule = /* GraphQL */ `
   subscription OnDeleteWorkSchedule(
     $filter: ModelSubscriptionWorkScheduleFilterInput
+    $owner: String
   ) {
-    onDeleteWorkSchedule(filter: $filter) {
+    onDeleteWorkSchedule(filter: $filter, owner: $owner) {
       id
       twoMonthCalendar {
         weekDays {
@@ -920,14 +769,16 @@ export const onDeleteWorkSchedule = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onCreatePhysician = /* GraphQL */ `
   subscription OnCreatePhysician(
     $filter: ModelSubscriptionPhysicianFilterInput
+    $owner: String
   ) {
-    onCreatePhysician(filter: $filter) {
+    onCreatePhysician(filter: $filter, owner: $owner) {
       id
       name
       cellPhoneNumber
@@ -940,6 +791,7 @@ export const onCreatePhysician = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -957,6 +809,7 @@ export const onCreatePhysician = /* GraphQL */ `
           _deleted
           _lastChangedAt
           appointmentServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -966,14 +819,16 @@ export const onCreatePhysician = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onUpdatePhysician = /* GraphQL */ `
   subscription OnUpdatePhysician(
     $filter: ModelSubscriptionPhysicianFilterInput
+    $owner: String
   ) {
-    onUpdatePhysician(filter: $filter) {
+    onUpdatePhysician(filter: $filter, owner: $owner) {
       id
       name
       cellPhoneNumber
@@ -986,6 +841,7 @@ export const onUpdatePhysician = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1003,6 +859,7 @@ export const onUpdatePhysician = /* GraphQL */ `
           _deleted
           _lastChangedAt
           appointmentServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1012,14 +869,16 @@ export const onUpdatePhysician = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onDeletePhysician = /* GraphQL */ `
   subscription OnDeletePhysician(
     $filter: ModelSubscriptionPhysicianFilterInput
+    $owner: String
   ) {
-    onDeletePhysician(filter: $filter) {
+    onDeletePhysician(filter: $filter, owner: $owner) {
       id
       name
       cellPhoneNumber
@@ -1032,6 +891,7 @@ export const onDeletePhysician = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1049,6 +909,7 @@ export const onDeletePhysician = /* GraphQL */ `
           _deleted
           _lastChangedAt
           appointmentServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1058,14 +919,16 @@ export const onDeletePhysician = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onCreateAppointment = /* GraphQL */ `
   subscription OnCreateAppointment(
     $filter: ModelSubscriptionAppointmentFilterInput
+    $owner: String
   ) {
-    onCreateAppointment(filter: $filter) {
+    onCreateAppointment(filter: $filter, owner: $owner) {
       id
       time
       type
@@ -1081,6 +944,7 @@ export const onCreateAppointment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -1088,14 +952,16 @@ export const onCreateAppointment = /* GraphQL */ `
       _deleted
       _lastChangedAt
       appointmentServiceProvidedByClinicId
+      owner
     }
   }
 `;
 export const onUpdateAppointment = /* GraphQL */ `
   subscription OnUpdateAppointment(
     $filter: ModelSubscriptionAppointmentFilterInput
+    $owner: String
   ) {
-    onUpdateAppointment(filter: $filter) {
+    onUpdateAppointment(filter: $filter, owner: $owner) {
       id
       time
       type
@@ -1111,6 +977,7 @@ export const onUpdateAppointment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -1118,14 +985,16 @@ export const onUpdateAppointment = /* GraphQL */ `
       _deleted
       _lastChangedAt
       appointmentServiceProvidedByClinicId
+      owner
     }
   }
 `;
 export const onDeleteAppointment = /* GraphQL */ `
   subscription OnDeleteAppointment(
     $filter: ModelSubscriptionAppointmentFilterInput
+    $owner: String
   ) {
-    onDeleteAppointment(filter: $filter) {
+    onDeleteAppointment(filter: $filter, owner: $owner) {
       id
       time
       type
@@ -1141,6 +1010,7 @@ export const onDeleteAppointment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -1148,12 +1018,16 @@ export const onDeleteAppointment = /* GraphQL */ `
       _deleted
       _lastChangedAt
       appointmentServiceProvidedByClinicId
+      owner
     }
   }
 `;
 export const onCreateLabOrder = /* GraphQL */ `
-  subscription OnCreateLabOrder($filter: ModelSubscriptionLabOrderFilterInput) {
-    onCreateLabOrder(filter: $filter) {
+  subscription OnCreateLabOrder(
+    $filter: ModelSubscriptionLabOrderFilterInput
+    $owner: String
+  ) {
+    onCreateLabOrder(filter: $filter, owner: $owner) {
       id
       physicianName
       testType
@@ -1171,6 +1045,7 @@ export const onCreateLabOrder = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       LabTests {
         items {
@@ -1185,6 +1060,7 @@ export const onCreateLabOrder = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1195,12 +1071,16 @@ export const onCreateLabOrder = /* GraphQL */ `
       _deleted
       _lastChangedAt
       labOrderServiceProvidedByClinicId
+      owner
     }
   }
 `;
 export const onUpdateLabOrder = /* GraphQL */ `
-  subscription OnUpdateLabOrder($filter: ModelSubscriptionLabOrderFilterInput) {
-    onUpdateLabOrder(filter: $filter) {
+  subscription OnUpdateLabOrder(
+    $filter: ModelSubscriptionLabOrderFilterInput
+    $owner: String
+  ) {
+    onUpdateLabOrder(filter: $filter, owner: $owner) {
       id
       physicianName
       testType
@@ -1218,6 +1098,7 @@ export const onUpdateLabOrder = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       LabTests {
         items {
@@ -1232,6 +1113,7 @@ export const onUpdateLabOrder = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1242,12 +1124,16 @@ export const onUpdateLabOrder = /* GraphQL */ `
       _deleted
       _lastChangedAt
       labOrderServiceProvidedByClinicId
+      owner
     }
   }
 `;
 export const onDeleteLabOrder = /* GraphQL */ `
-  subscription OnDeleteLabOrder($filter: ModelSubscriptionLabOrderFilterInput) {
-    onDeleteLabOrder(filter: $filter) {
+  subscription OnDeleteLabOrder(
+    $filter: ModelSubscriptionLabOrderFilterInput
+    $owner: String
+  ) {
+    onDeleteLabOrder(filter: $filter, owner: $owner) {
       id
       physicianName
       testType
@@ -1265,6 +1151,7 @@ export const onDeleteLabOrder = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       LabTests {
         items {
@@ -1279,6 +1166,7 @@ export const onDeleteLabOrder = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1289,14 +1177,16 @@ export const onDeleteLabOrder = /* GraphQL */ `
       _deleted
       _lastChangedAt
       labOrderServiceProvidedByClinicId
+      owner
     }
   }
 `;
 export const onCreatePrescription = /* GraphQL */ `
   subscription OnCreatePrescription(
     $filter: ModelSubscriptionPrescriptionFilterInput
+    $owner: String
   ) {
-    onCreatePrescription(filter: $filter) {
+    onCreatePrescription(filter: $filter, owner: $owner) {
       id
       physicianName
       medication
@@ -1315,6 +1205,7 @@ export const onCreatePrescription = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -1322,14 +1213,16 @@ export const onCreatePrescription = /* GraphQL */ `
       _deleted
       _lastChangedAt
       prescriptionServiceProvidedByClinicId
+      owner
     }
   }
 `;
 export const onUpdatePrescription = /* GraphQL */ `
   subscription OnUpdatePrescription(
     $filter: ModelSubscriptionPrescriptionFilterInput
+    $owner: String
   ) {
-    onUpdatePrescription(filter: $filter) {
+    onUpdatePrescription(filter: $filter, owner: $owner) {
       id
       physicianName
       medication
@@ -1348,6 +1241,7 @@ export const onUpdatePrescription = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -1355,14 +1249,16 @@ export const onUpdatePrescription = /* GraphQL */ `
       _deleted
       _lastChangedAt
       prescriptionServiceProvidedByClinicId
+      owner
     }
   }
 `;
 export const onDeletePrescription = /* GraphQL */ `
   subscription OnDeletePrescription(
     $filter: ModelSubscriptionPrescriptionFilterInput
+    $owner: String
   ) {
-    onDeletePrescription(filter: $filter) {
+    onDeletePrescription(filter: $filter, owner: $owner) {
       id
       physicianName
       medication
@@ -1381,6 +1277,7 @@ export const onDeletePrescription = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -1388,14 +1285,16 @@ export const onDeletePrescription = /* GraphQL */ `
       _deleted
       _lastChangedAt
       prescriptionServiceProvidedByClinicId
+      owner
     }
   }
 `;
 export const onCreateVitalSign = /* GraphQL */ `
   subscription OnCreateVitalSign(
     $filter: ModelSubscriptionVitalSignFilterInput
+    $owner: String
   ) {
-    onCreateVitalSign(filter: $filter) {
+    onCreateVitalSign(filter: $filter, owner: $owner) {
       id
       pulse
       respirationRate
@@ -1406,14 +1305,16 @@ export const onCreateVitalSign = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onUpdateVitalSign = /* GraphQL */ `
   subscription OnUpdateVitalSign(
     $filter: ModelSubscriptionVitalSignFilterInput
+    $owner: String
   ) {
-    onUpdateVitalSign(filter: $filter) {
+    onUpdateVitalSign(filter: $filter, owner: $owner) {
       id
       pulse
       respirationRate
@@ -1424,14 +1325,16 @@ export const onUpdateVitalSign = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onDeleteVitalSign = /* GraphQL */ `
   subscription OnDeleteVitalSign(
     $filter: ModelSubscriptionVitalSignFilterInput
+    $owner: String
   ) {
-    onDeleteVitalSign(filter: $filter) {
+    onDeleteVitalSign(filter: $filter, owner: $owner) {
       id
       pulse
       respirationRate
@@ -1442,14 +1345,16 @@ export const onDeleteVitalSign = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onCreateMedicalEncounter = /* GraphQL */ `
   subscription OnCreateMedicalEncounter(
     $filter: ModelSubscriptionMedicalEncounterFilterInput
+    $owner: String
   ) {
-    onCreateMedicalEncounter(filter: $filter) {
+    onCreateMedicalEncounter(filter: $filter, owner: $owner) {
       id
       date
       practitionerSeen
@@ -1457,7 +1362,6 @@ export const onCreateMedicalEncounter = /* GraphQL */ `
       diagnosis
       treatmentPlan
       referralToSpecialists
-      recommendedFollowUp
       patientID
       VitalSign {
         id
@@ -1470,6 +1374,7 @@ export const onCreateMedicalEncounter = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       Prescriptions {
         items {
@@ -1487,6 +1392,7 @@ export const onCreateMedicalEncounter = /* GraphQL */ `
           _deleted
           _lastChangedAt
           prescriptionServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1506,6 +1412,7 @@ export const onCreateMedicalEncounter = /* GraphQL */ `
           _deleted
           _lastChangedAt
           labOrderServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1516,14 +1423,16 @@ export const onCreateMedicalEncounter = /* GraphQL */ `
       _deleted
       _lastChangedAt
       medicalEncounterVitalSignId
+      owner
     }
   }
 `;
 export const onUpdateMedicalEncounter = /* GraphQL */ `
   subscription OnUpdateMedicalEncounter(
     $filter: ModelSubscriptionMedicalEncounterFilterInput
+    $owner: String
   ) {
-    onUpdateMedicalEncounter(filter: $filter) {
+    onUpdateMedicalEncounter(filter: $filter, owner: $owner) {
       id
       date
       practitionerSeen
@@ -1531,7 +1440,6 @@ export const onUpdateMedicalEncounter = /* GraphQL */ `
       diagnosis
       treatmentPlan
       referralToSpecialists
-      recommendedFollowUp
       patientID
       VitalSign {
         id
@@ -1544,6 +1452,7 @@ export const onUpdateMedicalEncounter = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       Prescriptions {
         items {
@@ -1561,6 +1470,7 @@ export const onUpdateMedicalEncounter = /* GraphQL */ `
           _deleted
           _lastChangedAt
           prescriptionServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1580,6 +1490,7 @@ export const onUpdateMedicalEncounter = /* GraphQL */ `
           _deleted
           _lastChangedAt
           labOrderServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1590,14 +1501,16 @@ export const onUpdateMedicalEncounter = /* GraphQL */ `
       _deleted
       _lastChangedAt
       medicalEncounterVitalSignId
+      owner
     }
   }
 `;
 export const onDeleteMedicalEncounter = /* GraphQL */ `
   subscription OnDeleteMedicalEncounter(
     $filter: ModelSubscriptionMedicalEncounterFilterInput
+    $owner: String
   ) {
-    onDeleteMedicalEncounter(filter: $filter) {
+    onDeleteMedicalEncounter(filter: $filter, owner: $owner) {
       id
       date
       practitionerSeen
@@ -1605,7 +1518,6 @@ export const onDeleteMedicalEncounter = /* GraphQL */ `
       diagnosis
       treatmentPlan
       referralToSpecialists
-      recommendedFollowUp
       patientID
       VitalSign {
         id
@@ -1618,6 +1530,7 @@ export const onDeleteMedicalEncounter = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       Prescriptions {
         items {
@@ -1635,6 +1548,7 @@ export const onDeleteMedicalEncounter = /* GraphQL */ `
           _deleted
           _lastChangedAt
           prescriptionServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1654,6 +1568,7 @@ export const onDeleteMedicalEncounter = /* GraphQL */ `
           _deleted
           _lastChangedAt
           labOrderServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1664,6 +1579,7 @@ export const onDeleteMedicalEncounter = /* GraphQL */ `
       _deleted
       _lastChangedAt
       medicalEncounterVitalSignId
+      owner
     }
   }
 `;
@@ -1733,51 +1649,705 @@ export const onDeleteMedication = /* GraphQL */ `
 export const onCreateInsuranceCarrier = /* GraphQL */ `
   subscription OnCreateInsuranceCarrier(
     $filter: ModelSubscriptionInsuranceCarrierFilterInput
+    $owner: String
   ) {
-    onCreateInsuranceCarrier(filter: $filter) {
+    onCreateInsuranceCarrier(filter: $filter, owner: $owner) {
       id
       name
       address
-      status
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onUpdateInsuranceCarrier = /* GraphQL */ `
   subscription OnUpdateInsuranceCarrier(
     $filter: ModelSubscriptionInsuranceCarrierFilterInput
+    $owner: String
   ) {
-    onUpdateInsuranceCarrier(filter: $filter) {
+    onUpdateInsuranceCarrier(filter: $filter, owner: $owner) {
       id
       name
       address
-      status
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onDeleteInsuranceCarrier = /* GraphQL */ `
   subscription OnDeleteInsuranceCarrier(
     $filter: ModelSubscriptionInsuranceCarrierFilterInput
+    $owner: String
   ) {
-    onDeleteInsuranceCarrier(filter: $filter) {
+    onDeleteInsuranceCarrier(filter: $filter, owner: $owner) {
       id
       name
       address
-      status
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onCreatePatient = /* GraphQL */ `
+  subscription OnCreatePatient(
+    $filter: ModelSubscriptionPatientFilterInput
+    $owner: String
+  ) {
+    onCreatePatient(filter: $filter, owner: $owner) {
+      id
+      name
+      address
+      dateOfBirth
+      gender
+      InsuranceCarrier {
+        id
+        name
+        address
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Medications {
+        items {
+          id
+          name
+          usage
+          dosage
+          frequency
+          sideEffects
+          interactions
+          patientID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      MedicalEncounters {
+        items {
+          id
+          date
+          practitionerSeen
+          complaints
+          diagnosis
+          treatmentPlan
+          referralToSpecialists
+          patientID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          medicalEncounterVitalSignId
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Appointments {
+        items {
+          id
+          time
+          type
+          patientID
+          physicianID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          appointmentServiceProvidedByClinicId
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Physician {
+        id
+        name
+        cellPhoneNumber
+        WorkSchedules {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      cell
+      Payments {
+        items {
+          id
+          paymentsId
+          patientId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      paymentStatus
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      patientInsuranceCarrierId
+      patientPhysicianId
+      owner
+    }
+  }
+`;
+export const onUpdatePatient = /* GraphQL */ `
+  subscription OnUpdatePatient(
+    $filter: ModelSubscriptionPatientFilterInput
+    $owner: String
+  ) {
+    onUpdatePatient(filter: $filter, owner: $owner) {
+      id
+      name
+      address
+      dateOfBirth
+      gender
+      InsuranceCarrier {
+        id
+        name
+        address
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Medications {
+        items {
+          id
+          name
+          usage
+          dosage
+          frequency
+          sideEffects
+          interactions
+          patientID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      MedicalEncounters {
+        items {
+          id
+          date
+          practitionerSeen
+          complaints
+          diagnosis
+          treatmentPlan
+          referralToSpecialists
+          patientID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          medicalEncounterVitalSignId
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Appointments {
+        items {
+          id
+          time
+          type
+          patientID
+          physicianID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          appointmentServiceProvidedByClinicId
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Physician {
+        id
+        name
+        cellPhoneNumber
+        WorkSchedules {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      cell
+      Payments {
+        items {
+          id
+          paymentsId
+          patientId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      paymentStatus
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      patientInsuranceCarrierId
+      patientPhysicianId
+      owner
+    }
+  }
+`;
+export const onDeletePatient = /* GraphQL */ `
+  subscription OnDeletePatient(
+    $filter: ModelSubscriptionPatientFilterInput
+    $owner: String
+  ) {
+    onDeletePatient(filter: $filter, owner: $owner) {
+      id
+      name
+      address
+      dateOfBirth
+      gender
+      InsuranceCarrier {
+        id
+        name
+        address
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Medications {
+        items {
+          id
+          name
+          usage
+          dosage
+          frequency
+          sideEffects
+          interactions
+          patientID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      MedicalEncounters {
+        items {
+          id
+          date
+          practitionerSeen
+          complaints
+          diagnosis
+          treatmentPlan
+          referralToSpecialists
+          patientID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          medicalEncounterVitalSignId
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Appointments {
+        items {
+          id
+          time
+          type
+          patientID
+          physicianID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          appointmentServiceProvidedByClinicId
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Physician {
+        id
+        name
+        cellPhoneNumber
+        WorkSchedules {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      cell
+      Payments {
+        items {
+          id
+          paymentsId
+          patientId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      paymentStatus
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      patientInsuranceCarrierId
+      patientPhysicianId
+      owner
+    }
+  }
+`;
+export const onCreatePatientPayments = /* GraphQL */ `
+  subscription OnCreatePatientPayments(
+    $filter: ModelSubscriptionPatientPaymentsFilterInput
+    $owner: String
+  ) {
+    onCreatePatientPayments(filter: $filter, owner: $owner) {
+      id
+      paymentsId
+      patientId
+      payments {
+        id
+        amount
+        dayIssued
+        dayFulfilled
+        isPaid
+        patients {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      patient {
+        id
+        name
+        address
+        dateOfBirth
+        gender
+        InsuranceCarrier {
+          id
+          name
+          address
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        Medications {
+          nextToken
+          startedAt
+        }
+        MedicalEncounters {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        Physician {
+          id
+          name
+          cellPhoneNumber
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        cell
+        Payments {
+          nextToken
+          startedAt
+        }
+        paymentStatus
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        patientInsuranceCarrierId
+        patientPhysicianId
+        owner
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onUpdatePatientPayments = /* GraphQL */ `
+  subscription OnUpdatePatientPayments(
+    $filter: ModelSubscriptionPatientPaymentsFilterInput
+    $owner: String
+  ) {
+    onUpdatePatientPayments(filter: $filter, owner: $owner) {
+      id
+      paymentsId
+      patientId
+      payments {
+        id
+        amount
+        dayIssued
+        dayFulfilled
+        isPaid
+        patients {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      patient {
+        id
+        name
+        address
+        dateOfBirth
+        gender
+        InsuranceCarrier {
+          id
+          name
+          address
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        Medications {
+          nextToken
+          startedAt
+        }
+        MedicalEncounters {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        Physician {
+          id
+          name
+          cellPhoneNumber
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        cell
+        Payments {
+          nextToken
+          startedAt
+        }
+        paymentStatus
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        patientInsuranceCarrierId
+        patientPhysicianId
+        owner
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onDeletePatientPayments = /* GraphQL */ `
+  subscription OnDeletePatientPayments(
+    $filter: ModelSubscriptionPatientPaymentsFilterInput
+    $owner: String
+  ) {
+    onDeletePatientPayments(filter: $filter, owner: $owner) {
+      id
+      paymentsId
+      patientId
+      payments {
+        id
+        amount
+        dayIssued
+        dayFulfilled
+        isPaid
+        patients {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      patient {
+        id
+        name
+        address
+        dateOfBirth
+        gender
+        InsuranceCarrier {
+          id
+          name
+          address
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        Medications {
+          nextToken
+          startedAt
+        }
+        MedicalEncounters {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        Physician {
+          id
+          name
+          cellPhoneNumber
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        cell
+        Payments {
+          nextToken
+          startedAt
+        }
+        paymentStatus
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        patientInsuranceCarrierId
+        patientPhysicianId
+        owner
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
     }
   }
 `;

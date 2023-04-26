@@ -29,7 +29,7 @@ import * as React from 'react';
 import Link, { LinkProps } from '@cloudscape-design/components/link';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import styles from '../styles/styles.module.scss';
-import { InsuranceCarrier, Patient } from '../models';
+import { InsuranceCarrier, Patient, Medication } from '../models';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import { TableEmptyState, TableNoMatchState } from './ElectronicPatientRecord';
 import type { AmplifyUser } from '@aws-amplify/ui';
@@ -788,16 +788,17 @@ function PatientDetail() {
         const GetPatient = async () => {
             const patient = await DataStore.query(Patient, ID);
             setPatient(patient as Patient);
-            console.log(patient?.InsuranceCarrier);
+            console.log(patient);
             setIsLoaded(true);
+            const medications = await patient?.Medications.toArray();
+            console.log(medications);
         };
 
         const GetInsurance = async () => {
-            const insurance = patient.InsuranceCarrier;
-            // console.log(insurance)
         };
 
-        GetPatient().then(() => GetInsurance());
+        GetPatient()
+        GetInsurance()
 
         return () => {};
     }, []);

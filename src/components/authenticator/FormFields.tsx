@@ -9,7 +9,7 @@ const customSignUpFields = () => {
         {/* Re-use default `Authenticator.SignUp.FormFields` */}
         <Authenticator.SignUp.FormFields />
   
-        <SelectField name="custom:role" label="Roles">
+        <SelectField name="custom:role:" label="Roles">
           <option value="Physician">Physician</option>
           <option value="PhysicianAssisstant">Physician Assisstant</option>
           <option value="Nurse">Nurse</option>

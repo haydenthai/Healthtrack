@@ -456,10 +456,13 @@ function PhysicianScheduler({ user }: PhysicianProps) {
         }
     }
     useEffect(() => {
-        // console.log(
-        //     `UE month: ${month} day: ${day} year: ${year} weekCounter: ${weekCounter}`
-        // );
-    }, [day, month, year, weekCounter]);
+        let x = async () => {
+            const models = await DataStore.query(Physician);
+            console.log(models);
+
+        }
+        x();
+    },[]);
 
     useEffect(() => {
         const removeListener = Hub.listen('datastore', async (capsule) => {

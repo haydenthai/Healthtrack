@@ -595,8 +595,8 @@ const CustomAppLayout = forwardRef<any, any>((props, ref) => {
 
 const resourcesBreadcrumbs = [
     {
-        text: 'Nurse',
-        href: '/nurse',
+        text: 'Insurance',
+        href: '/insurance-billing',
     },
     {
         text: 'Patients',

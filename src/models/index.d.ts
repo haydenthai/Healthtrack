@@ -687,8 +687,8 @@ type EagerPatient = {
   readonly gender?: string | null;
   readonly InsuranceCarrier?: InsuranceCarrier | null;
   readonly Medications?: (Medication | null)[] | null;
-  readonly MedicalEncounters?: (Medication | null)[] | null;
-  readonly Appointments?: (Medication | null)[] | null;
+  readonly MedicalEncounters?: (MedicalEncounter | null)[] | null;
+  readonly Appointments?: (Appointment | null)[] | null;
   readonly Physician?: Physician | null;
   readonly cell?: string | null;
   readonly Payments?: (PatientPayments | null)[] | null;
@@ -711,8 +711,8 @@ type LazyPatient = {
   readonly gender?: string | null;
   readonly InsuranceCarrier: AsyncItem<InsuranceCarrier | undefined>;
   readonly Medications: AsyncCollection<Medication>;
-  readonly MedicalEncounters: AsyncCollection<Medication>;
-  readonly Appointments: AsyncCollection<Medication>;
+  readonly MedicalEncounters: AsyncCollection<MedicalEncounter>;
+  readonly Appointments: AsyncCollection<Appointment>;
   readonly Physician: AsyncItem<Physician | undefined>;
   readonly cell?: string | null;
   readonly Payments: AsyncCollection<PatientPayments>;

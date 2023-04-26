@@ -2,329 +2,107 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createPatient = /* GraphQL */ `
-  mutation CreatePatient(
-    $input: CreatePatientInput!
-    $condition: ModelPatientConditionInput
+export const createPayments = /* GraphQL */ `
+  mutation CreatePayments(
+    $input: CreatePaymentsInput!
+    $condition: ModelPaymentsConditionInput
   ) {
-    createPatient(input: $input, condition: $condition) {
+    createPayments(input: $input, condition: $condition) {
       id
-      user
-      address
-      dateOfBirth
-      gender
-      InsuranceCarrier {
-        id
-        name
-        address
-        status
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      Medications {
+      amount
+      dayIssued
+      dayFulfilled
+      isPaid
+      patients {
         items {
           id
-          name
-          usage
-          dosage
-          frequency
-          sideEffects
-          interactions
-          patientID
+          paymentsId
+          patientId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
       }
-      MedicalEncounters {
-        items {
-          id
-          date
-          practitionerSeen
-          complaints
-          diagnosis
-          treatmentPlan
-          referralToSpecialists
-          recommendedFollowUp
-          patientID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          medicalEncounterVitalSignId
-        }
-        nextToken
-        startedAt
-      }
-      Appointments {
-        items {
-          id
-          time
-          type
-          patientID
-          physicianID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          appointmentServiceProvidedByClinicId
-        }
-        nextToken
-        startedAt
-      }
-      Physician {
-        id
-        name
-        cellPhoneNumber
-        WorkSchedules {
-          nextToken
-          startedAt
-        }
-        Appointments {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      cell
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      patientInsuranceCarrierId
-      patientPhysicianId
       owner
     }
   }
 `;
-export const updatePatient = /* GraphQL */ `
-  mutation UpdatePatient(
-    $input: UpdatePatientInput!
-    $condition: ModelPatientConditionInput
+export const updatePayments = /* GraphQL */ `
+  mutation UpdatePayments(
+    $input: UpdatePaymentsInput!
+    $condition: ModelPaymentsConditionInput
   ) {
-    updatePatient(input: $input, condition: $condition) {
+    updatePayments(input: $input, condition: $condition) {
       id
-      user
-      address
-      dateOfBirth
-      gender
-      InsuranceCarrier {
-        id
-        name
-        address
-        status
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      Medications {
+      amount
+      dayIssued
+      dayFulfilled
+      isPaid
+      patients {
         items {
           id
-          name
-          usage
-          dosage
-          frequency
-          sideEffects
-          interactions
-          patientID
+          paymentsId
+          patientId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
       }
-      MedicalEncounters {
-        items {
-          id
-          date
-          practitionerSeen
-          complaints
-          diagnosis
-          treatmentPlan
-          referralToSpecialists
-          recommendedFollowUp
-          patientID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          medicalEncounterVitalSignId
-        }
-        nextToken
-        startedAt
-      }
-      Appointments {
-        items {
-          id
-          time
-          type
-          patientID
-          physicianID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          appointmentServiceProvidedByClinicId
-        }
-        nextToken
-        startedAt
-      }
-      Physician {
-        id
-        name
-        cellPhoneNumber
-        WorkSchedules {
-          nextToken
-          startedAt
-        }
-        Appointments {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      cell
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      patientInsuranceCarrierId
-      patientPhysicianId
       owner
     }
   }
 `;
-export const deletePatient = /* GraphQL */ `
-  mutation DeletePatient(
-    $input: DeletePatientInput!
-    $condition: ModelPatientConditionInput
+export const deletePayments = /* GraphQL */ `
+  mutation DeletePayments(
+    $input: DeletePaymentsInput!
+    $condition: ModelPaymentsConditionInput
   ) {
-    deletePatient(input: $input, condition: $condition) {
+    deletePayments(input: $input, condition: $condition) {
       id
-      user
-      address
-      dateOfBirth
-      gender
-      InsuranceCarrier {
-        id
-        name
-        address
-        status
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      Medications {
+      amount
+      dayIssued
+      dayFulfilled
+      isPaid
+      patients {
         items {
           id
-          name
-          usage
-          dosage
-          frequency
-          sideEffects
-          interactions
-          patientID
+          paymentsId
+          patientId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
       }
-      MedicalEncounters {
-        items {
-          id
-          date
-          practitionerSeen
-          complaints
-          diagnosis
-          treatmentPlan
-          referralToSpecialists
-          recommendedFollowUp
-          patientID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          medicalEncounterVitalSignId
-        }
-        nextToken
-        startedAt
-      }
-      Appointments {
-        items {
-          id
-          time
-          type
-          patientID
-          physicianID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          appointmentServiceProvidedByClinicId
-        }
-        nextToken
-        startedAt
-      }
-      Physician {
-        id
-        name
-        cellPhoneNumber
-        WorkSchedules {
-          nextToken
-          startedAt
-        }
-        Appointments {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      cell
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      patientInsuranceCarrierId
-      patientPhysicianId
       owner
     }
   }
@@ -345,6 +123,7 @@ export const createVendor = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -364,6 +143,7 @@ export const updateVendor = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -383,6 +163,7 @@ export const deleteVendor = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -403,6 +184,7 @@ export const createEquipmentMaintenance = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -423,6 +205,7 @@ export const updateEquipmentMaintenance = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -443,6 +226,7 @@ export const deleteEquipmentMaintenance = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -460,6 +244,7 @@ export const createEquipmentOwned = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -477,6 +262,7 @@ export const updateEquipmentOwned = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -494,6 +280,7 @@ export const deleteEquipmentOwned = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -511,6 +298,7 @@ export const createEquipmentLeased = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -528,6 +316,7 @@ export const updateEquipmentLeased = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -545,6 +334,7 @@ export const deleteEquipmentLeased = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -572,6 +362,7 @@ export const createEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -589,6 +380,7 @@ export const createEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -602,6 +394,7 @@ export const createEquipment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       EquipmentLeased {
         id
@@ -612,6 +405,7 @@ export const createEquipment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -620,6 +414,7 @@ export const createEquipment = /* GraphQL */ `
       _lastChangedAt
       equipmentEquipmentOwnedId
       equipmentEquipmentLeasedId
+      owner
     }
   }
 `;
@@ -647,6 +442,7 @@ export const updateEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -664,6 +460,7 @@ export const updateEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -677,6 +474,7 @@ export const updateEquipment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       EquipmentLeased {
         id
@@ -687,6 +485,7 @@ export const updateEquipment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -695,6 +494,7 @@ export const updateEquipment = /* GraphQL */ `
       _lastChangedAt
       equipmentEquipmentOwnedId
       equipmentEquipmentLeasedId
+      owner
     }
   }
 `;
@@ -722,6 +522,7 @@ export const deleteEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -739,6 +540,7 @@ export const deleteEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -752,6 +554,7 @@ export const deleteEquipment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       EquipmentLeased {
         id
@@ -762,6 +565,7 @@ export const deleteEquipment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -770,6 +574,7 @@ export const deleteEquipment = /* GraphQL */ `
       _lastChangedAt
       equipmentEquipmentOwnedId
       equipmentEquipmentLeasedId
+      owner
     }
   }
 `;
@@ -790,6 +595,7 @@ export const createLabTest = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -810,6 +616,7 @@ export const updateLabTest = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -830,6 +637,7 @@ export const deleteLabTest = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -848,6 +656,7 @@ export const createServiceProvidedByClinic = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -866,6 +675,7 @@ export const updateServiceProvidedByClinic = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -884,6 +694,7 @@ export const deleteServiceProvidedByClinic = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -908,6 +719,7 @@ export const createWorkSchedule = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -932,6 +744,7 @@ export const updateWorkSchedule = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -956,6 +769,7 @@ export const deleteWorkSchedule = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -977,6 +791,7 @@ export const createPhysician = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -994,6 +809,7 @@ export const createPhysician = /* GraphQL */ `
           _deleted
           _lastChangedAt
           appointmentServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1003,6 +819,7 @@ export const createPhysician = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -1024,6 +841,7 @@ export const updatePhysician = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1041,6 +859,7 @@ export const updatePhysician = /* GraphQL */ `
           _deleted
           _lastChangedAt
           appointmentServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1050,6 +869,7 @@ export const updatePhysician = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -1071,6 +891,7 @@ export const deletePhysician = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1088,6 +909,7 @@ export const deletePhysician = /* GraphQL */ `
           _deleted
           _lastChangedAt
           appointmentServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1097,6 +919,7 @@ export const deletePhysician = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -1121,6 +944,7 @@ export const createAppointment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -1128,6 +952,7 @@ export const createAppointment = /* GraphQL */ `
       _deleted
       _lastChangedAt
       appointmentServiceProvidedByClinicId
+      owner
     }
   }
 `;
@@ -1152,6 +977,7 @@ export const updateAppointment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -1159,6 +985,7 @@ export const updateAppointment = /* GraphQL */ `
       _deleted
       _lastChangedAt
       appointmentServiceProvidedByClinicId
+      owner
     }
   }
 `;
@@ -1183,6 +1010,7 @@ export const deleteAppointment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -1190,6 +1018,7 @@ export const deleteAppointment = /* GraphQL */ `
       _deleted
       _lastChangedAt
       appointmentServiceProvidedByClinicId
+      owner
     }
   }
 `;
@@ -1216,6 +1045,7 @@ export const createLabOrder = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       LabTests {
         items {
@@ -1230,6 +1060,7 @@ export const createLabOrder = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1240,6 +1071,7 @@ export const createLabOrder = /* GraphQL */ `
       _deleted
       _lastChangedAt
       labOrderServiceProvidedByClinicId
+      owner
     }
   }
 `;
@@ -1266,6 +1098,7 @@ export const updateLabOrder = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       LabTests {
         items {
@@ -1280,6 +1113,7 @@ export const updateLabOrder = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1290,6 +1124,7 @@ export const updateLabOrder = /* GraphQL */ `
       _deleted
       _lastChangedAt
       labOrderServiceProvidedByClinicId
+      owner
     }
   }
 `;
@@ -1316,6 +1151,7 @@ export const deleteLabOrder = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       LabTests {
         items {
@@ -1330,6 +1166,7 @@ export const deleteLabOrder = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1340,6 +1177,7 @@ export const deleteLabOrder = /* GraphQL */ `
       _deleted
       _lastChangedAt
       labOrderServiceProvidedByClinicId
+      owner
     }
   }
 `;
@@ -1367,6 +1205,7 @@ export const createPrescription = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -1374,6 +1213,7 @@ export const createPrescription = /* GraphQL */ `
       _deleted
       _lastChangedAt
       prescriptionServiceProvidedByClinicId
+      owner
     }
   }
 `;
@@ -1401,6 +1241,7 @@ export const updatePrescription = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -1408,6 +1249,7 @@ export const updatePrescription = /* GraphQL */ `
       _deleted
       _lastChangedAt
       prescriptionServiceProvidedByClinicId
+      owner
     }
   }
 `;
@@ -1435,6 +1277,7 @@ export const deletePrescription = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -1442,6 +1285,7 @@ export const deletePrescription = /* GraphQL */ `
       _deleted
       _lastChangedAt
       prescriptionServiceProvidedByClinicId
+      owner
     }
   }
 `;
@@ -1461,6 +1305,7 @@ export const createVitalSign = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -1480,6 +1325,7 @@ export const updateVitalSign = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -1499,6 +1345,7 @@ export const deleteVitalSign = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -1515,7 +1362,6 @@ export const createMedicalEncounter = /* GraphQL */ `
       diagnosis
       treatmentPlan
       referralToSpecialists
-      recommendedFollowUp
       patientID
       VitalSign {
         id
@@ -1528,6 +1374,7 @@ export const createMedicalEncounter = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       Prescriptions {
         items {
@@ -1545,6 +1392,7 @@ export const createMedicalEncounter = /* GraphQL */ `
           _deleted
           _lastChangedAt
           prescriptionServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1564,6 +1412,7 @@ export const createMedicalEncounter = /* GraphQL */ `
           _deleted
           _lastChangedAt
           labOrderServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1574,6 +1423,7 @@ export const createMedicalEncounter = /* GraphQL */ `
       _deleted
       _lastChangedAt
       medicalEncounterVitalSignId
+      owner
     }
   }
 `;
@@ -1590,7 +1440,6 @@ export const updateMedicalEncounter = /* GraphQL */ `
       diagnosis
       treatmentPlan
       referralToSpecialists
-      recommendedFollowUp
       patientID
       VitalSign {
         id
@@ -1603,6 +1452,7 @@ export const updateMedicalEncounter = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       Prescriptions {
         items {
@@ -1620,6 +1470,7 @@ export const updateMedicalEncounter = /* GraphQL */ `
           _deleted
           _lastChangedAt
           prescriptionServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1639,6 +1490,7 @@ export const updateMedicalEncounter = /* GraphQL */ `
           _deleted
           _lastChangedAt
           labOrderServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1649,6 +1501,7 @@ export const updateMedicalEncounter = /* GraphQL */ `
       _deleted
       _lastChangedAt
       medicalEncounterVitalSignId
+      owner
     }
   }
 `;
@@ -1665,7 +1518,6 @@ export const deleteMedicalEncounter = /* GraphQL */ `
       diagnosis
       treatmentPlan
       referralToSpecialists
-      recommendedFollowUp
       patientID
       VitalSign {
         id
@@ -1678,6 +1530,7 @@ export const deleteMedicalEncounter = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       Prescriptions {
         items {
@@ -1695,6 +1548,7 @@ export const deleteMedicalEncounter = /* GraphQL */ `
           _deleted
           _lastChangedAt
           prescriptionServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1714,6 +1568,7 @@ export const deleteMedicalEncounter = /* GraphQL */ `
           _deleted
           _lastChangedAt
           labOrderServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1724,6 +1579,7 @@ export const deleteMedicalEncounter = /* GraphQL */ `
       _deleted
       _lastChangedAt
       medicalEncounterVitalSignId
+      owner
     }
   }
 `;
@@ -1802,12 +1658,12 @@ export const createInsuranceCarrier = /* GraphQL */ `
       id
       name
       address
-      status
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -1820,12 +1676,12 @@ export const updateInsuranceCarrier = /* GraphQL */ `
       id
       name
       address
-      status
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -1838,12 +1694,663 @@ export const deleteInsuranceCarrier = /* GraphQL */ `
       id
       name
       address
-      status
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      owner
+    }
+  }
+`;
+export const createPatient = /* GraphQL */ `
+  mutation CreatePatient(
+    $input: CreatePatientInput!
+    $condition: ModelPatientConditionInput
+  ) {
+    createPatient(input: $input, condition: $condition) {
+      id
+      name
+      address
+      dateOfBirth
+      gender
+      InsuranceCarrier {
+        id
+        name
+        address
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Medications {
+        items {
+          id
+          name
+          usage
+          dosage
+          frequency
+          sideEffects
+          interactions
+          patientID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      MedicalEncounters {
+        items {
+          id
+          date
+          practitionerSeen
+          complaints
+          diagnosis
+          treatmentPlan
+          referralToSpecialists
+          patientID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          medicalEncounterVitalSignId
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Appointments {
+        items {
+          id
+          time
+          type
+          patientID
+          physicianID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          appointmentServiceProvidedByClinicId
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Physician {
+        id
+        name
+        cellPhoneNumber
+        WorkSchedules {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      cell
+      Payments {
+        items {
+          id
+          paymentsId
+          patientId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      paymentStatus
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      patientInsuranceCarrierId
+      patientPhysicianId
+      owner
+    }
+  }
+`;
+export const updatePatient = /* GraphQL */ `
+  mutation UpdatePatient(
+    $input: UpdatePatientInput!
+    $condition: ModelPatientConditionInput
+  ) {
+    updatePatient(input: $input, condition: $condition) {
+      id
+      name
+      address
+      dateOfBirth
+      gender
+      InsuranceCarrier {
+        id
+        name
+        address
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Medications {
+        items {
+          id
+          name
+          usage
+          dosage
+          frequency
+          sideEffects
+          interactions
+          patientID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      MedicalEncounters {
+        items {
+          id
+          date
+          practitionerSeen
+          complaints
+          diagnosis
+          treatmentPlan
+          referralToSpecialists
+          patientID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          medicalEncounterVitalSignId
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Appointments {
+        items {
+          id
+          time
+          type
+          patientID
+          physicianID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          appointmentServiceProvidedByClinicId
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Physician {
+        id
+        name
+        cellPhoneNumber
+        WorkSchedules {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      cell
+      Payments {
+        items {
+          id
+          paymentsId
+          patientId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      paymentStatus
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      patientInsuranceCarrierId
+      patientPhysicianId
+      owner
+    }
+  }
+`;
+export const deletePatient = /* GraphQL */ `
+  mutation DeletePatient(
+    $input: DeletePatientInput!
+    $condition: ModelPatientConditionInput
+  ) {
+    deletePatient(input: $input, condition: $condition) {
+      id
+      name
+      address
+      dateOfBirth
+      gender
+      InsuranceCarrier {
+        id
+        name
+        address
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Medications {
+        items {
+          id
+          name
+          usage
+          dosage
+          frequency
+          sideEffects
+          interactions
+          patientID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      MedicalEncounters {
+        items {
+          id
+          date
+          practitionerSeen
+          complaints
+          diagnosis
+          treatmentPlan
+          referralToSpecialists
+          patientID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          medicalEncounterVitalSignId
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Appointments {
+        items {
+          id
+          time
+          type
+          patientID
+          physicianID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          appointmentServiceProvidedByClinicId
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Physician {
+        id
+        name
+        cellPhoneNumber
+        WorkSchedules {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      cell
+      Payments {
+        items {
+          id
+          paymentsId
+          patientId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      paymentStatus
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      patientInsuranceCarrierId
+      patientPhysicianId
+      owner
+    }
+  }
+`;
+export const createPatientPayments = /* GraphQL */ `
+  mutation CreatePatientPayments(
+    $input: CreatePatientPaymentsInput!
+    $condition: ModelPatientPaymentsConditionInput
+  ) {
+    createPatientPayments(input: $input, condition: $condition) {
+      id
+      paymentsId
+      patientId
+      payments {
+        id
+        amount
+        dayIssued
+        dayFulfilled
+        isPaid
+        patients {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      patient {
+        id
+        name
+        address
+        dateOfBirth
+        gender
+        InsuranceCarrier {
+          id
+          name
+          address
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        Medications {
+          nextToken
+          startedAt
+        }
+        MedicalEncounters {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        Physician {
+          id
+          name
+          cellPhoneNumber
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        cell
+        Payments {
+          nextToken
+          startedAt
+        }
+        paymentStatus
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        patientInsuranceCarrierId
+        patientPhysicianId
+        owner
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const updatePatientPayments = /* GraphQL */ `
+  mutation UpdatePatientPayments(
+    $input: UpdatePatientPaymentsInput!
+    $condition: ModelPatientPaymentsConditionInput
+  ) {
+    updatePatientPayments(input: $input, condition: $condition) {
+      id
+      paymentsId
+      patientId
+      payments {
+        id
+        amount
+        dayIssued
+        dayFulfilled
+        isPaid
+        patients {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      patient {
+        id
+        name
+        address
+        dateOfBirth
+        gender
+        InsuranceCarrier {
+          id
+          name
+          address
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        Medications {
+          nextToken
+          startedAt
+        }
+        MedicalEncounters {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        Physician {
+          id
+          name
+          cellPhoneNumber
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        cell
+        Payments {
+          nextToken
+          startedAt
+        }
+        paymentStatus
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        patientInsuranceCarrierId
+        patientPhysicianId
+        owner
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const deletePatientPayments = /* GraphQL */ `
+  mutation DeletePatientPayments(
+    $input: DeletePatientPaymentsInput!
+    $condition: ModelPatientPaymentsConditionInput
+  ) {
+    deletePatientPayments(input: $input, condition: $condition) {
+      id
+      paymentsId
+      patientId
+      payments {
+        id
+        amount
+        dayIssued
+        dayFulfilled
+        isPaid
+        patients {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      patient {
+        id
+        name
+        address
+        dateOfBirth
+        gender
+        InsuranceCarrier {
+          id
+          name
+          address
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        Medications {
+          nextToken
+          startedAt
+        }
+        MedicalEncounters {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        Physician {
+          id
+          name
+          cellPhoneNumber
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        cell
+        Payments {
+          nextToken
+          startedAt
+        }
+        paymentStatus
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        patientInsuranceCarrierId
+        patientPhysicianId
+        owner
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
     }
   }
 `;

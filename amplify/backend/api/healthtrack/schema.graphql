@@ -1,4 +1,4 @@
-type Payments @model @auth(rules: [{allow: private}]) {
+type Payments @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   amount: Float!
   dayIssued: AWSDate!
@@ -7,7 +7,7 @@ type Payments @model @auth(rules: [{allow: private}]) {
   patients: [Patient] @manyToMany(relationName: "PatientPayments")
 }
 
-type Vendor @model @auth(rules: [{allow: public}]) {
+type Vendor @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   name: String
   address: String
@@ -15,7 +15,7 @@ type Vendor @model @auth(rules: [{allow: public}]) {
   equipmentID: ID! @index(name: "byEquipment")
 }
 
-type EquipmentMaintenance @model @auth(rules: [{allow: public}]) {
+type EquipmentMaintenance @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   type: String
   description: String
@@ -24,19 +24,19 @@ type EquipmentMaintenance @model @auth(rules: [{allow: public}]) {
   equipmentID: ID! @index(name: "byEquipment")
 }
 
-type EquipmentOwned @model @auth(rules: [{allow: public}]) {
+type EquipmentOwned @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   datePurchased: AWSDate
   warranty: String
 }
 
-type EquipmentLeased @model @auth(rules: [{allow: public}]) {
+type EquipmentLeased @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   startDate: AWSDate
   endDate: AWSDate
 }
 
-type Equipment @model @auth(rules: [{allow: public}]) {
+type Equipment @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   type: String
   description: String
@@ -49,7 +49,7 @@ type Equipment @model @auth(rules: [{allow: public}]) {
   EquipmentLeased: EquipmentLeased @hasOne
 }
 
-type LabTest @model @auth(rules: [{allow: public}]) {
+type LabTest @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   testTypeName: String
   normalRange: String
@@ -58,14 +58,14 @@ type LabTest @model @auth(rules: [{allow: public}]) {
   laborderID: ID! @index(name: "byLabOrder")
 }
 
-type ServiceProvidedByClinic @model @auth(rules: [{allow: public}]) {
+type ServiceProvidedByClinic @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   type: String
   description: String
   cost: Float
 }
 
-type WorkSchedule @model @auth(rules: [{allow: public}]) {
+type WorkSchedule @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   twoMonthCalendar: [Week]
   physicianID: ID! @index(name: "byPhysician")
@@ -82,7 +82,7 @@ type Week {
   weekDays: [Day]
 }
 
-type Physician @model @auth(rules: [{allow: public}]) {
+type Physician @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   name: String
   cellPhoneNumber: AWSPhone
@@ -90,7 +90,7 @@ type Physician @model @auth(rules: [{allow: public}]) {
   Appointments: [Appointment] @hasMany(indexName: "byPhysician", fields: ["id"])
 }
 
-type Appointment @model @auth(rules: [{allow: public}]) {
+type Appointment @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   time: AWSDateTime
   type: String
@@ -99,7 +99,7 @@ type Appointment @model @auth(rules: [{allow: public}]) {
   ServiceProvidedByClinic: ServiceProvidedByClinic @hasOne
 }
 
-type LabOrder @model @auth(rules: [{allow: public}]) {
+type LabOrder @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   physicianName: String
   testType: String
@@ -111,7 +111,7 @@ type LabOrder @model @auth(rules: [{allow: public}]) {
   LabTests: [LabTest] @hasMany(indexName: "byLabOrder", fields: ["id"])
 }
 
-type Prescription @model @auth(rules: [{allow: public}]) {
+type Prescription @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   physicianName: String!
   medication: String!
@@ -123,7 +123,7 @@ type Prescription @model @auth(rules: [{allow: public}]) {
   ServiceProvidedByClinic: ServiceProvidedByClinic @hasOne
 }
 
-type VitalSign @model @auth(rules: [{allow: public}]) {
+type VitalSign @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   pulse: Int!
   respirationRate: Int!
@@ -144,7 +144,7 @@ enum Practitioner {
   PSYCHIATRIST
 }
 
-type MedicalEncounter @model @auth(rules: [{allow: public}]) {
+type MedicalEncounter @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   date: AWSDate!
   practitionerSeen: [Practitioner]!
@@ -175,13 +175,13 @@ enum InsuranceCarrierStatus {
   DIFFICULT_TO_GET_PAYMENTS
 }
 
-type InsuranceCarrier @model @auth(rules: [{allow: public}]) {
+type InsuranceCarrier @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   name: String!
   address: String
 }
 
-type Patient @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}]) {
+type Patient @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurse"], operations: [read, create, update, delete]}, {allow: groups, groups: ["LabTechnician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Pharmacist"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Physician"], operations: [read, create, update, delete]}, {allow: groups, groups: ["PhysicianAssistant"], operations: [read, create, update, delete]}]) {
   id: ID!
   name: String
   address: String
@@ -189,8 +189,8 @@ type Patient @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Nurs
   gender: String
   InsuranceCarrier: InsuranceCarrier @hasOne
   Medications: [Medication] @hasMany(indexName: "byPatient", fields: ["id"])
-  MedicalEncounters: [Medication] @hasMany(indexName: "byPatient", fields: ["id"])
-  Appointments: [Medication] @hasMany(indexName: "byPatient", fields: ["id"])
+  MedicalEncounters: [MedicalEncounter] @hasMany(indexName: "byPatient", fields: ["id"])
+  Appointments: [Appointment] @hasMany(indexName: "byPatient", fields: ["id"])
   Physician: Physician @hasOne
   cell: AWSPhone
   Payments: [Payments] @manyToMany(relationName: "PatientPayments")

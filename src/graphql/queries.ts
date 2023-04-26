@@ -2,166 +2,60 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getPatient = /* GraphQL */ `
-  query GetPatient($id: ID!) {
-    getPatient(id: $id) {
+export const getPayments = /* GraphQL */ `
+  query GetPayments($id: ID!) {
+    getPayments(id: $id) {
       id
-      user
-      address
-      dateOfBirth
-      gender
-      InsuranceCarrier {
-        id
-        name
-        address
-        status
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      Medications {
+      amount
+      dayIssued
+      dayFulfilled
+      isPaid
+      patients {
         items {
           id
-          name
-          usage
-          dosage
-          frequency
-          sideEffects
-          interactions
-          patientID
+          paymentsId
+          patientId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
       }
-      MedicalEncounters {
-        items {
-          id
-          date
-          practitionerSeen
-          complaints
-          diagnosis
-          treatmentPlan
-          referralToSpecialists
-          recommendedFollowUp
-          patientID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          medicalEncounterVitalSignId
-        }
-        nextToken
-        startedAt
-      }
-      Appointments {
-        items {
-          id
-          time
-          type
-          patientID
-          physicianID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          appointmentServiceProvidedByClinicId
-        }
-        nextToken
-        startedAt
-      }
-      Physician {
-        id
-        name
-        cellPhoneNumber
-        WorkSchedules {
-          nextToken
-          startedAt
-        }
-        Appointments {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      cell
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      patientInsuranceCarrierId
-      patientPhysicianId
       owner
     }
   }
 `;
-export const listPatients = /* GraphQL */ `
-  query ListPatients(
-    $filter: ModelPatientFilterInput
+export const listPayments = /* GraphQL */ `
+  query ListPayments(
+    $filter: ModelPaymentsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listPatients(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listPayments(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        user
-        address
-        dateOfBirth
-        gender
-        InsuranceCarrier {
-          id
-          name
-          address
-          status
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        Medications {
+        amount
+        dayIssued
+        dayFulfilled
+        isPaid
+        patients {
           nextToken
           startedAt
         }
-        MedicalEncounters {
-          nextToken
-          startedAt
-        }
-        Appointments {
-          nextToken
-          startedAt
-        }
-        Physician {
-          id
-          name
-          cellPhoneNumber
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        cell
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        patientInsuranceCarrierId
-        patientPhysicianId
         owner
       }
       nextToken
@@ -169,14 +63,14 @@ export const listPatients = /* GraphQL */ `
     }
   }
 `;
-export const syncPatients = /* GraphQL */ `
-  query SyncPatients(
-    $filter: ModelPatientFilterInput
+export const syncPayments = /* GraphQL */ `
+  query SyncPayments(
+    $filter: ModelPaymentsFilterInput
     $limit: Int
     $nextToken: String
     $lastSync: AWSTimestamp
   ) {
-    syncPatients(
+    syncPayments(
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -184,51 +78,19 @@ export const syncPatients = /* GraphQL */ `
     ) {
       items {
         id
-        user
-        address
-        dateOfBirth
-        gender
-        InsuranceCarrier {
-          id
-          name
-          address
-          status
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        Medications {
+        amount
+        dayIssued
+        dayFulfilled
+        isPaid
+        patients {
           nextToken
           startedAt
         }
-        MedicalEncounters {
-          nextToken
-          startedAt
-        }
-        Appointments {
-          nextToken
-          startedAt
-        }
-        Physician {
-          id
-          name
-          cellPhoneNumber
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        cell
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        patientInsuranceCarrierId
-        patientPhysicianId
         owner
       }
       nextToken
@@ -249,6 +111,7 @@ export const getVendor = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -270,6 +133,7 @@ export const listVendors = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -300,6 +164,7 @@ export const syncVendors = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -332,6 +197,7 @@ export const vendorsByEquipmentID = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -352,6 +218,7 @@ export const getEquipmentMaintenance = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -378,6 +245,7 @@ export const listEquipmentMaintenances = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -409,6 +277,7 @@ export const syncEquipmentMaintenances = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -442,6 +311,7 @@ export const equipmentMaintenancesByEquipmentID = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -459,6 +329,7 @@ export const getEquipmentOwned = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -478,6 +349,7 @@ export const listEquipmentOwneds = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -506,6 +378,7 @@ export const syncEquipmentOwneds = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -523,6 +396,7 @@ export const getEquipmentLeased = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -546,6 +420,7 @@ export const listEquipmentLeaseds = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -574,6 +449,7 @@ export const syncEquipmentLeaseds = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -601,6 +477,7 @@ export const getEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -618,6 +495,7 @@ export const getEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -631,6 +509,7 @@ export const getEquipment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       EquipmentLeased {
         id
@@ -641,6 +520,7 @@ export const getEquipment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -649,6 +529,7 @@ export const getEquipment = /* GraphQL */ `
       _lastChangedAt
       equipmentEquipmentOwnedId
       equipmentEquipmentLeasedId
+      owner
     }
   }
 `;
@@ -683,6 +564,7 @@ export const listEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         EquipmentLeased {
           id
@@ -693,6 +575,7 @@ export const listEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         createdAt
         updatedAt
@@ -701,6 +584,7 @@ export const listEquipment = /* GraphQL */ `
         _lastChangedAt
         equipmentEquipmentOwnedId
         equipmentEquipmentLeasedId
+        owner
       }
       nextToken
       startedAt
@@ -744,6 +628,7 @@ export const syncEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         EquipmentLeased {
           id
@@ -754,6 +639,7 @@ export const syncEquipment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         createdAt
         updatedAt
@@ -762,6 +648,7 @@ export const syncEquipment = /* GraphQL */ `
         _lastChangedAt
         equipmentEquipmentOwnedId
         equipmentEquipmentLeasedId
+        owner
       }
       nextToken
       startedAt
@@ -782,6 +669,7 @@ export const getLabTest = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -804,6 +692,7 @@ export const listLabTests = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -835,6 +724,7 @@ export const syncLabTests = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -868,6 +758,7 @@ export const labTestsByLaborderID = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -886,6 +777,7 @@ export const getServiceProvidedByClinic = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -910,6 +802,7 @@ export const listServiceProvidedByClinics = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -939,6 +832,7 @@ export const syncServiceProvidedByClinics = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -963,6 +857,7 @@ export const getWorkSchedule = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -981,6 +876,7 @@ export const listWorkSchedules = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -1008,6 +904,7 @@ export const syncWorkSchedules = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -1037,6 +934,7 @@ export const workSchedulesByPhysicianID = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -1058,6 +956,7 @@ export const getPhysician = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1075,6 +974,7 @@ export const getPhysician = /* GraphQL */ `
           _deleted
           _lastChangedAt
           appointmentServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1084,6 +984,7 @@ export const getPhysician = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -1111,6 +1012,7 @@ export const listPhysicians = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -1147,6 +1049,7 @@ export const syncPhysicians = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -1171,6 +1074,7 @@ export const getAppointment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -1178,6 +1082,7 @@ export const getAppointment = /* GraphQL */ `
       _deleted
       _lastChangedAt
       appointmentServiceProvidedByClinicId
+      owner
     }
   }
 `;
@@ -1204,6 +1109,7 @@ export const listAppointments = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         createdAt
         updatedAt
@@ -1211,6 +1117,7 @@ export const listAppointments = /* GraphQL */ `
         _deleted
         _lastChangedAt
         appointmentServiceProvidedByClinicId
+        owner
       }
       nextToken
       startedAt
@@ -1246,6 +1153,7 @@ export const syncAppointments = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         createdAt
         updatedAt
@@ -1253,6 +1161,7 @@ export const syncAppointments = /* GraphQL */ `
         _deleted
         _lastChangedAt
         appointmentServiceProvidedByClinicId
+        owner
       }
       nextToken
       startedAt
@@ -1290,6 +1199,7 @@ export const appointmentsByPatientID = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         createdAt
         updatedAt
@@ -1297,6 +1207,7 @@ export const appointmentsByPatientID = /* GraphQL */ `
         _deleted
         _lastChangedAt
         appointmentServiceProvidedByClinicId
+        owner
       }
       nextToken
       startedAt
@@ -1334,6 +1245,7 @@ export const appointmentsByPhysicianID = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         createdAt
         updatedAt
@@ -1341,6 +1253,7 @@ export const appointmentsByPhysicianID = /* GraphQL */ `
         _deleted
         _lastChangedAt
         appointmentServiceProvidedByClinicId
+        owner
       }
       nextToken
       startedAt
@@ -1367,6 +1280,7 @@ export const getLabOrder = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       LabTests {
         items {
@@ -1381,6 +1295,7 @@ export const getLabOrder = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1391,6 +1306,7 @@ export const getLabOrder = /* GraphQL */ `
       _deleted
       _lastChangedAt
       labOrderServiceProvidedByClinicId
+      owner
     }
   }
 `;
@@ -1419,6 +1335,7 @@ export const listLabOrders = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         LabTests {
           nextToken
@@ -1430,6 +1347,7 @@ export const listLabOrders = /* GraphQL */ `
         _deleted
         _lastChangedAt
         labOrderServiceProvidedByClinicId
+        owner
       }
       nextToken
       startedAt
@@ -1467,6 +1385,7 @@ export const syncLabOrders = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         LabTests {
           nextToken
@@ -1478,6 +1397,7 @@ export const syncLabOrders = /* GraphQL */ `
         _deleted
         _lastChangedAt
         labOrderServiceProvidedByClinicId
+        owner
       }
       nextToken
       startedAt
@@ -1517,6 +1437,7 @@ export const labOrdersByMedicalencounterID = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         LabTests {
           nextToken
@@ -1528,6 +1449,7 @@ export const labOrdersByMedicalencounterID = /* GraphQL */ `
         _deleted
         _lastChangedAt
         labOrderServiceProvidedByClinicId
+        owner
       }
       nextToken
       startedAt
@@ -1555,6 +1477,7 @@ export const getPrescription = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
@@ -1562,6 +1485,7 @@ export const getPrescription = /* GraphQL */ `
       _deleted
       _lastChangedAt
       prescriptionServiceProvidedByClinicId
+      owner
     }
   }
 `;
@@ -1591,6 +1515,7 @@ export const listPrescriptions = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         createdAt
         updatedAt
@@ -1598,6 +1523,7 @@ export const listPrescriptions = /* GraphQL */ `
         _deleted
         _lastChangedAt
         prescriptionServiceProvidedByClinicId
+        owner
       }
       nextToken
       startedAt
@@ -1636,6 +1562,7 @@ export const syncPrescriptions = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         createdAt
         updatedAt
@@ -1643,6 +1570,7 @@ export const syncPrescriptions = /* GraphQL */ `
         _deleted
         _lastChangedAt
         prescriptionServiceProvidedByClinicId
+        owner
       }
       nextToken
       startedAt
@@ -1683,6 +1611,7 @@ export const prescriptionsByMedicalencounterID = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         createdAt
         updatedAt
@@ -1690,6 +1619,7 @@ export const prescriptionsByMedicalencounterID = /* GraphQL */ `
         _deleted
         _lastChangedAt
         prescriptionServiceProvidedByClinicId
+        owner
       }
       nextToken
       startedAt
@@ -1709,6 +1639,7 @@ export const getVitalSign = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -1730,6 +1661,7 @@ export const listVitalSigns = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -1760,6 +1692,7 @@ export const syncVitalSigns = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -1776,7 +1709,6 @@ export const getMedicalEncounter = /* GraphQL */ `
       diagnosis
       treatmentPlan
       referralToSpecialists
-      recommendedFollowUp
       patientID
       VitalSign {
         id
@@ -1789,6 +1721,7 @@ export const getMedicalEncounter = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       Prescriptions {
         items {
@@ -1806,6 +1739,7 @@ export const getMedicalEncounter = /* GraphQL */ `
           _deleted
           _lastChangedAt
           prescriptionServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1825,6 +1759,7 @@ export const getMedicalEncounter = /* GraphQL */ `
           _deleted
           _lastChangedAt
           labOrderServiceProvidedByClinicId
+          owner
         }
         nextToken
         startedAt
@@ -1835,6 +1770,7 @@ export const getMedicalEncounter = /* GraphQL */ `
       _deleted
       _lastChangedAt
       medicalEncounterVitalSignId
+      owner
     }
   }
 `;
@@ -1857,7 +1793,6 @@ export const listMedicalEncounters = /* GraphQL */ `
         diagnosis
         treatmentPlan
         referralToSpecialists
-        recommendedFollowUp
         patientID
         VitalSign {
           id
@@ -1870,6 +1805,7 @@ export const listMedicalEncounters = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Prescriptions {
           nextToken
@@ -1885,6 +1821,7 @@ export const listMedicalEncounters = /* GraphQL */ `
         _deleted
         _lastChangedAt
         medicalEncounterVitalSignId
+        owner
       }
       nextToken
       startedAt
@@ -1912,7 +1849,6 @@ export const syncMedicalEncounters = /* GraphQL */ `
         diagnosis
         treatmentPlan
         referralToSpecialists
-        recommendedFollowUp
         patientID
         VitalSign {
           id
@@ -1925,6 +1861,7 @@ export const syncMedicalEncounters = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Prescriptions {
           nextToken
@@ -1940,6 +1877,7 @@ export const syncMedicalEncounters = /* GraphQL */ `
         _deleted
         _lastChangedAt
         medicalEncounterVitalSignId
+        owner
       }
       nextToken
       startedAt
@@ -1969,7 +1907,6 @@ export const medicalEncountersByPatientID = /* GraphQL */ `
         diagnosis
         treatmentPlan
         referralToSpecialists
-        recommendedFollowUp
         patientID
         VitalSign {
           id
@@ -1982,6 +1919,7 @@ export const medicalEncountersByPatientID = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         Prescriptions {
           nextToken
@@ -1997,6 +1935,7 @@ export const medicalEncountersByPatientID = /* GraphQL */ `
         _deleted
         _lastChangedAt
         medicalEncounterVitalSignId
+        owner
       }
       nextToken
       startedAt
@@ -2123,12 +2062,12 @@ export const getInsuranceCarrier = /* GraphQL */ `
       id
       name
       address
-      status
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -2147,12 +2086,12 @@ export const listInsuranceCarriers = /* GraphQL */ `
         id
         name
         address
-        status
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -2176,12 +2115,597 @@ export const syncInsuranceCarriers = /* GraphQL */ `
         id
         name
         address
-        status
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getPatient = /* GraphQL */ `
+  query GetPatient($id: ID!) {
+    getPatient(id: $id) {
+      id
+      name
+      address
+      dateOfBirth
+      gender
+      InsuranceCarrier {
+        id
+        name
+        address
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Medications {
+        items {
+          id
+          name
+          usage
+          dosage
+          frequency
+          sideEffects
+          interactions
+          patientID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      MedicalEncounters {
+        items {
+          id
+          date
+          practitionerSeen
+          complaints
+          diagnosis
+          treatmentPlan
+          referralToSpecialists
+          patientID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          medicalEncounterVitalSignId
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Appointments {
+        items {
+          id
+          time
+          type
+          patientID
+          physicianID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          appointmentServiceProvidedByClinicId
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Physician {
+        id
+        name
+        cellPhoneNumber
+        WorkSchedules {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      cell
+      Payments {
+        items {
+          id
+          paymentsId
+          patientId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      paymentStatus
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      patientInsuranceCarrierId
+      patientPhysicianId
+      owner
+    }
+  }
+`;
+export const listPatients = /* GraphQL */ `
+  query ListPatients(
+    $filter: ModelPatientFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPatients(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        address
+        dateOfBirth
+        gender
+        InsuranceCarrier {
+          id
+          name
+          address
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        Medications {
+          nextToken
+          startedAt
+        }
+        MedicalEncounters {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        Physician {
+          id
+          name
+          cellPhoneNumber
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        cell
+        Payments {
+          nextToken
+          startedAt
+        }
+        paymentStatus
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        patientInsuranceCarrierId
+        patientPhysicianId
+        owner
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncPatients = /* GraphQL */ `
+  query SyncPatients(
+    $filter: ModelPatientFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncPatients(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        address
+        dateOfBirth
+        gender
+        InsuranceCarrier {
+          id
+          name
+          address
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        Medications {
+          nextToken
+          startedAt
+        }
+        MedicalEncounters {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        Physician {
+          id
+          name
+          cellPhoneNumber
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        cell
+        Payments {
+          nextToken
+          startedAt
+        }
+        paymentStatus
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        patientInsuranceCarrierId
+        patientPhysicianId
+        owner
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getPatientPayments = /* GraphQL */ `
+  query GetPatientPayments($id: ID!) {
+    getPatientPayments(id: $id) {
+      id
+      paymentsId
+      patientId
+      payments {
+        id
+        amount
+        dayIssued
+        dayFulfilled
+        isPaid
+        patients {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      patient {
+        id
+        name
+        address
+        dateOfBirth
+        gender
+        InsuranceCarrier {
+          id
+          name
+          address
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        Medications {
+          nextToken
+          startedAt
+        }
+        MedicalEncounters {
+          nextToken
+          startedAt
+        }
+        Appointments {
+          nextToken
+          startedAt
+        }
+        Physician {
+          id
+          name
+          cellPhoneNumber
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        cell
+        Payments {
+          nextToken
+          startedAt
+        }
+        paymentStatus
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        patientInsuranceCarrierId
+        patientPhysicianId
+        owner
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const listPatientPayments = /* GraphQL */ `
+  query ListPatientPayments(
+    $filter: ModelPatientPaymentsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPatientPayments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        paymentsId
+        patientId
+        payments {
+          id
+          amount
+          dayIssued
+          dayFulfilled
+          isPaid
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        patient {
+          id
+          name
+          address
+          dateOfBirth
+          gender
+          cell
+          paymentStatus
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          patientInsuranceCarrierId
+          patientPhysicianId
+          owner
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncPatientPayments = /* GraphQL */ `
+  query SyncPatientPayments(
+    $filter: ModelPatientPaymentsFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncPatientPayments(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        paymentsId
+        patientId
+        payments {
+          id
+          amount
+          dayIssued
+          dayFulfilled
+          isPaid
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        patient {
+          id
+          name
+          address
+          dateOfBirth
+          gender
+          cell
+          paymentStatus
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          patientInsuranceCarrierId
+          patientPhysicianId
+          owner
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const patientPaymentsByPaymentsId = /* GraphQL */ `
+  query PatientPaymentsByPaymentsId(
+    $paymentsId: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelPatientPaymentsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    patientPaymentsByPaymentsId(
+      paymentsId: $paymentsId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        paymentsId
+        patientId
+        payments {
+          id
+          amount
+          dayIssued
+          dayFulfilled
+          isPaid
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        patient {
+          id
+          name
+          address
+          dateOfBirth
+          gender
+          cell
+          paymentStatus
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          patientInsuranceCarrierId
+          patientPhysicianId
+          owner
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const patientPaymentsByPatientId = /* GraphQL */ `
+  query PatientPaymentsByPatientId(
+    $patientId: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelPatientPaymentsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    patientPaymentsByPatientId(
+      patientId: $patientId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        paymentsId
+        patientId
+        payments {
+          id
+          amount
+          dayIssued
+          dayFulfilled
+          isPaid
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        patient {
+          id
+          name
+          address
+          dateOfBirth
+          gender
+          cell
+          paymentStatus
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          patientInsuranceCarrierId
+          patientPhysicianId
+          owner
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
       }
       nextToken
       startedAt

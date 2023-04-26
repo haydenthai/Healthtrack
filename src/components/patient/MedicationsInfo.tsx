@@ -24,7 +24,7 @@ import { InfoLink } from '../../pages/ElectronicPatientRecord';
 import styles from '../../styles/styles.module.scss';
 import { DataStore } from '@aws-amplify/datastore';
 import { Medication } from '../../models';
-import { MedicationForm } from '../../ui-components';
+import { MedicationForm, MedicationUpdateForm } from '../../ui-components';
 
 interface IMedicationsInfoProps {
     loadHelpPanelContent: (index: React.SetStateAction<number>) => void;

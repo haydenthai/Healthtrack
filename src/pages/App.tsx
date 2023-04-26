@@ -32,6 +32,7 @@ export interface RouterProps {
 export const UserContext = createContext<AmplifyUser | undefined>(undefined);
 
 export function App() {
+
     return (
         <div>
             <Authenticator.Provider>
